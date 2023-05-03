@@ -15,7 +15,7 @@ Seguiranno anche i file relativi alle esercitazioni Moodle che accompagnano il t
 
 I file sorgente possono essere copiati, modificati e ripubblicati in accordo con la licenza presente nel file license.md
 
-**Per utilizzare i file sorgente è necessatio scaricare ed installare:**
+**Per utilizzare i file sorgente è necessario scaricare ed installare:**
 
 1) R https://www.r-project.org
 2) Bookdown https://bookdown.org
