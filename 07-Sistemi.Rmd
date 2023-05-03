@@ -1,0 +1,796 @@
+# Sistemi lineari {#sistemi}
+
+Questo capitolo è dedicato alla risoluzione di qualsiasi sistema lineare 
+tramite il metodo di *eliminazione di Gauss*.
+
+## Definizioni e preliminari 
+
+Si dice **equazione lineare** (o **di primo grado**)
+**in una variabile** (o in una **incognita**)  **a coefficienti reali** ogni equazione del tipo:
+\begin{equation}
+ax  =  b,
+\end{equation}
+dove $a$ e $b$ sono numeri reali:  $a$ è detto **coefficiente della variabile** e $b$ è detto **termine noto**.
+
+Si dice **equazione lineare nelle $n$ variabili** $x_1,x_2,\dots,x_n$ **a coefficienti reali** ogni equazione del tipo:
+\begin{equation}
+a_1x_1+a_2x_2+\dots+a_nx_n  =  b,
+(\#eq:lineq)
+\end{equation}
+dove i numeri reali $a_1,a_2,\dots,a_n$ sono detti **coefficienti delle variabili** e $b$ è detto **termine noto**.
+
+Una $n$-pla ordinata $(s_1,s_2,\dots,s_n)$ tale che 
+ $$
+ a_1s_1+a_2s_2+\dots+a_ns_n  =  b
+ $$
+ è detta **soluzione** dell'equazione \@ref(eq:lineq). 
+
+Si osservi come *una* soluzione di una equazione consista di $n$ numeri reali ordinati. Ad esempio, le terne $(-2,2,1)$ e $(-2,1,3)$ sono entrambe soluzioni dell'equazione lineare
+$$x_1+2x_2+x_3=3$$ nelle tre variabili $x_1,x_2,x_3$, mentre la terna
+$(1,2,-3)$ non lo è. 
+
+Un insieme di più equazioni lineari è detto sistema lineare.
+
+::: {.definition}
+Si dice **sistema lineare di $m$ equazioni  in $n$ variabili (o incognite) a coefficienti reali** ogni insieme
+\begin{equation}
+ \left\{ \begin{array}{lcl}
+a_{11}x_1+a_{12}x_2+\dots+a_{1n}x_n & = & b_1, \\
+a_{21}x_1+a_{22}x_2+\dots+a_{2n}x_n & = & b_2, \\
+\hspace{2.5cm}\vdots           & = & \vdots \\
+a_{m1}x_1+a_{m2}x_2+\dots+a_{mn}x_n & = & b_m,
+(\#eq:linsyst)
+\end{array}
+\right.
+\end{equation}
+
+costituito da $m$ equazioni lineari a coefficienti reali nelle *stesse* $n$ variabili. I numeri reali $a_{ij}$ con
+$1\leq i\leq m$ e $1\leq j \leq n,$
+ sono detti **coefficienti delle variabili**, mentre i $b_i, 1\leq i \leq m,$
+sono detti **termini noti**.
+::: 
+
+::: {.definition}
+*Ogni* $n$-pla ordinata $(s_1,s_2,\dots,s_n)$ che  sia soluzione
+*simultanea* di *tutte* le $m$ equazioni del sistema lineare \@ref(eq:linsyst)
+è detta **soluzione** del sistema lineare.
+Un sistema che possiede almeno una soluzione si dice **compatibile**, mentre
+un sistema che non possiede nessuna soluzione è detto **incompatibile** (o **impossibile**).
+:::
+
+Un sistema lineare può essere identificato più semplicemente scrivendo solamente i 
+suoi coefficienti delle variabili e i suoi termini noti, che possono essere 
+rappresentanti sotto forma di matrici.
+
+::: {.definition}
+Una **matrice** $m \times n$ è un insieme ordinato di $mn$ numeri disposti in
+$m$ righe e $n$ colonne.
+:::
+
+Una matrice viene indicata con una lettera maiuscola in grassetto. Ad esempio,
+i coefficienti delle variabili del sistema lineare \@ref(eq:linsyst) possono essere 
+raffigurati tramite la matrice $m\times n$
+$$
+\mathbf{A}=\left(\begin{array}{cccc}a_{11} & a_{12} & \dots & a_{1n} \\a_{21} & a_{22} & \dots & a_{2n} \\\vdots & \vdots & \ddots & \vdots \\a_{m1} & a_{m2} & \dots & a_{mn}\end{array}\right),
+$$
+che viene detta **matrice incompleta** del sistema. Se ad essa si aggiunge la colonna dei termini noti, si otterrà la matrice $m\times(n+1)$
+$$
+\mathbf{\overline{A}}=\left(\begin{array}{cccc}a_{11} & a_{12} & \dots & a_{1n} \\a_{21} & a_{22} & \dots & a_{2n} \\\vdots & \vdots & \ddots & \vdots \\a_{m1} & a_{m2} & \dots & a_{mn}\end{array}\right.\left|\begin{array}{c}b_1 \\b_2 \\\vdots \\b_m\end{array}\right),
+$$
+che viene detta **matrice completa** del sistema. La linea verticale che separa i valori dei coefficienti
+delle variabili dai termini noti rappresenta le $m$ uguaglianze del sistema.
+
+Lo scopo di questo capitolo è quello di determinare condizioni necessarie e sufficienti affinché un dato sistema sia compatibile e, nel caso lo sia, di calcolarne le soluzioni.
+Esistono sistemi lineari per cui questo problema risulta facilmente risolvibile
+con un *metodo di sostituzione* (ovvero risalendo dall'ultima equazione alla prima ricavando
+successivamente tutte le variabili).
+
+::: {.example}
+Si consideri il sistema lineare
+\begin{equation}\left\{ 
+\begin{array}{rcl}
+ x_1-x_2+2x_3 & = & 1,\\
+ x_2+\phantom{1}x_3 & = & 2,\\
+x_3 & = & 0.
+\end{array}
+\right.
+\end{equation}
+Sostituendo il valore $x_3=0$ nella seconda equazione, si ricava $x_2=2-x_3=2$.
+Quindi, sostituendo i valori $x_3=0, x_2=2$ nella prima equazione, si ricava 
+$x_1=1-2x_3+x_2=1-0+2=3$. Il sistema ammette dunque (l'unica) soluzione $(3,2,0)$.
+
+Si osservi come il sistema lineare può essere più velocemente scritto tramite la sua matrice completa
+$$
+\left(\begin{array}{ccc}1 & -1 & 2 \\0 & 1 & 1 \\0 & 0 & 1\end{array}\right.
+\left|\begin{array}{c}1 \\2 \\0\end{array}\right),
+$$
+omettendo cioè il nome delle variabili $x_1,x_2,x_3$. Useremo nel seguito questa notazione 
+*matriciale* per i sistemi lineari.
+:::
+
+## Operazioni elementari sulle righe di un sistema
+
+L'obiettivo di questo capitolo è quello di introdurre una tecnica che permetta,
+dato qualsiasi sistema lineare, di ricondursi ad un altro sistema avente le stesse
+soluzioni, ma facilmente risolvibile per sostituzione.
+
+::: {.definition}
+Due sistemi lineari si dicono **equivalenti** quando le soluzioni dell'uno
+sono *tutte e sole* quelle dell'altro.
+:::
+
+Su un sistema lineare possono essere effettuate le seguenti trasformazioni
+che non alterano l'insieme delle soluzioni, ovvero permettono di passare
+da un sistema lineare ad uno ad esso equivalente.
+
+::: {.theorem}
+È immediato verificare che si passa da un sistema lineare ad uno ad esso equivalente:
+
+- scambiando due equazioni o in generale permutando l'ordine delle equazioni;
+- moltiplicando  per un numero $k\neq 0$ tutti i coefficienti  ed il corrispondente termine noto di una equazione del sistema;
+- sommando ad una equazione del  sistema un multiplo di un'altra equazione.
+
+Queste sono dette  **operazioni elementari sulle righe di un sistema**.
+:::
+
+Il metodo di *eliminazione di Gauss* consiste nel passare, tramite la successiva applicazione
+di operazioni elementari, da un sistema dato ad uno che possa essere facilmente risolto
+per sostituzione. Introduciamo il metodo di eliminazione attraverso alcuni esempi.
+
+::: {.example}
+Si risolva il  sistema lineare
+\begin{equation}
+\left\{ 
+\begin{array}{rcl}
+\phantom{0x_1+}2x_2-x_3 & = & 1,\\
+ x_1 + x_2+ 3x_3 &=& 1,\\
+-2x_1+x_2+2x_3 &=& 0.
+\end{array}
+\right.
+(\#eq:ex2)
+\end{equation}
+Si osservi per l'ultima volta come il sistema lineare \@ref(eq:ex2) possa essere scritto equivalentemente in forma matriciale come
+$$
+\left(\begin{array}{ccc}0 & 2 & -1 \\1 & 1 & 3 \\-2 & 1 & 2\end{array}\right.
+\left|\begin{array}{c}1 \\1 \\0\end{array}\right).
+$$
+Per iniziare, si scambiano le prime due righe ($I \leftrightarrow II$), ottenendo
+$$
+\left(\begin{array}{ccc}1 & 1 & 3 \\0 & 2 & -1 \\-2 & 1 & 2\end{array}\right.
+\left|\begin{array}{c}1 \\1 \\0\end{array}\right).
+$$
+Per far scomparire la prima variabile nelle righe successive alla prima, in particolare nella terza,
+è possibile moltiplicare per 2 la prima riga e aggiungerla alla terza ($III+2(I)$). Si ottiene
+$$
+\left(\begin{array}{ccc}1 & 1 & 3 \\0 & 2 & -1 \\0 & 3 & 8\end{array}\right.
+\left|\begin{array}{c}1 \\1 \\2\end{array}\right).
+$$
+Questo completa il primo passo della eliminazione di Gauss: si è ottenuto un sistema equivalente al primo in cui
+la prima variabile compare solamente nella prima riga. 
+
+Si osservi come sarebbe controproducente utilizzare nuovamente, come secondo passo della eliminazione, elementi della prima riga. Ad esempio, se  moltiplicassimo per $-3$ la prima riga e la sommassimo alla terza ($III-3(I)$), la prima variabile tornerebbe 
+a comparire nella terza riga.
+Invece, operando sul primo elemento non nullo della *seconda* riga, possiamo moltiplicare per $-3/2$ la seconda riga e
+sommarla alla terza riga ($III-3/2(II)$), ottenendo
+$$
+\left(\begin{array}{ccc}1 & 1 & 3 \\0 & 2 & -1 \\0 & 0 & \frac{19}{2}\end{array}\right.
+\left|\begin{array}{c}1 \\1 \\\frac{1}{2}\end{array}\right).
+$$
+Questo completa il secondo passo della eliminazione di Gauss: si è ottenuto un sistema equivalente al primo in cui
+la prima variabile compare solamente nella prima riga, la seconda variabile solo nelle prime due righe.
+È quindi un sistema che può essere risolto per sostituzione.
+Per agevolare il calcolo delle soluzioni, è  possibile moltiplicare per due la terza riga ($2(III)$), eliminando così
+le frazioni ed ottenendo
+$$
+\left(\begin{array}{ccc}1 & 1 & 3 \\0 & 2 & -1 \\0 & 0 & 19\end{array}\right.
+\left|\begin{array}{c}1 \\1 \\\ 1\end{array}\right).
+$$
+Per sostituzione dall'ultima riga si calcola $x_3=1/19$; si sostituisce questo valore nella seconda equazione, ricavando $2x_2=1+x_3=20/19$
+e quindi $x_2=10/19$. Infine si sostituiscono i  valori trovati nella prima equazione, ricavando 
+$x_1=1-3x_3-x_2=6/19$. Il sistema ammette dunque l'unica soluzione $\left(\frac{6}{19},\frac{10}{19},\frac{1}{19}\right)$.
+
+È possibile **controllare** la correttezza di questa soluzione verificando che essa soddisfa simultaneamente *tutte* le equazioni del sistema *iniziale* \@ref(eq:ex2):
+
+\begin{equation}
+\left\{ 
+\begin{array}{rcl}
+\phantom{0x_1+}2\frac{10}{19}-\frac{1}{19} & = & \frac{19}{19}=1, \\
+ \frac{6}{19} + \frac{10}{19}+ 3\frac{1}{19} &=& \frac{19}{19}=1,\\
+-2\frac{6}{19}+\frac{10}{19}+2\frac{1}{19} &=& \frac{0}{19}= 0.
+\end{array}
+\right.
+\end{equation}
+
+:::
+
+::: {.example}
+Si risolva il  sistema lineare
+$$
+\left(\begin{array}{ccc}1 & 1 & 1 \\3 & 0 & -1 \\-1 & 1 & 4\end{array}\right.
+\left|\begin{array}{c}3 \\-1 \\0\end{array}\right).
+$$
+Primo passo della eliminazione di Gauss: ($II-3(I)$) e ($III+I$). Si ottiene
+$$
+\left(\begin{array}{ccc}1 & 1 & 1 \\0 & -3 & -4 \\0 & 2 & 5\end{array}\right.
+\left|\begin{array}{c}3 \\-10 \\3\end{array}\right).
+$$
+Secondo passo della eliminazione di Gauss: ($III+2/3(II)$) e ($3(III)$). Si ottiene
+$$
+\left(\begin{array}{ccc}1 & 1 & 1 \\0 & -3 & -4 \\0 & 0 & 7\end{array}\right.
+\left|\begin{array}{c}3 \\-10 \\-11\end{array}\right),
+$$
+da cui, per sostituzione, si ricava l'unica soluzione $(-6/7,38/7,-11/7)$.
+:::
+
+Vediamo adesso tre esempi di casi differenti da quelli trattati, in cui il sistema cioè non 
+ammette una unica soluzione.
+
+::: {.example #ex3}
+Si risolva il  sistema lineare
+\begin{equation*}
+\left(\begin{array}{cccc}2 & -1 & 1 & -2 \\1 & 1 & 2 & 1 \\-4 & 5 & 1 & 8 \end{array}\right.
+\left|\begin{array}{c}0 \\1 \\\ 0\end{array}\right).
+\end{equation*}
+Quando possibile, è conveniente operare su un termine pari ad 1, di modo da non utilizzare sin da subito frazioni che potrebbero appesantire il calcolo. In questo sistema, si possono scambiare a tal fine le prime due righe ($I \leftrightarrow II$):
+$$
+\left(\begin{array}{cccc}1 & 1 & 2 & 1 \\2 & -1 & 1 & -2 \\-4 & 5 & 1 & 8 \end{array}\right.
+\left|\begin{array}{c}1 \\0 \\\ 0\end{array}\right).
+$$
+A questo punto, con ($II-2(I)$) e ($III+4(I)$) si ottiene
+$$
+\left(\begin{array}{cccc}1 & 1 & 2 & 1 \\0 & -3 & -3 & -4 \\0 & 9 & 9 & 12 \end{array}\right.
+\left|\begin{array}{c}1 \\-2 \\\ 4\end{array}\right),
+$$
+e, infine, con ($III+3(II)$) si ottiene
+$$
+\left(\begin{array}{cccc}1 & 1 & 2 & 1 \\0 & -3 & -3 & -4 \\0 & 0 & 0 & 0 \end{array}\right.
+\left|\begin{array}{c}1 \\-2 \\\ -2\end{array}\right).
+$$
+Ricordando il significato della notazione matriciale di un sistema lineare, si può leggere l'ultima equazione come
+$$
+0x_1+0x_2+0x_3+0x_4=-2,
+$$
+ovvero $0=2$. Essendo l'ultima equazione impossibile, il sistema non possiede soluzioni.
+:::
+
+::: {.example}
+Si risolva il  sistema lineare
+\begin{equation}
+\left(\begin{array}{ccc}1 & -2 & 2 \\2 & 1 & -1 \\1 & 3 & -3 \\ 6 & -2 & 2 \end{array}\right.
+\left|\begin{array}{c}0 \\2 \\2 \\ 4\end{array}\right).
+(\#eq:ex4)
+\end{equation}
+
+Procedendo con ($II-2(I)$), ($III-I$), e ($IV-6(I)$), si ottiene
+$$
+\left(\begin{array}{ccc}1 & -2 & 2 \\0 & 5 & -5 \\0 & 5 & -5 \\ 0 & 10 & -10 \end{array}\right.
+\left|\begin{array}{c}0 \\2 \\2 \\ 4\end{array}\right).
+$$
+Calcolando ($III-II$) e ($IV-2(II)$), si ottiene
+$$
+\left(\begin{array}{ccc}1 & -2 & 2 \\0 & 5 & -5 \\0 & 0 & 0 \\ 0 & 0 & 0 \end{array}\right.
+\left|\begin{array}{c}0 \\2 \\0 \\ 0\end{array}\right).
+$$
+Le righe composte da soli $0$ sono inutili ($0=0$), o meglio *sovrabbondanti*: corrispondono cioè ad equazioni del sistema di partenza
+che forniscono una informazione già contenuta nelle altre equazioni. Ad esempio, si osservi come la terza equazione del sistema  \@ref(eq:ex4)
+sia semplicemente data dalla differenza tra la seconda e la prima. 
+Le righe composte da $0$ possono dunque essere cancellate.
+
+> In generale **non è possibile** 
+**dedurre il numero di soluzioni** di un sistema lineare **solamente dal numero delle sue equazioni (e variabili)**: alcune potrebbero essere sovrabbondanti o rappresentare equazioni impossibili.
+
+A questo punto, però, si ha difficoltà a calcolare le soluzioni del sistema per sostituzione, così come fatto negli esempi precedenti. Questa difficoltà nasce dal fatto che non ci sono numeri non nulli nelle ultime due equazioni che permettano di ricavare
+il valore di $x_3$. In questi casi, $x_3$ può essere scelta arbitrariamente: $x_3 \in \mathbb{R}$. Così facendo, dalla seconda equazione si può ricavare $5x_2=2+5x_3$, ovvero $x_2=2/5+x_3$, e quindi dalla prima $x_1=-2x_3+2x_2=4/5$. Il sistema in questo caso ammette cioè le **infinite** soluzioni date da tutte le terne $\left(\frac{4}{5},\frac{2}{5}+x_3,x_3\right),$ $x_3 \in \mathbb{R}$. Dato che le soluzioni variano in funzione del valore di $x_3$, che può essere scelta arbitrariamente, si parla in questo caso di $\infty^1$ soluzioni.
+Si osservi come, anche in questo caso, si possa verificare che tutte le infinite terne verifichino simultaneamente tutte le equazioni del sistema lineare di partenza.
+Inoltre, si osservi il ruolo dei *primi elementi non nulli* della prima e della seconda riga, relativi rispettivamente alla prima e seconda variabile, che permettono di calcolarne il valore; la terza variabile, non avendo un tale elemento, è invece *libera* di variare sulla retta reale.
+:::
+
+::: {.example}
+Si risolva il  sistema lineare
+$$
+\left(\begin{array}{cccc}2 & -1 & 1 & -2 \\1 & 1 & 2 & 1 \\-4 & 5 & 1 & 8 \end{array}\right.
+\left|\begin{array}{c}0 \\1 \\\ 2\end{array}\right).
+$$
+Questo è il sistema lineare studiato nell'Esempio \@ref(exm:ex3) in cui si è cambiato il termine noto dell'ultima equazione.
+Eseguendo quindi gli stessi passaggi, ovvero ($I \leftrightarrow II$), ($II-2(I)$) e ($III+4(I)$) si ottiene
+$$
+\left(\begin{array}{cccc}1 & 1 & 2 & 1 \\0 & -3 & -3 & -4 \\0 & 9 & 9 & 12 \end{array}\right.
+\left|\begin{array}{c}1 \\-2 \\\ 6\end{array}\right),
+$$
+e, infine, con  ($III+3(II)$) e $(-II)$ si ottiene
+$$
+\left(\begin{array}{cccc}1 & 1 & 2 & 1 \\0 & 3 & 3 & 4 \\0 & 0 & 0 & 0 \end{array}\right.
+\left|\begin{array}{c}1 \\2 \\\ 0\end{array}\right).
+$$
+Questo sistema è consistente e si dovranno assegnare valori arbitrari ad *entrambe* le variabili libere $x_3,x_4 \in \mathbb{R}$. Sostituendo questi valori nella seconda equazione si ricava dunque $3x_2=2-4x_4-3x_3$ da cui $x_2=2/3-4/3x_4-x_3$. Sostituendo nella prima equazione, si trova invece $x_1=1-x_4-2x_3-x_2=1-x_4-2x_3-(2/3-4/3x_4-x_3)=1/3-x_3+x_4/3$. In questo caso il sistema ammette le infinite soluzioni date dalle terne $\left(\frac{1}{3}-x_3+\frac{x_4}{3},\frac{2}{3}-x_3-\frac{4x_4}{3},x_3,x_4\right)$. Dipendendo le soluzioni da *due* variabili libere, si parla di sistema con $\infty^2$ soluzioni.
+:::
+
+## Eliminazione di Gauss
+
+Siamo dunque pronti per definire l'*algoritmo* di eliminazione di Gauss. 
+L'algoritmo consiste nell'applicare 
+successivamente operazioni elementari sulle righe della matrice completa di un sistema fino ad ottenere una matrice che permetta una risoluzione per sostituzione del sistema stesso. 
+Una tale matrice si dice *ridotta a scala*.
+
+::: {.definition}
+Una matrice si dice **ridotta a scala** se:
+
+- il primo elemento non nullo della $i$-ma riga (detto **pivot**) ha una colonna di $0$ sotto di esso e ogni colonna alla sua sinistra contiene $0$ dalla $i$-ma riga in poi;
+
+- ogni riga di 0 precede una riga di 0.
+::: 
+
+
+In effetti, si può verificare che ognuna delle matrici conclusive degli esempi precedenti è una
+ridotta a scala, in cui i primi elementi non nulli di ogni riga (pivot) svolgono un ruolo
+fondamentale nel determinare le corrispondenti soluzioni.
+
+Generalizzando il procedimento usato
+negli esempi, è facile vedere che,
+applicando operazioni elementari sulle righe della matrice completa di un sistema,
+è sempre possibile ottenere una ridotta a scala.
+
+::: {.theorem}
+La matrice completa di un sistema lineare può essere sempre ridotta a scala
+applicando un numero finito di operazioni elementari sulle sue righe.
+::: 
+
+::: {.proof}
+Supponiamo che il primo elemento della prima riga $a_{11}$ della matrice completa sia non nullo, $a_{11}\neq 0$. 
+Se così non fosse, sarebbe possibile scambiare la prima riga con un'altra avente il primo elemento non nullo (altrimenti la variabile corrispondente a quella colonna avrebbe tutti i suoi coefficienti nulli e il sistema
+avrebbe una incognita in meno).
+Eseguiamo il primo passo dell'eliminazione di Gauss aggiungendo alla $i$-ma riga la prima moltiplicata
+per $-\left(\frac{a_{i1}}{a_{11}}\right)$, per ogni $2 \leq i \leq m$. Così facendo,
+si ottiene una matrice in cui *nessuna delle equazioni successive alla prima contiene la prima variabile* $x_1$.
+
+Adesso operiamo sulla seconda riga (se c'è, altrimenti abbiamo già ottenuto una ridotta a scala). 
+Se qualcuno dei termini $a_{i2}, 2 \leq i \leq m$, è non-nullo, possiamo supporre (a meno di un opportuno scambio di righe) che $a_{22}\neq 0$ e ripetere il procedimento sopra descritto ottenendo una matrice in cui *nessuna delle equazioni successive alla seconda contiene la seconda variabile* $x_2$.
+Se invece $a_{i2}=0, 2 \leq i \leq m$, andiamo a cercare sulla destra la prima colonna $j>2$ che contiene 
+almeno un termine non nullo sotto la prima riga. A questo punto (a meno di uno scambio di righe) possiamo supporre $a_{2j}\neq 0$ e possiamo ripetere il procedimento descritto, ottenendo una matrice
+in cui *nessuna delle equazioni successive alla seconda contiene* $x_2, \dots, x_j$.
+
+Iterando la procedura sopra descritta, dopo un numero finito di passaggi, si giunge per costruzione ad una matrice ridotta a scala.
+::: 
+
+>Ad ogni passo della eliminazione di Gauss, il numero per cui si deve moltiplicare una riga è l'opposto del numero da cancellare diviso il pivot su cui si sta operando.
+
+Una volta giunti ad una ridotta a scala, 
+*se il sistema è compatibile*, le variabili che hanno un pivot nella loro colonna possono essere determinate, quelle che non lo hanno possono essere scelte arbitrariamente.
+
+::: {.theorem  name="Algoritmo di eliminazione di Gauss"}
+
+Sia $\overline{A}$ la matrice completa $m\times(n+1)$ di un sistema lineare avente $m$ equazioni e $n$ variabili e $\overline{S}$ una sua qualsiasi ridotta a scala ottenuta da $\overline{A}$ attraverso un numero finito di operazioni elementari sulle sue righe.
+
+1. Se l'ultima colonna (dei termini noti) di $\overline{S}$ possiede un pivot, ovvero se una riga composta da tutti 0 termina con un elemento non nullo $(0 \quad 0 \quad \dots \quad 0 \quad \vert \; 1)$, allora il sistema lineare **non possiede soluzioni**.
+
+2. Se 1. non è verificato, allora il sistema è compatibile e:
+
+    2a. se il numero $p$ di pivot di $\overline{S}$ è uguale al numero delle variabili $n$, allora il sistema
+**ha una unica soluzione**;
+
+    2b. se il numero $p$ di pivot di $\overline{S}$ è inferiore al numero delle variabili $n$, allora il sistema possiede **infinite** soluzioni che si ottengono scegliendo arbitrariaramente le $n-p$ variabili **libere** che non posseggono un pivot nella loro colonna. In questo caso si dice che il sistema ha $\infty^{n-p}$ soluzioni.
+::: 
+
+::: {.proof}
+Si è già dimostrato che la matrice completa $\overline{A}$ di un sistema lineare può essere sempre ridotta a scala $\overline{S}$ con un numero finito di operazioni elementari sulle sue righe.
+
+Se in $\overline{S}$ si verifica il caso 1., a meno di una costante moltiplicativa c'è una riga della matrice equivalente a $0=1$, quindi il corrispondente sistema non possiede soluzioni.
+
+Se 1. non è verificato e il numero di pivot di $\overline{S}$ è uguale al numero delle variabili, allora
+si possono calcolare i valori delle variabili per sostituzione a partire dall'ultima equazione e risalendo alla prima. Il sistema in questo caso ha una unica soluzione.
+
+Se 1. non è verificato e il numero di pivot $p$ di $\overline{S}$ è invece inferiore al numero delle variabili $n$, $p<n$, si sostituiscono $(n-p)$ valori reali qualsiasi alle $(n-p)$ variabili corrispondenti alle colonne dove non compare un pivot, e si portano questi valori a destra del segno di $=$ in tutte le equazioni.
+Il sistema lineare si trasforma quindi in un nuovo sistema nelle $p$ variabili restanti.
+La sua matrice completa $\overline{S}'$ è ottenuta da $\overline{S}$ eliminando le colonne senza pivot,  eliminando eventuali righe nulle e ricalcolando i termini noti. È immediato verificare che $\overline{S}'$ è una ridotta a scala in cui il numero di pivot è adesso uguale al numero delle colonne. Il sistema corrispondente a $\overline{S}'$ quindi ammette una unica soluzione per ogni possibile scelta delle $(m-p)$ variabili libere. Il sistema originario $\overline{S}$ possiede quindi $\infty^{n-p}$ soluzioni.
+
+Dato che $\overline{S}$ è ricavata da $\overline{A}$ con operazioni elementari sulle righe,
+le stesse conclusioni valgono per il sistema definito da $\overline{A}$.
+::: 
+
+> Nonostante sia comunemente attribuito a Gauss, una prima applicazione dell'algoritmo di eliminazione compare già nel II secolo a.C. all'interno del testo matematico cinese Jiuzhang Suanshu ("Nove capitoli sulle arti matematiche").
+
+::: {.remark}
+È importante osservare che:
+
+- Un sistema lineare può ammettere **una** oppure **nessuna** oppure **infinite** soluzioni. 
+
+> È un errore grave scrivere ad esempio che un sistema lineare con tre variabili ha tre soluzioni. La soluzione, se esiste, è una terna di valori. Quindi, o non ci sono soluzioni, o vi è una terna ($n$-pla, in generale) unica, o ve ne sono infinite.
+
+- Vi sono infinite ridotte a scala di una stessa matrice (ad esempio, basta moltiplicare la matrice ridotta a scala per una costante non nulla).
+Se esse sono tutte ottenute tramite operazioni elementari sulle righe della stessa matrice, esse rappresentano sistemi lineari equivalenti, ovvero aventi lo stesso insieme di soluzioni. Dato che il numero di soluzioni dipende dal numero dei pivot di una ridotta
+a scala, **tutte le ridotte a scala ottenute tramite operazioni elementari da una stessa matrice hanno lo stesso numero di pivot**. Questo numero è detto *rango* della matrice.
+:::
+
+::: {.definition}
+Il numero di pivot di una qualsiasi ridotta a scala di una matrice $\mathbf{A}$  è detto **rango** della matrice e si indica con $r(\mathbf{A})$.
+:::
+
+::: {.theorem name="Rouché-Capelli"}
+Un sistema lineare è compatibile se e solo se il rango della sua matrice incompleta è pari al rango della sua matrice completa.
+:::
+
+::: {.proof}
+Equivalentemente, dimostriamo che un sistema lineare è incompatibile se e solo se il rango della sua matrice incompleta differisce dal rango della sua matrice completa. Si osservi  che la matrice completa differisce dalla incompleta solo per l'aggiunta della colonna dei termini noti. 
+Di conseguenza, il rango della matrice incompleta è differente dal rango della matrice completa se e solo se la matrice completa ha rango maggiore della incompleta
+ovvero se e solo se  una sua ridotta a scala possiede un pivot nella colonna dei termini noti,
+ovvero se e solo se una sua riga composta da tutti 0 termina con un elemento non nullo, ovvero se
+e solo se il sistema è incompatibile.
+:::
+
+L'algoritmo di eliminazione di Gauss risolve qualsiasi sistema lineare. Nel resto della sezione ci limitiamo dunque a fornire ulteriori esempi della sua applicazione.
+
+\pagebreak
+
+::: {.example}
+Si risolva il  sistema lineare
+$$
+\left(\begin{array}{ccc}3 & -6 & -7 \\1 & -2 & -1 \\-1 & 2 & 3\end{array}\right.
+\left|\begin{array}{c}-4 \\0 \\2\end{array}\right).
+$$
+È consigliabile in questo caso permutare l'ordine delle righe, ottenendo
+$$
+\left(\begin{array}{ccc}1 & -2 & -1 \\-1 & 2 & 3\\3 & -6 & -7\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\-4\end{array}\right).
+$$
+Applicando quindi le operazioni elementari ($II+I$) e ($III-3(I)$) si ottiene  
+$$
+\left(\begin{array}{ccc}1 & -2 & -1 \\0 & 0 & 2\\0 & 0 & -4\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\-4\end{array}\right).
+$$
+Infine con ($III+2(II)$) si arriva alla ridotta a scala
+$$
+\left(\begin{array}{ccc}\mathbf{1} & -2 & -1 \\0 & 0 & \mathbf{2}\\0 & 0 & 0\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\0\end{array}\right),
+$$
+in cui sono stati stavolta evidenziati in grassetto i pivot (i primi elementi non nulli di ogni riga).
+Dato che l'ultima riga di 0 si prolunga in uno 0, il sistema è compatibile. Avendo $2$ pivot e $3$ variabili,
+il sistema ammetterà $\infty^1$ soluzioni che si ottengono lasciando libera di variare la seconda variabile $x_2$,
+che non possiede un pivot sulla sua colonna. Dalla seconda equazione si ricava $2x_3=2$, ovvero $x_3=1$.
+Dalla prima equazione, si ricava $x_1=x_3+2x_2$, cioè $x_1=1+2x_2$.
+Le $\infty^1$ soluzioni del sistema sono costituite cioè da tutte le terne
+$(2x_2+1,x_2,1)$, $x_2 \in \mathbb{R}$.
+
+:::
+## Sistemi lineari omogenei
+Esistono particolari sistemi lineari che ammettono sempre almeno una soluzione.
+
+::: {.definition}
+Un sistema lineare è detto **omogeneo** se ha tutti i termini noti nulli.
+::: 
+
+::: {.remark}
+Un sistema lineare omogeneo è sempre compatibile; esso
+possiede infatti almeno la soluzione $(0,0,\dots,0)$, che è detta **soluzione nulla**.
+Un sistema lineare omogeneo ammette soluzioni non nulle se e solo se una ridotta a scala
+della sua matrice completa ha un numero di pivot inferiore al numero delle incognite.
+:::
+
+::: {.example}
+Si risolva il  sistema lineare omogeneo
+$$
+\left(\begin{array}{cccc}2 & 0 & 1 & 2\\1 & -2 & 1 & -1 \\1 & 2 & 0 & 3 \\ 3 &-2 &2 &1\end{array}\right.
+\left|\begin{array}{c}0 \\0 \\0 \\0\end{array}\right).
+$$
+Nello svolgere la eliminazione di Gauss in un sistema omogeneo si possono tralasciare i termini noti che, qualsiasi
+operazione elementare sulle righe venga svolta, rimarranno invariati.
+Si può scrivere quindi solamente la matrice incompleta del sistema
+$$
+\left(\begin{array}{cccc}2 & 0 & 1 & 2\\1 & -2 & 1 & -1 \\1 & 2 & 0 & 3 \\ 3 &-2 &2 &1\end{array}\right).
+$$
+Quindi, permutando le righe si ottiene
+$$
+\left(\begin{array}{cccc}1 & -2 & 1 & -1\\1 & 2 & 0 & 3 \\2 & 0 & 1 & 2 \\ 3 &-2 &2 &1\end{array}\right),
+$$
+e attraverso ($II-I$), ($III-2(II)$), e ($IV-3(I)$) si arriva alla matrice
+$$
+\left(\begin{array}{cccc}1 & -2 & 1 & -1\\0 & 4 & -1 & 4 \\0 & 4 & -1 & 4 \\ 0 & 4 & -1 & 4\end{array}\right).
+$$
+Eseguendo ($III-II$) e ($IV-II$) si ottiene la ridotta a scala
+$$
+\left(\begin{array}{cccc}\textbf{1} & -2 & 1 & -1\\0 & \textbf{4} & -1 & 4 \\0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0\end{array}\right).
+$$
+Le variabili $x_3$ e $x_4$ non posseggono un pivot nella loro colonna e quindi saranno libere. Sostituendo il loro valore nella seconda e prima equazione si trova
+che il sistema ha $\infty^2$ soluzioni date da $\left(-\frac{x_3}{2}-x_4,\frac{x_3}{4}-x_4,x_3,x_4\right)$. Si osservi come la soluzione nulla sia comunque inclusa sostituendo 
+$x_3=x_4=0$.
+::: 
+
+\pagebreak
+
+## Sistemi lineari parametrici
+Affrontiamo in questa sezione la risoluzione di sistemi lineari in cui 
+compare un parametro da discutere.
+
+::: {.example}
+Al variare del parametro $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare 
+$$
+\left(\begin{array}{ccc}3 & 3 & 4 \\2 & 2 & 3\\1 & 1 & 2\end{array}\right.
+\left|\begin{array}{c}k-4 \\2 \\1\end{array}\right).
+$$
+Quando compare un parametro, è consigliabile differire il più possibile la sua discussione.
+In questo esempio, conviene scambiare prima e terza riga $(I \leftrightarrow III)$ della matrice completa, ottenendo
+$$
+\left(\begin{array}{ccc}1 & 1 & 2 \\2 & 2 & 3\\3 & 3 & 4\end{array}\right.
+\left|\begin{array}{c}1 \\2 \\k-4\end{array}\right).
+$$
+Il primo passo della eliminazione di Gauss viene completato con ($II-2(I)$) e ($III-3(I)$), da cui si ottiene
+$$
+\left(\begin{array}{ccc}1 & 1 & 2 \\0 & 0 & -1\\0 & 0 & -2\end{array}\right.
+\left|\begin{array}{c}1 \\0 \\k-7\end{array}\right).
+$$
+Si osservi che il parametro è semplicemente un numero reale e, come tale, non comporta difficoltà di calcolo aggiuntive.
+Si procede quindi con ($III-2(II)$), ottenendo la matrice ridotta a scala
+$$
+\left(\begin{array}{ccc}1 & 1 & 2 \\0 & 0 & -1\\0 & 0 & 0\end{array}\right.
+\left|\begin{array}{c}1 \\0 \\k-7\end{array}\right).
+$$
+A questo punto è necessario discutere il parametro. **Prima di contare i pivot**, si deve sempre controllare la compatibilità del sistema.
+Dato che compare una riga di 0 nella matrice incompleta, essa dovrà essere completata da un termine nullo nella matrice completa per garantire che il sistema abbia soluzioni.
+Se ne deduce che per $k-7 \neq 0$, ovvero $k \neq 7$, il sistema non ha soluzioni.
+
+Altrimenti, per $k=7$, la matrice completa diviene
+$$
+\left(\begin{array}{ccc}\textbf{1} & 1 & 2 \\0 & 0 & \textbf{-1}\\0 & 0 & 0\end{array}\right.
+\left|\begin{array}{c}1 \\0 \\0\end{array}\right),
+$$
+con due pivot su tre variabili. In questo caso si avranno allora $\infty^1$ soluzioni. Dalla seconda equazione si ricava $x_3=0$, quindi dalla prima 
+$x_1=1-x_2$. Le infinite soluzioni sono quindi date dalle terne $(1-x_2,x_2,0)$.
+
+Anche in questo caso si possono sostituire le soluzioni nel sistema iniziale. La seconda e la terza equazione risulteranno essere risolte:
+\begin{align*}
+(II) :  2(1-x_2)+2(x_2)+3(0)&=2,\\
+(III):  (1-x_2)+(x_2)+2(0)&=1,
+\end{align*}
+mentre per la prima equazione risulterà
+$$
+(I): 3(1-x_2)+3(x_2)+4(0)=3=k-4.
+$$
+Si otterrà quindi un sistema compatibile solo se $3=k-4$, ovvero se e solo se $k=7$.
+:::
+
+> Prima di procedere con la eliminazione di Gauss è sempre consigliabile effettuare una analisi preliminare 
+della matrice completa di un sistema e stabilire quale sia la strategia migliore per risolverlo.
+Procedere meccanicamente (ad esempio senza effettuare scambi di righe o discutendo subito il parametro) potrebbe portare a calcoli più onerosi.
+
+> Il procedimento di verifica di un sistema lineare (ovvero la sostituzione del valore delle soluzioni trovate nel sistema originario) fa parte della sua risoluzione
+perché assicura che il sistema sia stato correttamente risolto.
+
+Altri tre esempi illustrano qualche casistica che si può verificare nella risoluzione 
+di un sistema lineare. Resta comunque vero che il metodo di eliminazione di Gauss è un algoritmo
+universale che arriva sempre a risoluzione. 
+
+::: {.example}
+Al variare del parametro $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare 
+$$
+\left(\begin{array}{ccc}-2 & k & -2 \\1 & 2k & k\\1 & k & 1\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\0\end{array}\right).
+$$
+Scambiando prima e terza riga ($I \leftrightarrow III$), si ottiene
+$$
+\left(\begin{array}{ccc}1 & k & 1 \\1 & 2k & k\\-2 & k & -2\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\0\end{array}\right).
+$$
+Effettuando ($II-I$) e ($III+2(I)$), si ottiene
+$$
+\left(\begin{array}{ccc}1 & k & 1 \\0 & k & k-1\\0 & 3k & 0\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\0\end{array}\right).
+$$
+Infine, ($III-3(II)$) porta alla matrice
+$$
+\left(\begin{array}{ccc}\textbf{1} & k & 1 \\0 & *k* & k-1\\0 & 0 & *(-3k+3)*\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\-6\end{array}\right).
+$$
+Nella matrice così ottenuta, c'è sicuramente un pivot (in grassetto) sulla prima riga, mentre gli altri primi elementi della seconda e terza riga (tra asterischi) dipendono dal parametro e 
+devono quindi essere discussi. Il caso più semplice è quello in cui tutti e due sono non nulli e rappresentano altrettanti pivot. Se $k \neq 0$ e $-3k+3 \neq 0$, ovvero $k \neq 0,1$,
+la matrice avrà $3$ pivot, e quindi il corrispondente sistema lineare a $3$ variabili avrà una unica soluzione. Dalla terza equazione si ricava
+$x_3=\frac{2}{k-1}$, quindi dalla seconda $kx_2=2-(k-1)\frac{2}{k-1}=0$, e dalla prima $x_1=-x_3-k(0)=-\frac{2}{k-1}$. Si osservi come, nel determinare l'unicità e l'esistenza dell'unica soluzione $\left(-\frac{2}{k-1},0,\frac{2}{k-1}\right)$, sia necessario che $k \neq 0, 1$.
+
+Restano da affrontare i due casi $k=0$ e $k=1$.
+
+Se $k=1$, l'ultima riga della matrice diviene $(0 \quad0\quad 0\; \vert -6)$, ovvero il sistema non ammette soluzioni.
+
+Si presti particolare attenzione al caso $k=0$, per cui la matrice diviene
+\begin{equation}
+\left(\begin{array}{ccc}\textbf{1} & 0 & 1 \\0 & 0 & -1\\0 & 0 & 3\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\-6\end{array}\right).
+(\#eq:ex5)
+\end{equation}
+**Questa matrice non è ridotta a scala**, quindi si deve completare un altro passo della eliminazione di Gauss, ponendo
+($III+3(II)$), per giungere effettivamente alla ridotta a scala
+
+$$
+\left(\begin{array}{ccc}\textbf{1} & 0 & 1 \\0 & 0 & \textbf{-1}\\0 & 0 & 0\end{array}\right.
+\left|\begin{array}{c}0 \\2 \\0\end{array}\right).
+$$
+
+In questo caso, il sistema risulta compatibile (la riga di $0$ viene completata da uno $0$) e si ottengono due pivot che determinano
+$\infty^1$ soluzioni date da $(2,x_2,-2), x_2 \in \mathbb{R}$.
+:::
+
+>Nella risoluzione di sistemi parametrici, si presti sempre attenzione ad effettuare il conteggio dei pivot in una matrice ridotta a scala. Nella matrice \@ref(eq:ex5) è sufficiente mettere qualsiasi altro numero al posto del $-6$ per rendere il sistema impossibile. Per accorgersene, è però necessario effettuare un altro passo della eliminazione di Gauss.
+
+\pagebreak
+
+::: {.example}
+Al variare del parametro $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare 
+\begin{equation}
+\left(\begin{array}{ccc}1 & -1 & 2 \\4 & -1 & 2\\5 & -2 & k\end{array}\right.
+\left|\begin{array}{c}0 \\0 \\8\end{array}\right).
+(\#eq:ex6)
+\end{equation}
+Applicando ($II-4(I)$) e ($III-5(I)$), si ottiene
+$$
+\left(\begin{array}{ccc}1 & -1 & 2 \\0 & 3 & -6\\0 & 3 & k-10\end{array}\right.
+\left|\begin{array}{c}0 \\0 \\8\end{array}\right).
+$$
+Infine, con ($III-II$) e ($II/3$) si arriva alla matrice
+$$
+\left(\begin{array}{ccc}\textbf{1} & -1 & 2 \\0 & \textbf{1} & -2\\0 & 0 & *(k-4)*\end{array}\right.
+\left|\begin{array}{c}0 \\0 \\8\end{array}\right).
+$$
+È immediato osservare che per $k=4$ il sistema non ha soluzioni, mentre per $k \neq 4$ si hanno tre pivot e una unica soluzione data da
+$\left(0, \frac{16}{k-4},\frac{8}{k-4}\right)$. 
+
+Il sistema può essere risolto più velocemente operando una eliminazione di Gauss non standard, ovvero
+notando nella matrice iniziale \@ref(eq:ex6) che la prima e la seconda riga sono quasi identiche.
+Completando allora ($II-I$) a partire da \@ref(eq:ex6), si ottiene
+$$
+\left(\begin{array}{ccc}1 & -1 & 2 \\3 & 0 & 0\\5 & -2 & k\end{array}\right.
+\left|\begin{array}{c}0 \\0 \\8\end{array}\right),
+$$
+da cui è immediato ricavare $x_1=0$. Se la prima variabile è nulla, è come se non comparisse nel sistema. Si ottiene dunque un sottosistema
+con le sole variabili $x_2$ e $x_3$ e solo le relative colonne, ovvero
+$$
+\left(\begin{array}{cc}-1 & 2 \\-2 & k \end{array}\right.
+\left|\begin{array}{c}0 \\8\end{array}\right),
+$$
+da cui si arriva con ($II-2(I)$) alla matrice 
+$$
+\left(\begin{array}{cc}-1 & 2 \\0 & k-4 \end{array}\right.
+\left|\begin{array}{c}0 \\8\end{array}\right),
+$$
+che molto più rapidamente determina la stessa soluzione precedentemente trovata per $k \neq 4$: $x_2=\frac{16}{k-4}$ e $x_3=\frac{8}{k-4}$, a cui si aggiunge il valore $x_1=0$. Per $k=4$, il sottosistema, e quindi il sistema originario, risulta incompatibile.
+:::
+
+> Non è necessario effettuare la eliminazione di Gauss in modo standard, se ci si accorge che esiste una strategia migliore basata
+su operazioni elementari consentite.
+
+::: {.example}
+Al variare del parametro $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare 
+$$
+\left(\begin{array}{ccc}k & -2 & k \\1 & 1 & 1\\1 & -1 & 2\end{array}\right.
+\left|\begin{array}{c}0 \\1 \\0\end{array}\right).
+$$
+La presenza del parametro $k$ in prima posizione ci costringerebbe a discuterlo subito. Meglio differire la  discussione, permutando le righe della matrice completa come in
+$$
+\left(\begin{array}{ccc}1 & 1 & 1 \\1 & -1 & 2\\k & -2 & k\end{array}\right.
+\left|\begin{array}{c}1 \\0 \\0\end{array}\right).
+$$
+Quindi, si procede con $(II-I)$ e ($III-k(I)$). Si osservi che in questo punto non è necessario assumere $k \neq 0$ perché anche se fosse $k = 0$ sommeremmo alla terza riga una quantità nulla.  Così facendo, si ottiene
+$$
+\left(\begin{array}{ccc}1 & 1 & 1 \\0 & -2 & 1\\0 & -2-k & 0\end{array}\right.
+\left|\begin{array}{c}1 \\-1 \\-k\end{array}\right).
+$$
+A questo punto, utilizzando il pivot $-2$, si moltiplica la seconda riga per $-\frac{2+k}{2}$. In generale,
+si ricordi che si deve moltiplicare la riga contenente il pivot per il numero che si intende annullare fratto il pivot, cambiato di segno.
+In questo caso, $\left(III-\frac{2+k}{2}(II)\right)$. Si ottiene la matrice completa
+$$
+\left(\begin{array}{ccc}1 & 1 & 1 \\0 & -2 & 1\\0 & 0 & -\frac{2+k}{2}\end{array}\right.
+\left|\begin{array}{c}1 \\-1 \\\frac{2-k}{2}\end{array}\right).
+$$
+Moltiplicando l'ultima riga per $2$, $(2(III))$, si arriva a
+$$
+\left(\begin{array}{ccc}\textbf{1} & 1 & 1 \\0 & \textbf{-2} & 1\\0 & 0 & *(-2-k)* \end{array}\right.
+\left|\begin{array}{c}1 \\-1 \\2-k\end{array}\right).
+$$
+Se $-2-k=0$, ovvero se $k=-2$, l'ultima riga diviene $(0\quad0\quad0\;\vert \; 4)$ e il sistema è in questo caso impossibile.
+
+Se invece $k\neq-2$ si hanno 3 pivot per le 3 variabili, quindi il sistema ha l'unica soluzione
+che si può verificare essere data da $\left(\frac{4-k}{k+2},\frac{k}{k+2},\frac{k-2}{k+2}\right)$. Si ricordi che $k$ è un valore fissato. Quindi la terna indicata è unica per ogni valore di $k$, con $k\neq-2$.
+:::
+
+> In una ridotta a scala parametrica si devono discutere solo i candidati pivot che dipendono dal parametro,
+non ha nessuna valenza discutere eventuali altri elementi della matrice che dipendano dal parametro.
+
+> A volte  si tende a dire che per un determinato valore del parametro "il sistema non esiste".
+Il sistema esiste comunque, semmai non esistono le sue soluzioni.
+
+## Esercizi
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+4x_1-x_2+2x_3&=0,\\
+5x_1-2x_2+2kx_3&=0,\\
+x_1-x_2+x_3&=0.\\
+\end{cases}
+$$
+\begin{flushright}[ Se $k=\frac32$: $\infty^1$ soluzioni  $(-\frac{x_3}{3},\frac{2x_3}{3},x_3),x_3 \in \mathbb{R}$; se $k\neq \frac32$: l'unica soluzione nulla (sistema omogeneo). ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare$$
+\begin{cases}
+2x_1-2x_2+3x_3&=2,\\
+3x_1-3x_2+4x_3&=k-2,\\
+x_1-x_2+2x_3&=1.
+\end{cases}
+$$
+\begin{flushright}[ Se $k \neq 5$: nessuna soluzione; se $k=5$: $\infty^1$ soluzioni $(1+x_2,x_2,0)$, $x_2 \in \mathbb{R}$. ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+2x_1+k\,x_2+2x_3&=0,\\
+\phantom{-}x_1+k\,x_2+k\,x_3&=2,\\
+2x_1-k\,x_2+\,x_3&=0.
+\end{cases}
+$$
+\begin{flushright}[ Se $k \neq \frac54,0$:  l'unica soluzione   $\left(-\frac{6}{4k-5},-\frac{4}{(4k-5)k},\frac{8}{4k-5}\right)$; se $k=0,\frac54$: nessuna soluzione. ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+-4x_1-8x_2+6x_3&=-6, \\
+x_1+2x_2-3x_3&=0, \\
+3x_1-(k-4)x_2-kx_3&=11.
+\end{cases}
+$$
+\begin{flushright}[ Se $k = -2$: $\infty^1$ soluzioni $(3-2x_2,x_2,1), x_2 \in \mathbb{R}$; se $k \neq -2$: l'unica soluzione $(5,-1,1)$.]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+3x_1-kx_2-kx_3&=8, \\
+x_1-2x_2-x_3&=0, \\
+-x_1+2x_2+3x_3&=2.
+\end{cases}
+$$
+\begin{flushright}[ Se $k \neq 6$: l'unica soluzione $\left(\frac{k+16}{6-k},\frac{5+k}{6-k},1\right)$; se $k=6$: nessuna soluzione. ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+2x_1+kx_2+x_3&=-1,\\
+-x_2+x_3&=-1,\\
+x_1+2x_2&=-1.\\
+\end{cases}
+$$
+\begin{flushright}[ Se $k=3$: nessuna soluzione; se $k \neq 3$: l'unica soluzione  $\left(-\frac{k+1}{k-3}, \frac{2}{k-3},\frac{5-k}{k-3}\right)$. ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+x_1+kx_2+x_3&=-1,\\
+x_1+2x_3&=-2,\\
+\phantom{x_1}-x_2+x_3&=-1.\\
+\end{cases}
+$$
+\begin{flushright}[ Se $k \neq 1$: l'unica soluzione $(0,0,-1)$; se $k=1$: $\infty^1$ soluzioni $(-2-2x_3, 1+x_3,x_3)$,  $x_3 \in \mathbb{R}$. ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+2x_1+kx_2+kx_3&=4,\\
+x_1+kx_2+2kx_3&=2,\\
+-x_1+kx_2+2x_3&=1.\\
+\end{cases}
+$$
+\begin{flushright}[ Se $k \neq 0,\frac12$: l'unica soluzione $\left(\frac{4-5k}{2-4k},\frac{-9}{2-4k},\frac{3}{2-4k}\right)$; se $k=\frac12$: nessuna soluzione; se $k=0$: $\infty^1$ soluzioni $\left(2,x_2,\frac32\right)$,  $x_2 \in \mathbb{R}$. ]\end{flushright}
+:::
+::: {.exercise}
+Al variare di $k \in \mathbb{R}$, calcolare le soluzioni del sistema lineare
+$$
+\begin{cases}
+k\,x_1-2x_2+(k-1)\,x_3&=0, \\
+x_1-x_2+2x_3&=0,\\
+x_1+x_2+x_3&=1.\\
+\end{cases}
+$$
+\begin{flushright}[ Se $k \neq -4$: il sistema ammette l'unica soluzione 
+$\left(\frac{-k+5}{k+4},\frac{k+1}{k+4},\frac{k-2}{k+4}\right)$; se $k=-4$ nessuna soluzione. ]\end{flushright}
+:::

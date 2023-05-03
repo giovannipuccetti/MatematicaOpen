@@ -1,0 +1,125 @@
+# Prefazione {-}
+
+\pagenumbering{roman}
+
+## Perché questo libro (non) è gratuito {-}
+
+Il movimento dell'accesso aperto [(*Open Access*)](https://it.wikipedia.org/wiki/Open_access) nasce dalla esigenza delle comunità scientifiche di rendere accessibili a chiunque ne abbia interesse le ricerche svolte nelle istituzioni pubbliche e finanziate con fondi pubblici.
+
+È un principio semplice, quello dell'accesso aperto,  ed è un modo per le istituzioni pubbliche di restituire alla società parte degli investimenti che sono stati fatti con il denaro di tutti.
+
+Che un professore universitario decida di scrivere un testo didattico dedicato ai suoi studenti in primo luogo, ma di fatto accessibile a qualsiasi studente della materia, è piuttosto inusuale. Le richieste ai professori universitari sono moltissime, ma fra queste non c'è quella di scrivere testi didattici. Scrivere un manuale didattico costa molto in termini di tempo dedicato alla progettazione, alla organizzazione dei materiali, alla elaborazione dei testi, alla costruzione degli esercizi, e rende davvero poco in termini di riconoscimento per la propria carriera.
+
+Che un professore universitario decida di scrivere un testo didattico abbracciando la filosofia dell'accesso aperto, che decida di renderlo disponibile non solo ai suoi studenti, ma agli studenti in generale, rappresenta al momento una eccezione.
+Il mio auspicio è che, nel prossimo futuro, possa diventare la regola.
+
+
+\begin{flushright}
+Paola Galimberti, \\
+Responsabile ufficio supporto politiche di Open Science, \\ 
+Università degli Studi di Milano
+\end{flushright}
+
+\pagebreak
+
+# Introduzione {-}
+
+Questo testo di Matematica è stato scritto per il corrispondente insegnamento da 80 ore del Corso di Laurea in Economia & Management dell'Università Statale di Milano.
+Le 80 ore si sviluppano su 4 lezioni settimanali in un arco di 10 settimane, così ogni capitolo è pensato per una settimana del corso, con 4 lezioni da 2 ore ciascuna.
+
+Non essendo un libro di Analisi, questo testo non contiene dimostrazioni, se non quelle che illustrino brevemente e con semplicità le condizioni che permettono la validità dei corrispondenti Teoremi. Inoltre, il libro contiene solo pochi esempi economici, essendo pensato come un testo
+propedeutico ad una successiva analisi economica da svilupparsi negli altri insegnamenti del piano di studi, e con un possibile utilizzo al di fuori di una facoltà economica.
+
+Il libro trae ispirazione da due principali referenze:
+
+- [1] Enrico Giusti (1988), *Analisi Matematica I (seconda edizione)*, Bollati Boringhieri;
+
+questo è il testo su cui mi sono formato durante i miei studi universitari e del quale ho sempre apprezzato il rigore matematico. Da questa referenza sono tratte in particolare la teoria degli infiniti e alcune dimostrazioni.
+
+- [2] Serse Lang (2002), *Short Calculus*, Springer;
+
+uno dei testi in cui l'autore è riuscito nella difficile operazione di coniugare semplicità
+e chiarezza espositiva con il rigore e formalismo propri della matematica (obiettivo ambizioso che spero anche
+il mio testo realizzi). Da questo secondo testo 
+ho preso (e questo penso differenzi questo libro dagli altri testi universitari di Matematica Generale) la definizione della funzione logaritmica (precedentemente così data in G.H. Hardy (1921), *A Course of Pure Mathematics*, Cambridge University Press) e i conseguenti teoremi.
+
+Elemento di novità di questo corso è l'inclusione delle definizioni
+formali di funzione e numero naturale (che, data la loro semplicità, ogni volta mi sorprendo di non trovare nei testi universitari). Queste, come tutta la teoria trattata nel seguito, si basano sulla definizione triviale di insieme data nel Capitolo \@ref(preliminari).
+
+Il libro è conciso, nel senso che viene trattato solo quanto effettivamente contenuto nel programma dell'insegnamento, e con un orientamento molto pratico teso alla risoluzione guidata di un gran numero di esercizi.
+A tal fine non vengono trattate se non marginalmente le successioni e le serie numeriche, e si definisce il calcolo degli integrali definiti senza dimostrare né costruire il teorema fondamentale del calcolo integrale.
+
+Prevalentemente nei capitoli riguardanti l'Ottimizzazione Bivariata e la Matematica Finanziaria, alcuni esempi fanno uso di un codice R, che viene interamente riportato. [**R**](https://www.r-project.org) è un software statistico ad accesso gratuito che per la sua immediatezza e semplicità d'uso è possibile imparare ad usare sin da subito.
+
+Il livello del corso è comparabile con quello dell'ultimo anno di un Liceo Scientifico, e per gli argomenti comuni potrebbe ben sostituire un libro di testo della scuola secondaria superiore.
+
+Il libro è corredato da alcune "pillole" di Storia della Matematica che vogliono illustrare come il sapere matematico sia stato costruito dall'umanità nel corso del tempo, e sia ancora in evoluzione.
+
+Tutti gli esercizi (trascritti da quelli inventati per le lezioni e gli esami nel corso degli ultimi anni) e le illustrazioni del testo sono originali.
+
+## Piattaforma Moodle {-}
+
+Affianca questo libro una piattaforma [**Moodle**](https://elearning.unimi.it/authentication/skin/labonline/login.aspx?c=true&url=https://labonline.ctu.unimi.it/login/index.php), accessibile gratuitamente dagli studenti dell'Università degli Studi di Milano,
+contenente vario materiale aggiuntivo tra cui:
+
+- test di esercitazioni suddivisi per argomento e settimana di corso;
+
+- video-lezioni dell'autore;
+
+- le note scritte in classe dall'autore;
+
+- temi di Esame aggiuntivi.
+
+## Prerequisiti e precorso MOOC {-}
+
+Alla fine del Capitolo \@ref(preliminari) sono elencate le tipologie di disequazioni la cui risoluzione 
+è ne-cessaria per il completamento del corso. 
+Allo scopo di colmare eventuali carenze su questi prerequisiti, 
+consigliamo di seguire il MOOC online gratuito [**"MATEMATICA DI BASE"**](https://lms.federica.eu/login/index.php) di *Federica Web Learning* che comprende video-lezioni ed esercitazioni organizzate per argomento. Come libro di testo di riferimento per questo MOOC, può essere preso qualsiasi testo di Matematica della scuola secondaria.
+
+
+## Ringraziamenti {-}
+
+Questo libro raccoglie i numerosi suggerimenti che gli studenti del mio corso mi hanno inviato durante gli anni in cui è stato tenuto presso il Polo delle Scienze Sociali dell'Università degli Studi di Milano. Durante questo periodo, sono riuscito a migliorare il mio insegnamento e gli appunti che adesso raccolgo in questo testo. 
+Se questo libro è stato possibile, è prima di tutto grazie a tutte le critiche costruttive che ho ricevuto e che spero di continuare a ricevere per le successive edizioni.
+
+Un particolare ringraziamento va: a Fabrizio Durante, che mi ha introdotto al pacchetto R [**bookdown**](https://bookdown.org) con il quale è stato scritto questo testo, e mi ha segnalato numerose correzioni durante la sua scrittura; a tutti coloro che hanno seguito il mio corso nell'autunno del 2022 e che hanno segnalato gli errori presenti in una bozza di questa edizione.
+
+Chiunque volesse segnalare un errore o inviare un suggerimento può scrivermi liberamente al mio indirizzo accademico.
+
+\begin{flushright}
+Milano, Febbraio 2023 \\ Giovanni Puccetti
+\end{flushright}
+
+
+> Giovanni Puccetti è Ordinario di Metodi Matematici dell'Economia e delle Scienze Attuariali e Finanziarie presso l'Università degli Studi di Milano. Si occupa principalmente di dipendenza stocastica, Quantitative Risk Management e Probabilità applicata. Le sue collaborazioni scientifiche hanno prodotto numerosi algoritmi per la risoluzione di problemi in ambito probabilistico, tra cui il *Rearrangement Algorithm*. Dal 2013 dirige la rivista Open Access internazionale *Dependence Modeling*.
+
+\pagebreak
+
+## Licenza {-}
+
+Questo libro nelle sue varie versioni (pdf, html, epub o copia fisica) è distribuito 
+con una licenza Creative Commons Attribuzione - Non commerciale - Condividi allo stesso modo 4.0 Internazionale.
+[**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.it).
+
+```{r echo=FALSE,fig.align = 'center',out.height='5%'}
+knitr::include_graphics("Figures/CCBY.png")
+```
+
+**Si può liberamente:**
+
+Condividere — riprodurre, distribuire, comunicare al pubblico, esporre in pubblico, rappresentare, eseguire e recitare questo materiale con qualsiasi mezzo e formato;
+
+Modificare — remixare, trasformare il materiale e basarsi su di esso per le proprie opere;
+
+**Alle seguenti condizioni**:
+
+*Attribuzione* — Si deve riconoscere una menzione di paternità adeguata, fornire un link alla licenza e indicare se sono state effettuate delle modifiche. Si può fare ciò in qualsiasi maniera ragionevole possibile, ma non con modalità tali da suggerire che il licenziante avalli qualcuno o il proprio utilizzo del materiale.
+
+*NonCommerciale* — Non si può utilizzare il materiale per scopi commerciali.
+
+*StessaLicenza* — Se si remixa, trasforma il materiale o ci si basa su di esso, si devono distribuire i propri contributi con la stessa licenza del materiale originario.
+
+La licenza completa è disponibile all'indirizzo [*https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode*](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode). 
+
+\begin{flushright}In copertina: progetto grafico a cura dell'autore.\end{flushright}

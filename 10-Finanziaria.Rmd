@@ -1,0 +1,1090 @@
+# Matematica finanziaria {#finanziaria}
+
+Questo capitolo introduce alcuni elementi di Matematica Finanziaria
+che permetteranno la valutazione di semplici operazioni finanziarie
+quale quella di mutuo a tasso fisso.
+
+Dato che verranno utilizzati codici scritti in R per la soluzione di alcuni esempi, in questo capitolo verrà utilizzato il punto come separatore decimale (secondo la notazione anglosassone largamente utilizzata nei codici di programmazione).
+
+## Operazioni finanziarie e TAN
+
+La Matematica Finanziaria si basa sul fatto che **importi monetari certi riferiti
+ad istan-ti temporali differenti hanno valori attuali differenti**, e si pone come obiettivo la valutazione di una qualsiasi *operazione finanziaria*.
+
+::: {.definition}
+Una **operazione finanziaria** è un flusso di importi monetari certi
+riferiti ad istanti temporali differenti. Una operazione finanziaria
+è rappresentabile tramite due vettori $\boldsymbol{x},\boldsymbol{t} \in \mathbb{R}^{n}$:
+
+- il vettore $\boldsymbol{x}=(x_1,x_2,\dots,x_n)$ rappresenta  $n$ importi monetari;
+
+- il vettore $\boldsymbol{t}=(t_1,t_2,\dots,t_n)$, con $t_1 < t_2 < \ldots < t_n$,
+rappresenta  le $n$ scadenze alle quali gli importi monetari saranno disponibili.
+:::
+
+Nel seguito rappresenteremo i due vettori su un segmento ordinato rappresentante il tempo.
+
+```{r echo=FALSE,fig.align = 'center',out.height='10%'}
+# Plot and first axis:
+N=3
+par(mfrow=c(1,1), pty="s")
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(x[1],x[2],"...",x[n])),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=c(expression(t[1],t[2],"...",t[n])),line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+#mtext("Label 1",1,line=1,at=0.2)
+```
+
+Si consideri una semplice operazione finanziaria come
+il deposito di una somma di importo $S_0>0$ al tempo $t=0$ (oggi) su un conto remunerato presso un istituto finanziario (nel seguito, più semplicemente,
+una banca). Dopo un anno ($t=1$), al netto della tassazione vigente e delle  eventuali spese  del conto che al momento *non vengono considerate*, la somma avrà maturato degli interessi e sarà pari ad $S_1 \geq 0$:
+
+```{r echo=FALSE,fig.align = 'center',out.height='10%'}
+# Plot and first axis:
+N=1
+par(mfrow=c(1,1), pty="s")
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(S[0],S[1])),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=0:N,line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+#mtext("Label 1",1,line=1,at=0.2)
+```
+Nel cosiddetto *regime della capitalizzazione composta degli interessi*, se la banca 
+remunera il conto con un **Tasso Annuo Nominale di interesse (TAN)** pari ad $i\in [-1,+\infty)$,
+si avrà che
+$$
+S_1=S_0\,(1+i).
+$$
+Invertendo la formula, si trova che il tasso di interesse offerto dalla banca è dato dalla differenza tra capitale finale 
+e capitale iniziale, diviso quest'ultimo:
+$$
+i=\frac{S_1-S_0}{S_0}.
+$$
+
+Storicamente, può essere considerato normale un regime di capitalizzazione
+con tassi di interesse positivi, ovvero una situazione in cui un capitale dato in prestito produce interessi, e quindi aumenta nel tempo.
+
+Non è da escludersi però un regime con tassi negativi (comunque con $i \geq -1$ dato che per $i=-1$ la somma $S_1$ si annulla), in cui il capitale depositato si deprezza. Questa è una situazione che ha caratterizzato molti Paesi ad esempio negli anni 2020-2022. A titolo di esempio, si può reperire il tasso [*EURIBOR*](https://mutuionline.24oreborsaonline.ilsole24ore.com/guide-mutui/euribor.asp), ovvero il tasso di interesse interbancario di riferimento diffuso giornalmente dalla Federazione Bancaria Europea come media ponderata dei tassi di interesse ai quali le Banche operanti nell'Unione Europea cedono i depositi in prestito. Questo è il tasso tipicamente utilizzato come parametro di indicizzazione dei mutui *a tasso variabile*. Alla data del 7/4/2022, l'EURIBOR a 12 mesi era pari a $i=-0,063\%$. 
+
+Ad un tasso di interesse nullo $i=0$, il tempo non altera il valore delle
+somme depositate, e diventa immediata la valutazione di una operazione finanziaria.
+
+Se la somma $S_0$ depositata al tempo $t=0$ viene tenuta sul conto per *due* anni,
+il capitale $S_2$ che verrà maturato in $t=2$ sarà pari a
+$$
+S_2=S_1\,(1+i)=S_0\,(1+i)^2.
+$$
+Dopo $n$ anni, in $t=n$, si avrà
+$$
+S_n=S_0\,(1+i)^n.
+$$
+
+Ad esempio, supponiamo di aver depositato la somma di $S_0=10000$ EUR su un conto remunerato al 
+$$
+\text{TAN}=2\%=\frac{2}{100}=0.02.
+$$
+Dopo un anno, la somma sarà pari a
+$$
+S_1=S_0\,(1+i)=10000(1.02)=10200 \text{ EUR}.
+$$
+In un anno quindi la somma depositata avrà maturato il $2\%$ di interessi, ovvero 200 EUR.
+Se lasciamo la somma depositata per un altro anno, si avrà
+$$
+S_2=S_0\,(1+i)^2=10000(1.02)^2=10404 \text{ EUR}.
+$$
+Nel secondo anno, la somma ha quindi maturato 204>200 EUR di interessi: infatti nel secondo anno non
+si è rivalutata solo la somma iniziale di 10000 EUR, ma anche gli interessi che essa ha maturato alla fine del primo anno.
+
+> Chi fosse in possesso di un conto corrente può reperire il TAN attualmente praticato dalla sua banca
+nel "Documento di Sintesi" riportante le condizioni economiche del conto.
+
+## Periodi di capitalizzazione e TAE
+
+Gli interessi su una somma possono maturare anche su un periodo differente, generalmente inferiore all'anno.
+Il periodo in cui matura l'interesse su una determinata somma è detto **periodo di capitalizzazione**.
+Se pensiamo ad un conto corrente, dove avvengono transazioni su base giornaliera, la banca potrebbe aver interesse a calcolare gli interessi ogni giorno; su un prestito che tipicamente viene rimborsato tramite rate mensili, è necessario avere un periodo di capitalizzazione mensile.
+
+Se si adotta un periodo di capitalizzazione inferiore all'anno, il TAN 
+viene diviso per il numero $m$ di periodi di capitalizzazione nell'anno per ottenere
+il tasso di interesse che matura sul singolo periodo.
+
+Formalmente, se su una somma $S_0$ depositata al tempo $t=0$ maturano interessi
+con un TAN pari a $i$, il capitale $S_1$ che verrà maturato al tempo $t=1$ 
+dopo $m$ periodi di capitalizzazione sarà pari a
+$$
+S_1=S_0\,\left(1+\frac{i}{m}\right)^m.
+$$
+
+::: {.example}
+In Tabella \@ref(tab:capit) si possono visualizzare le differenze tra gli interessi maturati a seconda dei diversi periodi di capitalizzazione per una stessa somma iniziale di $S=10000$ EUR su cui maturano interessi al TAN=$2\%$.
+
+\begin{table*}[h]
+\begin{center}
+\caption{Differenze tra gli interessi maturati per diversi periodi di capitalizzazione}
+(\#tab:capit)
+\bigskip
+\begin{tabular}{lcclcc}\toprule
+&\textbf{Capitalizzazione} & $\boldsymbol{m}$  & $\boldsymbol{S_1=S_0\,\left(1+\frac{i}{m}\right)^m}$ & $\boldsymbol{S_1}$ & \\ \midrule
+&Annuale & $1$  & $S_1=S_0\,\left(1+i\right)$ & $10200.00$ & \\ \midrule
+&Semestrale & $2$  & $S_1=S_0\,\left(1+\frac{i}{2}\right)^2$ & $10201.00$ &  \\ \midrule
+&Quadrimestrale & $3$  & $S_1=S_0\,\left(1+\frac{i}{3}\right)^3$ & $10201.34$ &  \\ \midrule
+&Trimestrale & $4$  & $S_1=S_0\,\left(1+\frac{i}{4}\right)^4$ & $10201.51$ &  \\ \midrule
+&Mensile & $12$  & $S_1=S_0\,\left(1+\frac{i}{12}\right)^{12}$ & $10201.84$ &  \\ \midrule
+&Giornaliera & $365$  & $S_1=S_0\,\left(1+\frac{i}{365}\right)^{365}$ & $10202.01$ &  \\ \bottomrule
+\end{tabular}
+\end{center}
+\end{table*}
+:::
+
+> Attenzione al fatto che un periodo di capitalizzazione **quadrimestrale** corrisponde ad una capitalizzazione
+degli interessi che avviene $\boldsymbol{m=3}$ volte in un anno; un periodo di capitalizzazione **trimestrale** corrisponde ad una capitalizzazione
+degli interessi che avviene $\boldsymbol{m=4}$ volte in un anno.
+
+Dalla Tabella \@ref(tab:capit), è evidente che, a parità di periodo di tempo (ad esempio un anno), maturano più interessi sulla stessa somma se si adotta un periodo di capitalizzazione più breve. Infatti, dopo ogni periodo di capitalizzazione maturano interessi non solo sulla somma iniziale, ma anche sugli interessi maturati nei periodi precedenti.
+
+Ne segue che, se si adotta un periodo di capitalizzazione inferiore all'anno,
+il tasso di interesse effettivamente realizzato, ovvero
+il **Tasso Annuo Effettivo di interesse (TAE)**
+risulterà maggiore del TAN. Se si considera una somma $S_0$ su cui maturano interessi per un anno in $m$ periodi di capitalizzazione si avrà che 
+$$
+\text{TAE}=\frac{S_0\,\left(1+\frac{i}{m}\right)^m-S_0}{S_0}=\left(1+\frac{i}{m}\right)^m-1=\left(1+\frac{\text{TAN}}{m}\right)^m-1.
+$$
+
+Se si utilizza una capitalizzazione annuale degli interessi ($m=1$), si avrà che $\text{TAE}=\text{TAN}$.
+Se si utilizza un periodo di capitalizzazione inferiore all'anno, si avrà che $\text{TAE}>\text{TAN}$, e il TAE sarà tanto maggiore quanto più frequente la capitalizzazione degli interessi;
+si veda la Tabella 10.4.
+
+\pagebreak
+
+::: {.example #esempiocap}
+Si consideri una somma iniziale di $S_0=50000$ EUR depositata ad un TAN pari a $i=5\%$.
+Quanto varrà la somma finale $S_n$ dopo $n=10$ anni con una capitalizzazione in $m$ periodi annuali?
+
+Con una capitalizzazione in $m$ periodi annuali, al termine di $n$ anni, gli interessi maturano $mn$ volte, quindi si ha
+$$
+S_n=S_0\,\left(1+\frac{i}{m}\right)^{mn}.
+$$
+```{r echo=TRUE}
+#Somma iniziale
+S_0=50000
+#Anni di deposito
+n=10
+#TAN 
+i=0.05
+#Formula per la somma finale
+S_n<- function(m) {
+  S_0*(1+i/m)^(m*n)
+}
+#Vettore periodi di capitalizzazione
+m=c(1,2,3,4,12,365)
+#Calcolo vettore somme finali 
+Sn=S_n(m)
+knitr::kable(
+  cbind(m,Sn), booktabs = TRUE,
+  caption = 'Soluzione Esempio 10.2',position = "!h",linesep = ""
+)
+```
+Più frequente la capitalizzazione degli interessi, maggiore la somma che si otterrà alla fine dello stesso periodo.
+::: 
+
+\pagebreak
+
+::: {.example}
+Quanti anni $n$ devono passare affinché una somma depositata ad un TAN pari a $i=5\%$ diventi $k\in\mathbb{N}$ volte
+la somma iniziale in un regime di capitalizzazione degli interessi in $m$ periodi all'anno?
+
+Ricordando la formula precedente con $S_n=kS_0$ :
+$$
+k\,S_0=S_0\,\left(1+\frac{i}{m}\right)^{mn},
+$$
+si deve risolvere per il numero di anni $n$. Semplificando il capitale iniziale, che non ha nessuna influenza,
+e applicando la funzione logaritmo a sinistra e a destra del segno di uguaglianza, si ottiene
+$$
+\log k = \log \left(1+\frac{i}{m}\right)^{mn}= mn \log \left(1+\frac{i}{m}\right),
+$$
+da cui
+$$
+n=\frac{\log k}{m\log \left(1+\frac{i}{m}\right)}.
+$$
+
+```{r echo=TRUE}
+#TAN 
+i=0.05
+#Incremento del capitale iniziale (k=2 -> raddoppio)
+k=2
+#Formula per il numero di anni necessari
+n<- function(m) {
+  log(k)/m/log(1+i/m)
+}
+#Vettore periodi di capitalizzazione
+m=c(1,2,3,4,12,365)
+#Calcolo vettore anni necessari 
+anni=n(m)
+knitr::kable(
+  cbind(m,anni), booktabs = TRUE,
+  caption = 'Soluzione Esempio 10.3',position = "!h",linesep = ""
+)
+```
+
+Più frequente la capitalizzazione degli interessi, minore il numero di anni che servono per raddoppiare il capitale.
+::: 
+
+\newpage
+
+Per la valutazione degli strumenti esistenti sul mercato finanziario, in cui ordini e prezzi si muovono su intervalli di tempo infinitesimali, è necessario introdurre una capitalizzazione degli interessi *continua*, dove gli interessi su
+un capitale maturano istante dopo istante. 
+Il tasso di interesse effettivo in capitalizzazione continua $\text{TAE}_c$ è definito come il limite del tasso di interesse della capitalizzazione su $m$ periodi annuali, per $m \to +\infty$. 
+
+Assumendo un TAN pari ad $i>0$, ponendo $r=\frac{m}{i}$, e ricordando il limite notevole \@ref(eq:limitee) nel Capitolo \@ref(derivate), ovvero
+\begin{equation}
+\lim_{x \to +\infty} \left( 1 + \frac{1}{x} \right)^x=e,
+(\#eq:limitee2)
+\end{equation}
+si calcola che
+$$
+\text{TAE}_c=\lim_{m \to +\infty} \left(1+\frac{i}{m}\right)^m-1=\lim_{r \to +\infty} \left(1+\frac{1}{r}\right)^{ri}-1=\lim_{r \to +\infty} \left(\left(1+\frac{1}{r}\right)^{r}\right)^i-1=e^i-1.
+$$
+
+> Sebbene le tavole logaritmiche in base $e$ fossero già state pubblicate da John Napier (Nepero) nel 1614, il matematico svizzero Jakob Bernoulli riscoprì il numero $e$ nel secolo successivo come valore del limite \@ref(eq:limitee2) proprio studiando la capitalizzazione continua degli interessi. In effetti, la costante $e$ potrebbe essere definita proprio come valore di questo limite, una volta dimostrata l'esistenza del limite stesso. 
+
+La seguente Tabella illustra le differenze tra i vari TAE risultanti dalle varie capitalizzazioni degli interessi, a parità di TAN.
+```{r echo=TRUE}
+#TAN 
+i=0.02
+#Formula per il calcolo del TAE
+t<- function(m) {
+  (1+i/m)^m-1
+}
+#Vettore periodi di capitalizzazione
+m=c(1,2,3,4,12,365)
+#Calcolo vettore TAE
+TAE=t(m)
+#Vettore periodi di capitalizzazione incluso la continua
+m=c(m,Inf)
+#Formula per il calcolo del TAE in capitalizzazione continua
+TAE=c(TAE,exp(i)-1)
+knitr::kable(
+  cbind(m,TAE), booktabs = TRUE,
+  caption = 'Tabella dei vari TAE corrispondenti ad un TAN=0.02',
+  position = "!h",linesep = ""
+)
+```
+
+::: {.example}
+Quanti anni $n$ devono passare affinché una somma depositata ad un TAN pari a $i=5\%$ diventi $k$ volte
+la somma iniziale in un regime di capitalizzazione continua degli interessi?
+
+Ricordando la formula del TAE in capitalizzazione continua, si ha che il capitale ottenibile dopo $n$ anni è pari a:
+$$
+S_n=S_0\,(1+ \text{TAE}_c)^n=S_0\,(e^i)^n=S_0\,e^{in}.
+$$
+Se deve essere $S_n=kS_0$, si avrà:
+$$
+kS_0=S_0\,e^{in}\quad \Rightarrow \quad n= \frac{\log k}{i}. 
+$$
+\pagebreak
+
+Per il raddoppio del capitale occorreranno quindi un numero di anni pari a
+```{r echo=TRUE}
+#TAN 
+i=0.05
+#Incremento del capitale iniziale (k=2 -> raddoppio)
+k=2
+#Formula per il numero di anni necessari
+log(k)/i
+```
+Si confronti questo valore con quelli ottenuti in Tabella 10.3.
+::: 
+
+
+## Valutazione di una operazione finanziaria
+
+Valutare una operazione finanziaria significa calcolare il suo **valore attuale**,
+ovvero il valore che i suoi importi
+monetari (riferiti ad istanti temporali differenti) hanno al  momento della valutazione (che tipicamente
+avviene al tempo $t=0$).
+
+È quindi necessario saper valutare il valore attuale $x$ di una somma $S_n$ esigibile tra $n$ anni.
+
+```{r echo=FALSE,fig.align = 'center',out.height='10%'}
+# Plot and first axis:
+N=1
+par(mfrow=c(1,1), pty="s")
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(x,S[n])),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=c(0,"n"),line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+#mtext("Label 1",1,line=1,at=0.2)
+```
+In un regime di capitalizzazione annuale degli interessi al TAN pari a $i$, una somma $x$ disponibile oggi, tra $n$ anni avrebbe valore
+$$
+S_n=x\,(1+i)^n.
+$$
+Si ha dunque che una somma $S_n$ disponibile tra $n$ anni, oggi ha valore attuale
+$$
+x=S_n(1+i)^{-n}.
+$$
+La somma disponibile nel futuro viene **scontata**, ovvero moltiplicata per il 
+**tasso di sconto** $(1+i)^{-n}<1$. In un regime di tassi positivi,
+una somma disponibile nel futuro ha oggi un valore inferiore, perché se fosse
+disponibile da subito maturerebbe interessi.
+
+Ragionando analogamente, il valore attuale $x$ di una somma disponibile tra $n$ anni,
+in un regime di capitalizzazione in $m$ periodi all'anno, è
+$$
+x=S_n\left(1+\frac{i}{m}\right)^{-mn};
+$$
+in un regime di capitalizzazione continua degli interessi, è
+$$
+x=S_n\, e^{-in}.
+$$
+
+
+In generale, per valutare una qualsiasi operazione finanziaria in qualsiasi istante di tempo,
+si sommano i valori attuali di tutti i suoi singoli importi, ricordando che:
+
+- se si valuta oggi un importo disponibile nel passato, su di esso sono maturati interessi:
+il capitale comprensivo degli interessi disponibile oggi è detto *montante*;
+
+- se si valuta oggi un importo disponibile nel futuro, lo si dovrà scontare per ottenerne
+il suo valore attuale.
+
+::: {.example}
+Calcolare il valore attuale di $50000$ EUR esigibili dopo 10 anni
+al TAN=2\% nei vari regimi di capitalizzazione degli interessi.
+
+La somma $S_n=50000$ disponibile nel futuro deve essere scontata secondo le formule precedenti.
+Più frequente la capitalizzazione degli interessi, minore il valore attuale della somma (si veda la Tabella 10.5).
+
+```{r echo=TRUE}
+#Somma finale
+S=50000
+#Anni di deposito
+n=10
+#TAN 
+i=0.02
+#Formula per la somma iniziale in capitalizzazione composta
+S_0<- function(m) {
+  S*(1+i/m)^(-m*n)
+}
+#Vettore periodi di capitalizzazione
+m=c(1,2,3,4,12,365)
+#Calcolo vettore somme iniziali 
+S0=S_0(m)
+#Vettore periodi di capitalizzazione incluso la continua
+m=c(m,Inf)
+#Formula per la somma iniziale in capitalizzazione continua
+S0=c(S0,S*exp(-i*n))
+knitr::kable(
+  cbind(m,S0), booktabs = TRUE,
+  caption = 'Soluzione Esempio 10.5',position = "!h",linesep = ""
+)
+```
+::: 
+
+## La successione geometrica
+
+Al fine del calcolo del valore attuale di operazioni finanziarie più complesse, 
+è necessario introdurre
+qualche elemento di teoria sulle successioni numeriche.
+
+::: {.definition}
+Si dice **successione** una qualsiasi funzione reale $a:\mathbb{N} \to \mathbb{R}$
+avente come dominio l'insieme dei numeri naturali. Una successione
+si può indicare anche con la sequenza dei suoi **elementi** $a_1,a_2,\dots,a_n,\dots$,
+dove $a_i=a(i)$, o più sinteticamente come $(a_n),n \in \mathbb{N}$.
+:::
+
+Si dice successione (o progressione) **geometrica** di ragione $k \in (0,+\infty)$ una
+successione in cui il rapporto tra un elemento della successione ed il precedente è costante
+e pari a $k$. Si ha cioè che
+$$
+a_n=k^{n-1},\, n \in \mathbb{N}.
+$$
+Ad esempio, la successione geometrica di ragione $k=\frac12$ è:
+$$
+1,\quad\frac12,\quad\frac14,\quad\frac18,\quad\frac{1}{16},\quad\frac{1}{32},\quad\dots;
+$$
+quella di ragione $k=2$ è:
+$$
+1,\quad 2,\quad 4,\quad 8,\quad 16,\quad 32,\quad \dots;
+$$
+quella di ragione $k=1$ è
+$$
+1,\quad 1,\quad 1,\quad 1,\quad 1,\quad 1,\quad \dots\,.
+$$
+Ci interessa calcolare la somma dei primi $n$ elementi di una successione geometrica.
+
+::: {.definition}
+Data una successione $(a_n),n \in \mathbb{N}$, 
+si dice successione delle sue somme parziali la successione
+che al termine $n$-mo ha la somma dei primi $n$ elementi di $(a_n)$, ovvero
+$$
+s_n=\sum_{i=1}^n a_i.
+$$
+:::
+
+Ad esempio, per una successione geometrica di ragione $k=\frac12$ si ottiene:
+$$
+s_6=1+\frac12+\frac14+\frac18+\frac{1}{16}+\frac{1}{32}=\frac{32+16+8+4+2+1}{32}=\frac{63}{32}.
+$$
+
+Il caso della successione di ragione $k=1$ è immediato ($s_n=n$) e quindi possiamo escluderlo dal nostro calcolo.
+In generale, per una ragione $k \in (0,+\infty)\setminus\{1\}$, si ha che
+\begin{align*}
+s_n&=1+k+k^2+\dots+k^{n-1},\\
+s_{n+1}&=1+k+k^2+\dots+k^{n-1}+k^n,
+\end{align*}
+ovvero
+\begin{align*}
+s_{n+1}&=s_n+k^n,\\
+s_{n+1}&=ks_n+1.
+\end{align*}
+Da queste ultime due equazioni si ricava che 
+\begin{equation}
+s_n+k^n=ks_n+1 \quad \Rightarrow \quad(k^n-1) = (k-1) s_n \quad \Rightarrow \quad \boldsymbol{s_n=\frac{k^n-1}{k-1}}.
+(\#eq:geom)
+\end{equation}
+Ad esempio, per una successione geometrica di ragione $\frac12$ si ottiene:
+$$
+s_6=\frac{\frac12^6-1}{-\frac12}=2\left(1-\frac12^6\right)=2\left(1-\frac{1}{64} \right) =2\,\frac{63}{64}=\frac{63}{32}.
+$$
+
+## L'operazione finanziaria di mutuo a tasso fisso 
+
+In questa sezione ci occuperemo della valutazione dell'operazione finanziaria
+di *Mutuo a tasso fisso e rate costanti posticipate* (detto anche ammortamento *francese*).
+
+Una operazione finanziaria di mutuo prevede il rimborso di un capitale 
+$C$ erogato dalla banca all'istante attuale ($t=0$), attraverso una successione finita di rate di importo
+costante $R$ per $n$ periodi, tipicamente mesi. La prima rata viene pagata un periodo dopo ($t=1$) 
+l'erogazione del capitale (ed è quindi detta *posticipata*).
+Si noti che i differenti importi hanno segno opposto, in quanto il capitale $C$ viene incassato (segno positivo), e poi rimborsato attraverso il pagamento delle rate di importo $R$ (aventi quindi segno negativo):
+
+```{r echo=FALSE,fig.align = 'center',out.height='10%'}
+# Plot and first axis:
+N=4
+par(mfrow=c(1,1), pty="s")
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(C,-R,-R,"...",-R)),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=c(expression(0,1,2,"...",n)),line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+#mtext("Label 1",1,line=1,at=0.2)
+```
+
+Al fine della sua valutazione, supponiamo dapprima che le rate vengano pagate ogni anno, e che la banca conceda il prestito al tasso TAN pari ad $i$.
+
+Per valutare l'operazione finanziaria all'istante $t=0$, quando viene erogato il capitale e stipulato il contratto
+tra la banca e il contraente, è quindi necessario calcolare il valore attuale delle rate che verranno pagate nel futuro.
+Il valore attuale $V$ delle rate future è dato dalla somma dei valori attuali delle singole rate, ovvero
+$$
+V=R\,(1+i)^{-1}+R\,(1+i)^{-2}+\dots+R\,(1+i)^{-n}= R((1+i)^{-1}+(1+i)^{-2}+\dots+(1+i)^{-n}).
+$$
+Si osserva che il valore attuale $V$ delle rate future è pari al valore delle somme parziali $s_{n+1}$ di una successione geometrica di ragione $k=(1+i)^{-1}$, al quale viene sottratto il primo elemento a causa della posticipazione. Ricordando la formula \@ref(eq:geom) per $s_n$, si ottiene quindi 
+\begin{align}
+V=R\,(s_{n+1}-1)&=R\left(\frac{k^{n+1}-1}{k-1}-1\right) \notag \\ \notag \\&=R\left(\frac{k^{n+1}-1-k+1}{k-1}\right)=R\left(\frac{k^{n+1}-k}{k-1}\right).
+(\#eq:valorerate)
+\end{align}
+
+Il valore attuale dell'operazione di mutuo è quindi dato dal capitale erogato (che viene incassato) meno 
+il valore attuale delle rate future (che verranno pagate):
+$$
+C-V=C-R\left(\frac{k^{n+1}-k}{k-1}\right).
+$$
+Al momento della stipula ($t=0$), la banca impone che questo valore sia nullo,
+ovvero che
+$$
+C=R\left(\frac{k^{n+1}-k}{k-1}\right).
+$$
+
+::: {.definition}
+Una operazione finanziaria si dice **equa** se il valore attuale del suo flusso di importi è nullo.
+:::
+
+> L'equità di una operazione finanziaria è una definizione puramente matematica, e non deve essere
+confusa con la sua *convenienza*, come vedremo nella sezione seguente. La banca infatti richiede
+l'equità del mutuo dopo aver fissato il tasso di interesse.
+
+\pagebreak
+
+Sostituendo il valore di $k=(1+i)^{-1}=\frac{1}{1+i}$ e sviluppando i calcoli dalla precedente equazione, si ottiene
+(per $i \neq 0$):
+
+\begin{align}
+C=R\left(\frac{k^{n+1}-k}{k-1}\right)&=R\,k\left(\frac{k^{n}-1}{k-1}\right) =\frac{R}{(1+i)}\left(\frac{(1+i)^{-n}-1}{\frac{1}{1+i}-1}\right) \notag
+\\ \notag
+\\&=\frac{R}{(1+i)}\left(\frac{(1+i)^{-n}-1}{\frac{1-1-i}{1+i}}\right) =\frac{R}{(1+i)}\left(\frac{(1+i)^{-n}-1}{\frac{-i}{1+i}}\right)\notag
+\\ \notag
+\\&=\frac{R}{(1+i)}\left((1+i)^{-n}-1\right)\frac{1+i}{-i}=\frac{R}{i}\left(1-(1+i)^{-n}\right).
+(\#eq:equita)
+\end{align}
+
+Si ha dunque che il valore della rata è pari a 
+$$
+\boldsymbol{R=\frac{C \, i}{ \left(1-(1+i)^{-n}\right)}}.
+$$
+Per un tasso nullo $i=0$ (in cui la formula delle somme parziali non è applicabile poiché corrisponde ad una ragione $k=1$), 
+basta osservare che $V=nR$ e che quindi $R=\frac{C}{n}$.
+Del resto, si può verificare (applicando de l'Hôpital) che
+$$
+\lim_{i \to 0^+} \frac{C \, i}{ \left(1-(1+i)^{-n}\right)}=\lim_{i \to 0^+} \frac{C}{n \left((1+i)^{-n-1}\right)}=\frac{C}{n}.
+$$
+
+Se si considera una capitalizzazione degli interessi mensile anziché annuale (come tipicamente avviene nella pratica), la formula rimarrà esattamente la stessa considerando che il rimborso avverrà in $12\,n$ rate e il tasso sarà frazionato per 12 mesi.
+Si ha quindi
+$$
+\boldsymbol{R=\frac{C \, \frac{i}{12}}{ \left(1-(1+\frac{i}{12})^{-12n}\right)}}.
+$$
+
+::: {.example #mutuo}
+Consideriamo un esempio realistico di un mutuo per l'acquisto dell'abitazione principale.
+Supponiamo cioè che si richieda la somma di 300000 EUR da restituirsi in 240 rate mensili (20 anni) di importo costante. La banca propone un TAN del 4.41%.
+
+Il contratto di mutuo deve includere anche il cosiddetto **piano di ammortamento**,
+ovvero un rendiconto completo dell'operazione finanziaria nel tempo, dalla
+stipula alla sua conclusione.
+
+\pagebreak
+
+Il piano di ammortamento scompone la $i$-ma rata $R_i=R$, $1 \leq i \leq n$, in due componenti, 
+$$
+R_i=\text{QI}_i+\text{QC}_i:
+$$
+
+- la **quota interessi** $\text{QI}_i$, che rimborsa alla banca gli interessi maturati sul
+debito residuo nel mese precedente al pagamento della rata;
+
+- la **quota capitale** $\text{QC}_i$, che rimborsa parte del debito residuo.
+
+La quota interessi sarà massima all'inizio dell'ammortamento,
+quando il debito residuo è pari al capitale erogato, per poi decrescere con il diminuire del debito residuo; in un mutuo a rate costanti, la quota capitale 
+andrà quindi ad aumentare sino a raggiungere il suo massimo alla scadenza del contratto, in cui salderà totalmente il capitale residuo estinguendo il debito.
+
+```{r echo=TRUE}
+#Capitale erogato 
+C=300000
+#Durata in anni
+n=20
+#Periodi annuali di capitalizzazione (m=12 -> cap. mensile)
+m=12
+#TAN 
+i=0.0441
+#Calcolo della rata costante
+R=C*i/m*(1-(1+i/m)^{-m*n})^(-1)
+#Vettori piano ammortamento
+DR=seq(0,0,length=n*m)
+QI=seq(0,0,length=n*m)
+QC=seq(0,0,length=n*m)
+R=seq(R,R,length=n*m)
+#Primo periodo t=1
+#Calcolo della quota interessi
+QI[1]=C*i/m
+#Calcolo della quota capitale
+QC[1]=R[1]-QI[1]
+#Calcolo del debito residuo
+DR[1]=C-QC[1]
+#Altri periodi t>1
+for (j in 2:(n*m))
+{
+#Calcolo della quota interessi
+QI[j]=DR[j-1]*i/m
+#Calcolo della quota capitale
+QC[j]=R[j]-QI[j]
+#Calcolo del debito residuo
+DR[j]=DR[j-1]-QC[j]
+}
+#Approssimazione a due cifre decimali
+R=round(R,2)
+QI=round(QI,2)
+QC=round(QC,2)
+DR=round(DR,2)
+#Vettore numero rate
+N=1:(m*n)
+knitr::kable(
+ cbind(N,R,QI,QC,DR)[c(1:5,((m*n)-4):(m*n)),], booktabs = TRUE,
+  caption = 'Piano di ammortamento, Esempio 10.6 
+  (prime e ultime cinque rate)',position = "!h"
+)
+```
+:::
+
+::: {.remark}
+Osserviamo i seguenti punti fondamentali sull'operazione di mutuo:
+
+- difficilmente la  stipula del contratto avverrà esattamente 1 mese prima del pagamento della prima rata. Di solito essa
+avviene qualche giorno prima ($t=-g<0$). In questo caso, la prima rata del mutuo verrà aumentata degli interessi 
+maturati in questo periodo, detto di *pre-ammortamento*;
+
+- nell'operazione di mutuo, e più in generale in tutte le operazioni trattate in questo capitolo, si presuppone la
+certezza della disponibilità degli importi ad una determinata scadenza. 
+Il piano di ammortamento non considera ad esempio l'eventuale decesso del contraente (nel qual caso il prestito viene trasmesso
+agli eredi) o la sua insolvenza, a copertura della quale la banca iscrive una ipoteca sull'immobile 
+(il mutuo viene detto infatti *mutuo ipotecario*);
+
+- in un mutuo a tasso fisso, il TAN è stabilito alla stipula e rimane fisso per tutta la sua durata.
+Prima della stipula, però, nel tempo in cui la banca istruisce la pratica e richiede informazioni sullo
+stato patrimoniale del futuro contraente e sullo stato dell'immobile oggetto della compravendita, il tasso può 
+essere indicizzato. Nei mutui a tasso fisso generalmente si utilizza il tasso
+[*EURIRS*](https://mutuionline.24oreborsaonline.ilsole24ore.com/guide-mutui/irs.asp)
+della scadenza corrispondente alla durata del mutuo, maggiorato di uno *spread* deciso dalla banca.
+Nei documenti precontrattuali inviati dalla banca alla richiesta di mutuo, è riportato il giorno
+in cui il tasso EURIRS verrà rilevato, e di conseguenza verrà fissato il TAN dell'operazione
+(che, per contratto, non potrà comunque essere negativo);
+
+- il mutuo potrà essere estinto in qualsiasi momento prima della sua scadenza naturale, versando alla banca
+il debito residuo rimanente, come da piano di ammortamento, dopo il pagamento di una rata.
+:::
+
+## Il Tasso Interno di Rendimento (TIR)
+
+Una volta compreso come valutare una operazione finanziaria,
+è necessario capire quale tra due o più operazioni finanziarie offerte
+sul mercato sia la più conveniente. Se siamo a conoscenza del tasso di interesse praticato, questo è un compito molto semplice.
+
+::: {.example}
+Un primo conto deposito offre un TAN $i_1=7\%$
+con capitalizzazione *annuale* degli interessi; il secondo conto deposito offre un TAN
+$i_2=6.9\%$ in capitalizzazione *continua* degli interessi. 
+Quale è il più conveniente se abbiamo intenzione di lasciare depositato un capitale $S_0=10000$ EUR per due anni?
+
+Per confrontare la convenienza di due operazioni finanziarie, non si può fare riferimento al TAN, che non tiene conto della frequenza con cui viene rivalutato il capitale, bensì al TAE.
+
+Nel primo caso, il TAE è pari al TAN perché si offre una capitalizzazione annuale. Alla fine dei due anni si avranno a disposizione
+$$
+S_1=10000\,(1.07)^2=11449 \text{ EUR}.
+$$
+
+Nel secondo caso si ha che $\text{TAE}_c=e^i-1=e^{0.069}-1\simeq 7.14 \%$,
+con un capitale finale di
+$$
+S_1'=10000\,e^{2\times0.069}=11479.76 \text{ EUR}.
+$$
+:::
+
+Una valutazione di convenienza finanziaria diviene più complessa se si conoscono il flusso di importi e le scadenze dell'operazione finanziaria, ma non il tasso praticato dalla banca.
+
+::: {.example}
+Un consulente offre due differenti prodotti di investimento. Nel primo, 
+investendo 10000 EUR, si ha diritto ad un capitale di 12500 EUR alla fine del secondo anno. Nel secondo, investendo la stessa somma, si maturano due cedole da
+6000 EUR alla fine del primo e alla fine del secondo anno. Quale tra i due prodotti è il più conveniente?
+
+Rappresentiamo le due operazioni finanziarie:
+
+```{r echo=FALSE,fig.align = 'center',out.height='10%'}
+# Plot and first axis:
+N=2
+par(mfrow=c(1,2), pty="s")
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(-10000," ",12500)),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=0:N,line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(-10000,6000,6000)),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=0:N,line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+#mtext("Label 1",1,line=1,at=0.2)
+```
+Per confrontarle efficacemente, dovremmo conoscere il tasso praticato dalla 
+banca, ovvero il *tasso interno di rendimento dell'operazione*.
+
+::: {.definition}
+Si dice **Tasso Interno di Rendimento (TIR)** di una operazione finanziaria quel tasso di interesse (se esiste) che la rende equa (ovvero che rende nullo il suo valore attuale).
+:::
+
+Calcolare il TIR è quindi una sorta di operazione inversa rispetto a quanto fatto sino a questo momento. Conoscendo gli importi e le scadenze dell'operazione finanziaria, si impone la sua equità e si risolve l'equazione così ottenuta rispetto alla variabile tasso di interesse.
+
+Assumendo un TAN pari ad $x$, il primo prodotto di investimento proposto è equo se si ha:
+$$
+-10000+12500\,(1+x)^{-2}=0,
+$$
+da cui si ricava che
+$$
+(1+x)^{2}=\frac{125}{100}=\frac{5}{4} \quad \Rightarrow \quad x=\frac{\sqrt5}{2}-1\simeq 11.80 \%.
+$$
+Quest'ultimo valore è il TIR: quel tasso che l'istituto finanziario ha implicitamente imposto per rendere il prodotto offerto equo.
+
+Analogamente, il secondo prodotto di investimento proposto è equo se si ha:
+$$
+-10000+6000\,(1+x)^{-1}+6000\,(1+x)^{-2}=0.
+$$
+Sostituendo la nuova variabile $y=(1+x)^{-1}$ e dividendo per 2000, si ottiene
+l'equazione di secondo grado
+$$
+3y^2+3y-5=0,
+$$
+che ha come soluzioni
+$$
+y_{1,2}=\frac{-3 \pm \sqrt{69}}{6}.
+$$
+Dato che $y=\frac{1}{1+x}$ è una variabile positiva, la soluzione negativa dell'equazione non è ammissibile. Si ha dunque che
+$$
+y=\frac{1}{(1+x)}=\frac{-3 + \sqrt{69}}{6} \quad \Rightarrow \quad x= \frac{1}{y}-1=
+\left(\frac{6}{-3 + \sqrt{69}}\right)-1 \simeq 13.07\%.
+$$
+Dato che stiamo dando in prestito una somma, è più conveniente scegliere il secondo prodotto di investimento che garantisce un tasso di rendimento più alto.
+::: 
+
+> Se stiamo prestando denaro, è più conveniente ottenere un TIR più alto.
+Viceversa, se stiamo prendendo in prestito una somma, privilegeremo un TIR più basso.
+
+Se il TIR viene calcolato su base annuale (come nell'esempio precedente),
+esso può essere definito (sempre che esista) come quel TAN che rende l'operazione stessa equa.
+
+## Il Tasso Annuale Effettivo Globale (TAEG)
+
+Sebbene il TIR permetta un primo confronto tra due operazioni finanziarie,
+si deve consi-derare che: se esso è calcolato su base annuale allora non tiene 
+conto della frequenza di capitalizzazione; in ogni operazione finanziaria sono previsti degli oneri/tasse e delle spese aggiuntive, che devono essere incluse nel suo flusso di importi.
+
+Il Tasso Annuale Effettivo di interesse di una operazione finanziaria in cui si considerano anche le spese, è detto **Tasso Annuale Effettivo Globale (TAEG)** e costituisce l'indice definitivo attraverso il quale possono essere confrontate due o più operazioni finanziarie.
+
+Per illustrare il calcolo del TAEG, riprendiamo l'Esempio \@ref(exm:mutuo) considerando anche le spese connesse all'operazione di mutuo.
+
+::: {.example}
+Per l'acquisto dell'abitazione principale,
+si richiede la somma di 300000 EUR da restituirsi in 240 rate mensili (20 anni) di importo costante. La banca propone un **TAN del 4.41%**.
+
+Per arrivare ad una valutazione definitiva dell'operazione, sono da considerarsi le spese ad essa connesse.
+Alla stipula di un contratto di mutuo, non viene erogato il capitale richiesto, ma da esso vengono sottratte:
+
+- l'imposta sostitutiva di legge che, per l'acquisto dell'abitazione principale è pari allo 0.25\% del capitale richiesto. Nel caso in questione, essa ammonta a 750 EUR;
+
+- le spese di istruttoria per la pratica, che nel caso in questione ammontano a
+750 EUR;
+
+- le spese per la perizia dell'immobile, che nel caso in questione ammontano a 
+250 EUR;
+
+- le spese per l'incasso della rata, da sommarsi periodicamente alla rata pagata, che in questo caso sono nulle;
+
+- le spese per l'invio di comunicazioni online/cartacee, che in questo caso sono nulle.
+
+Tutte le condizioni economiche del contratto di mutuo, piano di ammortamento compreso, devono essere comunicate prima della stipula tramite il *Prospetto Informativo Europeo Standardizzato (PIES)*.
+
+Nell'esempio in questione, a parità dell'importo della rata in precedenza calcolato, il capitale erogato dalla banca risulta quindi essere pari a 
+$$
+200000-750-750-250=198250 \text{ EUR}.
+$$
+L'operazione di fatto non avviene quindi al TAN proposto, ma si deve calcolare il TIR $x$ dell'operazione, comprendendo le spese.
+Considerando le spese totali $S$ sostenute dal cliente, si dovrà risolvere l'equazione \@ref(eq:equita) che determina l'equità del mutuo. Considerando il frazionamento mensile del tasso, si dovrà quindi risolvere in $x$ l'equazione
+$$
+C-S=\frac{12\,R}{x}\left(1-\left(1+\frac{x}{12}\right)^{-240}\right).
+$$
+Si osservi che il tasso $x$ che risolve questa equazione è comunque un
+tasso *annuale*, seppure comprensivo di spese. Per calcolare il TAEG
+lo si deve rendere effettivo sulla base della capitalizzazione (mensile)
+utilizzata. Numericamente, si ottiene quindi un **TAEG** del
+```{r echo=TRUE}
+#Capitale erogato 
+C=300000
+#Spese sostenute alla stipula
+S=1750
+#Durata in anni
+n=20
+#Periodi annuali di capitalizzazione (m=12 -> cap. mensile)
+m=12
+#TAN 
+i=0.0441
+#Calcolo della rata costante
+R=C*i/m*(1-(1+i/m)^{-m*n})^(-1)
+#Equazione: Capitale - Spese - Valore Attuale Rate 
+f=function(x) C-S-m*R/x*(1-(1+x/m)^(-m*n))
+#TIR= cerca soluzione Equazione=0 tra -1 e 1
+TIR=as.numeric(uniroot(f,c(-1,1))[1])
+#Calcolo del TAEG
+(1+TIR/m)^m-1
+```
+:::
+
+Il TAEG risulta quindi l'indicatore da utilizzare per comparare due mutui o più in generale due operazioni finanziarie. Per legge, nella pubblicità di un finanziamento e comunque nel documento che ne riassume le condizioni economiche devono essere indicati sia il TAN che il TAEG.
+
+Abbiamo studiato in dettaglio l'operazione di mutuo ipotecario con ammortamento a rate costanti posticipate e tasso fisso, ma esistono altre tipologie di finanziamento dell'acquisto di un immobile tra cui una tra le più utilizzate è quella 
+dell'ammortamento a rate posticipate *a tasso variabile*.
+Nel mutuo a tasso variabile, il tasso è indicizzato ad un indice europeo dei tassi, tipicamente l'[*EURIBOR*](https://mutuionline.24oreborsaonline.ilsole24ore.com/guide-mutui/euribor.asp) a 3 mesi, maggiorato di uno *spread* deciso dalla banca. Al momento della stipula, il piano di ammortamento non potrà essere considerato definitivo poiché periodicamente il tasso di interesse verrà aggiornato, e con esso l'importo delle rate future.
+
+La scelta tra un mutuo a tasso fisso o variabile è condizionata da molteplici fattori, anche soggettivi, primi tra i quali l'avversione al rischio del contraente (nel mutuo a tasso fisso l'importo di tutte le rate è predeterminato e non soggetto ad incertezza) e la previsione economica sull'andamento dei tassi nel futuro. Se si prevede un rialzo dei tassi di interesse, è preferibile stipulare un mutuo a tasso fisso; viceversa, se si prevede una decrescita dei tassi, diverrà più conveniente (ovvero con una rata più bassa) un mutuo a tasso variabile.
+
+Un'altra operazione finanziaria con le medesime caratteristiche matematiche del mutuo è quella del finanziamento per il credito al consumo. Essa è
+usualmente soggetta ad un tasso fisso, più alto rispetto a quello di un mutuo data la natura più rischiosa (per la banca) del prestito e l'assenza di un immobile a garanzia.
+
+::: {.example}
+Per l'acquisto di una nuova autovettura, si richiede un finanziamento
+di $C=20000$ EUR. L'istituto finanziario
+offre il rimborso in 96 rate (8 anni) mensili di importo $R=278.20$ EUR dichiarando
+un **TAN del 7,55%** e un **TAEG del 7,81%**.
+
+Numericamente, si può controllare l'equità dell'operazione finanziaria e l'assenza di spese accessorie:
+la differenza tra TAN e TAEG in questo caso è esclusivamente dovuta alla capitalizzazione mensile degli interessi.
+
+```{r echo=TRUE}
+#Capitale erogato 
+C=20000
+#Durata in anni
+n=8
+#Periodi annuali di capitalizzazione (m=12 -> cap. mensile)
+m=12
+#TAN 
+i=0.0755
+#Calcolo della rata costante
+R=C*i/m*(1-(1+i/m)^{-m*n})^(-1)
+R
+#Valore attuale dell'operazione = Capitale - Valore Attuale Rate 
+Val=function(x) C-m*R/x*(1-(1+x/m)^(-m*n))
+#Valore al TAN proposto
+round(Val(i),2)
+#Calcolo TAEG (in questo caso uguale al TAE)
+(1+i/m)^m-1
+```
+:::
+
+## La serie geometrica
+
+Concludiamo il capitolo studiando un interessante collegamento tra
+le somme parziali di una successione e l'integrale definito.
+
+::: {.definition}
+Data una successione $(a_n),n \in \mathbb{N},$
+si dice **serie** di termine $a_n$ la somma di tutti gli infiniti elementi
+della successione, che si indica con
+$$
+\sum_{n=1}^{+\infty} a_n.
+$$
+:::
+
+> Formalmente, il simbolo $\sum_{n=1}^{+\infty} a_n$ indica il limite della successione delle somme parziali
+di una successione, ovvero 
+$$
+\sum_{n=1}^{+\infty} a_n=\lim_{n \to +\infty} \, \sum_{i=1}^{n} a_i.
+$$
+Non avendo trattato in questo testo i limiti di successione, dobbiamo preferire una definizione triviale
+di serie.
+
+Il concetto di serie pone una interessante domanda, ovvero se
+la somma delle infinite quantità $\sum_{n=1}^{+\infty} a_n$, che assumeremo positive,
+$a_n > 0$, sia o meno infinita.
+
+Se si considera la successione geometrica di ragione $k>0$, ovvero $a_n=k^{n-1}$,
+è immediato verificare che, per $k \geq 1$, la risposta è affermativa.
+Per $k=1$, la successione delle somme parziali è pari a $s_n=n$, quindi tenderà a
+divenire arbitrariamente grande al crescere di $n \in \mathbb{N}$. Lo stesso si può
+naturalmente affermare per una ragione $k \geq 1$ che produce termini della successione
+ancora più grandi. Si ha dunque che 
+$$
+\sum_{n=1}^{+\infty} k^{n-1} =+\infty, \quad \text{ per } \quad k \geq 1.
+$$
+Consideriamo adesso le somme parziali della successione geometrica di ragione $\frac12$:
+$$
+1+\frac12+\frac14+\frac18+\frac{1}{16}+\frac{1}{32}+\dots
+$$
+Dall'immagine seguente, è immediato stabilire che
+$$
+\sum_{n=1}^{+\infty}\, \left(\,\frac12\,\right)^{n-1} = 2.
+$$
+```{r echo=FALSE,fig.align = 'center',out.height='20%'}
+knitr::include_graphics("Figures/Geometric.png")
+```
+
+Dalla \@ref(eq:geom), la successione geometrica delle somme parziali è pari a
+$$
+s_n=\frac{k^n-1}{k-1}.
+$$
+Per $0<k<1$, all'aumentare di $n$, il termine $k^n$ tenderà ad annullarsi e si avrà
+$$
+\sum_{n=1}^{+\infty}\, k^{n-1} =\frac{1}{1-k}, \quad \text{ per } \quad k \in (0,1).
+$$
+
+Si conclude che alcune serie a termini positivi sono pari ad un numero finito (convergono), altre sono pari a $+\infty$ (divergono).
+Interessante è il caso della cosiddetta successione armonica $a_n=\frac1n$,
+$$
+1,\quad \frac12,\quad \frac13,\quad\frac14,\quad\frac15,\quad\frac16,\quad\dots\,.
+$$
+Se si considera la corrispondente *serie armonica* si ottiene
+$$
+1+\frac12+\frac13+\frac14+\frac15+\frac16+\frac17+\frac18+\dots
+$$
+I primi due termini ($1$ e $\frac12$) sono entrambi maggiori o uguali a $\frac12$. La somma del terzo e del quarto termine ($\frac13 + \frac14 \geq \frac14 + \frac14=\frac12$) è anch'essa maggiore di $\frac12$. La somma dei termini dal quinto all'ottavo
+($\frac15 + \frac16 + \frac17 + \frac18 \geq \frac18 + \frac18 + \frac18 +\frac18 =\frac12$) è anch'essa maggiore di $\frac12$.
+Si può continuare così, ottenendo che la serie armonica è maggiore della somma di un numero infinito di $\frac12$,
+ed è quindi pari a
+$$
+\sum_{n=1}^{+\infty}\, \frac1n =+\infty.
+$$
+Del resto, avevamo calcolato nel Capitolo \@ref(integrali) che 
+$$
+\int_1^{+\infty} \frac{1}{x}\, dx =+\infty.
+$$
+Questo integrale è l'area della regione di piano delimitata dall'asse delle ascisse e il grafico di $\frac1x$, a destra del punto $x=1$. Come si vede in figura, essa è più piccola dell'area della somma degli infiniti rettangoli aventi base unitaria e altezza pari a $\frac{1}{n}, n \in \mathbb{N}$. 
+
+```{r echo=FALSE,fig.align = 'center',out.height='30%'}
+knitr::include_graphics("Figures/Armonic.png")
+```
+
+Ne risulta quindi
+$$
+\sum_{n=1}^{+\infty} \, \frac1n \geq \int_1^{+\infty} \frac{1}{x} \,dx =+\infty.
+$$
+Analogamente a quanto visto con gli integrali, si può dimostrare che il fatto che una serie converga o diverga
+dipende dalla **velocità con cui i suoi termini tendono ad annullarsi** per $n \to +\infty$. Una serie con termini $a_n > 0$ che si annullano più velocemente di $\frac{1}{n}$ (come ad esempio $a_n=\frac{1}{n^2}$) sarà finita, altrimenti (ad esempio $a_n=\frac{1}{\sqrt{n}}$) infinita.
+
+::: {.example}
+Attraverso i risultati esposti in precedenza, si può calcolare il valore attuale di una successione *infinita* di rate costanti.
+ Si consideri perciò che una cosiddetta rendita *perpetua* di importo costante $R$ venga pagata annualmente a partire dalla fine del prossimo anno, e per sempre (supponendo cioè che la rendita venga trasferita agli eredi in caso di decesso del beneficiario).
+
+```{r echo=FALSE,fig.align = 'center',out.height='10%'}
+# Plot and first axis:
+N=4
+par(mfrow=c(1,1), pty="s")
+y=seq(0,0,length=N)
+plot(1:N,y,xlim=c(0,N),ylim=c(10,10),xlab='',ylab='',axes=FALSE)
+axis(1,0:N,labels=c(expression(0,R,R,R,"...")),line=1,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0),col = NA)
+axis(1,0:N,labels=c(expression(0,1,2,3,"...")),line=3,cex.axis=0.8,tck=-0.02, mgp = c(3, 0.5, 0))
+#mtext("Label 1",1,line=1,at=0.2)
+```
+Se la valutazione avviene ad un TAN pari a $i>0$, e ricordando la formula \@ref(eq:valorerate), il valore attuale della rendita è finito e pari a
+$$
+V=R\,\left(\lim_{n \to +\infty} s_{n+1} -1 \right)=R\,\left(\frac{1}{1-\frac{1}{i+1}}-1\right)= \frac{R}{i}.
+$$
+Ad esempio, una rendita annuale perpetua di 1000 EUR vale oggi 50000 EUR al TAN $i= 2\%$.
+Nel caso in cui una rendita di questo tipo non venga trasferita, ma si interrompa al decesso del beneficiario, si dovranno considerare le probabilità di sopravvivenza dello stesso. In questo ultimo caso
+si deve utilizzare una valutazione non solo finanziaria, ma anche *attuariale*.
+:::
+
+## Esercizi
+
+::: {.exercise}
+Un capitale $C$ è investito in un conto deposito al tasso annuo nominale $i$ con capitalizzazione degli interessi trimestrale. Quale è il saldo $S$ del conto dopo 3 anni?
+\begin{flushright}[ $S=C(1+\frac{i}{4})^{12}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Si scriva il valore attuale di 100 EUR che riceverò tra un anno con un TAN del $2\%$ in capitalizzazione quadrimestrale degli interessi.
+\begin{flushright}[ $100\left(1+\frac{0.02}{3}\right)^{-3}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Si determini il valore attuale di 500 EUR avuti in prestito 6 mesi fa e di
+1000 EUR che riceverò tra 1 anno. Si consideri un tasso di capitalizzazione
+annuale del 2\%.
+\begin{flushright}[ $500(1,02)^{1/2}+1000/1,02=1485.367$ ]\end{flushright}
+:::
+
+::: {.exercise}
+La mia banca mi concede di rateizzare l'acquisto odierno di un computer da 1000 EUR, 
+con due rate da 300 e una rata finale da 400 EUR da pagarsi ognuna alla fine dei prossimi tre
+quadrimestri. A quanto ammonta il TIR annuale di questa operazione finanziaria?
+\begin{flushright}[ $\text{Essendo il valore nominale totale delle rate uguale al valore del prestito,
+il TIR è nullo.}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Una azienda prende a prestito un capitale $M$ da una banca all'inizio di un certo anno,
+e deve restituirlo con rate costanti $R$ alla fine di ognuno dei prossimi 10 semestri al TAN $i$.
+Si scriva la formula per determinare l'importo della rata $R$.
+\begin{flushright}[ $R=\frac{i/2\; M}{(1-(1+i/2)^{-10})}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Esprimere il TAN in funzione del TAE in regime di capitalizzazione quadrimestrale.
+\begin{flushright}[ $\text{TAN}=3[(1+\text{TAE})^{1/3}-1]$ ]\end{flushright}
+:::
+\pagebreak
+::: {.exercise}
+Calcolare il tempo $t$ in anni che deve passare affinché un capitale investito al tasso di interesse del $2\%$ in capitalizzazione trimestrale degli interessi triplichi. 
+\begin{flushright}[ $t=\frac{\log 3}{4\log (1+0.02/4)}=\frac{\log 3}{4\log (1.005)}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Scrivere la relazione che lega la rata \emph{quadrimestrale} $R$ di un mutuo a tasso fisso e rata costante ottenuto 
+per il prestito di un capitale $C$ da rimborsare in $n$ anni al tasso annuo nominale di interesse $i$. 
+
+\begin{flushright}[ $R=C\frac{i}{3}\left[ 1-\left( 1+\frac{i}{3}   \right)^{-3n}  \right]^{-1}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Scrivere l'equazione che esprime il numero di anni $n$ che devono passare affinché
+un capitale $C$ investito in capitalizzazione composta semestrale al tasso annuo nominale $i$ raddoppi.
+\begin{flushright}[ $n=\frac{\log 2}{2 \log(1+i/2)}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Scrivere la relazione che lega un tasso annuo nominale di interesse $i$ al suo corrispondente tasso annuo
+effettivo di interesse $x$ ottenuto con capitalizzazione quadrimestrale.
+\begin{flushright}[ $x=(1+i/3)^3-1$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Calcolare il tempo $t$ in anni che deve passare affinché
+un capitale investito in capitalizzazione composta al tasso di interesse nominale dell'1\%
+raddoppi.
+\begin{flushright}[ $t=\frac{\log 2}{\log 1.01}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Calcolare il tempo $t$ che deve passare affinché
+un capitale investito in capitalizzazione continua al tasso di interesse nominale del 4\%
+triplichi.
+\begin{flushright}[ $t=\frac{\log 3}{0.04}$ ]\end{flushright}
+:::
+
+
+::: {.exercise}
+Al tasso annuo nominale $i$, si scriva il valore attuale $V$ di un prestito 
+$M$ ricevuto due anni fa e due rate $R$ da pagare tra 6 e 12 mesi. 
+\begin{flushright}[ $V=M(1+i)^2+R(1+i)^{-1/2}+R(1+i)^{-1}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+A fronte di un prestito di 100 euro in data odierna, un mio amico mi restituirà
+120 euro tra 36 mesi. Calcolare il Tasso Interno di Rendimento $i$ dell'operazione finanziaria
+esprimendolo come tasso annuo di interesse.
+\begin{flushright}[ $i=\frac{6}{5}^{1/3}-1$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Quale tasso annuo di crescita $i$ è necessario affinché il PIL
+di un paese diventi 2 volte quello che vale oggi in 20 anni?
+\begin{flushright}[ $i=2^{\frac{1}{20}}-1$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Scrivere la relazione che lega la rata \emph{trimestrale} $R$ di un mutuo a tasso fisso e rata costante ottenuto 
+per il prestito di un capitale $C$ da rimborsare in $n$ trimestri al tasso annuo nominale di interesse $i$. 
+\begin{flushright}[ $R=C\frac{i}{4}\left[ 1-\left( 1+\frac{i}{4}   \right)^{-n}  \right]^{-1}$ ]\end{flushright}
+:::
+
+
+::: {.exercise}
+Scrivere la relazione che lega il TAN in regime di capitalizzazione trimestrale al TAE.
+\begin{flushright}[ $\text{TAN}=4[(\text{TAE}+1)^{1/4}-1]$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Una banca mi concede oggi un prestito di 250 EUR, a
+fronte di un rimborso di 400 EUR da effettuarsi tra un anno e di un rimborso di 200 EUR
+da effettuarsi tra due anni.
+Quale è il TIR dell'operazione?
+\begin{flushright}[ TIR=$100\%$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Una azienda prende a prestito un capitale $M$ da una banca all'inizio di un certo anno,
+e deve restituirlo con rate costanti $R$ alla fine di ognuno dei prossimi 15 mesi al TAN $i$.
+Si scriva la formula per determinare l'importo della rata $R$.
+\begin{flushright}[ $R=\frac{i/12\; M}{(1-(1+i/12)^{-15})}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Scrivere l'equazione che esprime il numero di trimestri $n$ che devono passare affinché
+un capitale $C$ investito in capitalizzazione composta trimestrale al tasso annuo nominale $i$ quadruplichi.
+\begin{flushright}[ $n=\frac{\log 4}{\log(1+i/4)}$ ]\end{flushright}
+:::
+
+::: {.exercise}
+Scrivere l'equazione che esprime il tempo $t$ che deve passare affinché
+un capitale investito in capitalizzazione continua al tasso di interesse nominale del 6\%
+raddoppi.
+\begin{flushright}[ $t=\frac{\log 2}{0.06}$ ]\end{flushright}
+:::
+
+
+

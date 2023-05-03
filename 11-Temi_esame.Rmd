@@ -1,0 +1,269 @@
+# Temi di esame completi {#temi}
+
+In questo capitolo conclusivo, si trovano alcuni temi d'esame somministrati
+negli scorsi anni accademici. Per ogni esercizio è indicato il punteggio in caso di risoluzione completa e la soluzione. Il tempo a disposizione per la risoluzione di ogni tema è di 90 minuti.
+
+## Tema d'esame 1
+
+\begin{enumerate}
+\item \pt{10} Si studi la funzione $f: D_f \to \mathbb{R},$ definita da
+$$
+f(x)= \frac{3-x}{(x-2)^3},
+$$
+in particolare ricavandone:
+\begin{enumerate}
+\item \pt{1} il dominio naturale $D_f$;
+\begin{flushright}\solu{ \mathbb{R}\setminus \{2\} }\end{flushright}
+\item \pt{2} i limiti agli estremi del suo dominio;
+\begin{flushright}\solu{\lim_{x\to \pm \infty} f(x)=0,\lim_{x\to 2^-} f(x)=-\infty,\lim_{x\to 2^+} f(x)=+\infty}\end{flushright}
+\item \pt{2} la derivata prima $f'(x)$ e per quale insieme di punti si ha $f'(x) \geq 0$;
+\begin{flushright}\solu{f'(x)=  \frac{2x-7}{(x-2)^4} \geq 0,  \text{ per $x \in \left[\frac{7}{2},+\infty\right)$}}\end{flushright}
+\item \pt{3} la derivata seconda $f''(x)$ e per quale insieme di punti si ha $f''(x) \geq 0$;
+\begin{flushright}\solu{f''(x)=-\frac{6(x-4)}{(x-2)^5} \geq 0, \text{ per $x \in (2,4]$}}\end{flushright}
+\item \pt{2} il suo grafico approssimativo con l'indicazione di eventuali massimi, minimi relativi, punti di flesso e asintoti.
+```{r echo=FALSE,fig.align = 'center',out.height='60%'}
+#par(mfrow=c(1,1), pty="s")
+xm=-5
+xM=5
+ym=-5
+yM=5
+curve((3-x)/(x-2)^3, from=xm, to=2, xlim=c(xm,xM), ylim=c(ym,yM), cex.lab=0.75, bty='l', axes=FALSE, xlab='',ylab='', lwd = 2, mgp = c(0, 0.1, 0),font.main=1,asp=1)
+curve((3-x)/(x-2)^3, from=2, to=xM,xlim=c(xm,xM), ylim=c(ym,yM),bty='l', lwd = 2,lty=1, add = TRUE)
+curve(0*x^1, from=xm-1, to=xM+1,xlim=c(xm,xM+1), ylim=c(ym,yM),bty='l', lwd = 1,lty=2, add = TRUE)
+abline(v=2,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+#abline(h=0,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+points(4, -1/8, cex = 1.25, pch=8)
+points(7/2, -4/27, cex = 1.2)
+axis(1,pos=0,at=xm:xM,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.1, 0))
+axis(2,pos=0,at=ym:yM,cex.axis=0.8,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.2, 0),las = 1)
+#grid(nx=NULL,ny=NULL,col = "lightgray", lty = "dotted",lwd = 1)
+legend("topright", legend=c(expression(frac((3-x),(x-2)^3)),"As.Ve. x=2","As.Or. y=0"), lty=c(1,2,2),lwd=c(2,1,1), bty='n', cex=0.8)
+```
+\end{enumerate}
+
+
+\item \pt{8} Si calcoli
+$$
+\int \frac{-x^2}{\sqrt{(x^3-4)^3}}  \;dx .
+$$ 
+\begin{flushright}\solu{\frac{2}{3\sqrt{(x^3-4)}}+C}\end{flushright}
+
+\item  \pt{5} Indicare se la funzione $$f(x,y)=x^2+x-2y+4,\; \text{ sull'insieme } \;\{(x,y) \in \mathbb{R}^2: 2x^2+y=2\},$$
+ammette massimo/minimo assoluto ed eventualmente indicarne i valori e dove essi sono raggiunti.
+\begin{flushright}\solu{\max f \text{ non esiste e } \min f = f(-\frac{1}{10}, \frac{99}{50})= -\frac{1}{20}}\end{flushright}
+
+\item  \pt{5} 
+Al variare di $k \in \mathbb{R}$ si determinino le soluzioni del sistema lineare
+$$
+\begin{cases}
+k\,x_1-2x_2+(k-1)\,x_3&=0, \\
+x_1-x_2+2x_3&=0,\\
+x_1+x_2+x_3&=1.\\
+\end{cases}
+$$
+\begin{flushright}\solu{\text{Se $k \neq -4$ l'unica soluzione 
+$\left(\frac{-k+5}{k+4},\frac{k+1}{k+4},\frac{k-2}{k+4}\right)$; se $k=-4$ nessuna soluzione}}\end{flushright}
+
+\item  \pt{2} \small
+Una banca mi concede oggi un prestito di 250 EUR, a
+fronte di un rimborso di 400 EUR da effettuarsi tra un anno e di un rimborso di 200 EUR
+da effettuarsi tra due anni.
+Quale è il TIR dell'operazione?
+\begin{flushright}\solu{\text{TIR}=100\%}\end{flushright}
+\end{enumerate}
+
+## Tema d'esame 2
+
+\begin{enumerate}
+\item \pt{10}
+Si studi la funzione $f: D_f \to \mathbb{R},$ definita da
+$$
+f(x)= \frac{x^2-x+1}{x-1},
+$$
+in particolare ricavandone:
+\begin{enumerate}
+\item \pt{1} il dominio naturale $D_f$;
+\begin{flushright}\solu{\mathbb{R} \setminus \{1\}}\end{flushright}
+\item \pt{2} i limiti agli estremi del suo dominio;
+\begin{flushright}[$\lim_{x\to -\infty} f(x)=\lim_{x\to 1^-} f(x)=-\infty, \lim_{x\to 1^+} f(x)=\lim_{x\to +\infty} f(x)=+\infty$]\end{flushright}
+\item \pt{2} la derivata prima $f'(x)$ e per quale insieme di punti si ha $f'(x) \geq 0$;
+\begin{flushright}\solu{f'(x)=  \frac{x(x-2)}{(x-1)^2} \geq 0,  \text{ per $x \in (-\infty,0] \cup [2,+\infty)$}}\end{flushright}
+\item \pt{3} la derivata seconda $f''(x)$ e per quale insieme di punti si ha $f''(x) \geq 0$;
+\begin{flushright}\solu{f''(x)=\frac{2}{(x-1)^3} \geq 0,  \text{ per $x \in (1,+\infty)$}}\end{flushright}
+\item \pt{2} il suo grafico approssimativo con l'indicazione di eventuali massimi, minimi relativi, punti di flesso e asintoti orizzontali, verticali, obliqui. 
+```{r echo=FALSE,fig.align = 'center',out.height='100%'}
+#par(mfrow=c(1,1), pty="s")
+xm=-5
+xM=5
+ym=-6
+yM=6
+curve((x^2-x+1)/(x-1), from=xm, to=1, xlim=c(xm,xM), ylim=c(ym,yM), cex.lab=0.75, bty='l', axes=FALSE, xlab='',ylab='', lwd = 2, mgp = c(0, 0.1, 0),font.main=1,asp=1)
+curve((x^2-x+1)/(x-1), from=1, to=xM,xlim=c(xm,xM), ylim=c(ym,yM),bty='l', lwd = 2,lty=1, add = TRUE)
+curve(1*x^1, from=xm-1, to=xM+1,xlim=c(xm,xM+1), ylim=c(ym,yM),bty='l', lwd = 1,lty=1, add = TRUE)
+abline(v=1,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+#abline(h=0,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+#points(4, -1/8, cex = 1.25, pch=8)
+points(0, -1, cex = 1.2)
+points(2, 3, cex = 1.2)
+axis(1,pos=0,at=xm:xM,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.1, 0))
+axis(2,pos=0,at=ym:yM,cex.axis=0.8,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.2, 0),las = 1)
+#grid(nx=NULL,ny=NULL,col = "lightgray", lty = "dotted",lwd = 1)
+legend("topright", legend=c(expression(frac((x^2-x+1),(x-1))),"As.Ob. y=x","As.Ve. x=1"), lty=c(1,1,2),lwd=c(2,1,1), bty='n', cex=0.8)
+```
+\end{enumerate}
+
+
+\item \pt{8}  Si calcoli
+$$
+\int \frac{3}{x^2+x-2}  \;dx .
+$$ 
+\begin{flushright}\solu{\log\vert x-1 \vert - \log \vert x+2 \vert+C}\end{flushright}
+
+\item  \pt{6} Nel caso esistano, trovare punti di massimo e minimo assoluti della funzione
+$$f(x,y)=-x^2+2y^3-y+x-\sqrt{2},\; \text{ sull'insieme }\; \{0\leq x \leq 1,0\leq y \leq 1\}.$$ 
+
+\begin{flushright}\solu{\text{p. min in $(x,y)=\left(1,\frac{\sqrt{6}}{6}\right)$ e $(x,y)=\left(0,\frac{\sqrt{6}}{6}\right)$; p. max in $(x,y)=\left(\frac12,1\right)$}}\end{flushright}
+
+\item  \pt{4} 
+Si determinino i valori del parametro $k \in \mathbb{R}$ per i quali la seguente matrice è invertibile:
+$$
+A=\left(\begin{array}{ccc}1 & 2 & 3 \\3 & 2 & 1 \\k & 0 & k\end{array}\right).
+$$
+\begin{flushright}\solu{\text{det}(A)=-8k\neq 0 \Rightarrow k \neq 0}\end{flushright}
+
+\item  \pt{2} 
+Scrivere l'equazione che esprime il numero di anni $n$ che devono passare affinché un capitale $C$ investito in
+capitalizzazione composta semestrale al tasso annuo nominale i raddoppi.
+\begin{flushright}\solu{n=\frac{\log 2}{2 \log(1+i/2)}}\end{flushright}
+\end{enumerate}
+
+## Tema d'esame 3
+
+\begin{enumerate}
+\item \pt{10}
+Si studi la funzione $f: D_f \to \mathbb{R},$ definita da
+$$
+f(x)= \log \left( \frac{2x-1}{x^2} \right),
+$$
+in particolare ricavandone:
+\begin{enumerate}
+\item \pt{1} il dominio naturale $D_f$;
+\begin{flushright}\solu{\left(\frac12,+\infty\right)}\end{flushright}
+\item \pt{2} i limiti agli estremi del suo dominio;
+\begin{flushright}\solu{\lim_{x\to \frac12^+} f(x)= \lim_{x\to +\infty} f(x)=-\infty}\end{flushright}
+\item \pt{2} la derivata prima $f'(x)$ e per quale insieme di punti si ha $f'(x) \geq 0$;
+\begin{flushright}\solu{f'(x)=  \frac{2-2x}{x(2x-1)} \geq 0,  \text{ per $x \in \left(\frac12,1\right] $}}\end{flushright}
+\item \pt{3} la derivata seconda $f''(x)$ e per quale insieme di punti si ha $f''(x) \geq 0$;
+\begin{flushright}\solu{f''(x)=\frac{4x^2-8x+2}{x^2(2x-1)^2} \geq 0,  \text{ per $x \in \left[\frac{2+\sqrt{2}}{2},+\infty \right)$}}\end{flushright}
+\item \pt{2} il suo grafico approssimativo con l'indicazione di eventuali massimi, minimi relativi, punti di flesso e asintoti orizzontali, verticali, obliqui. 
+```{r echo=FALSE,fig.align = 'center',out.height='100%'}
+#par(mfrow=c(1,1), pty="s")
+xm=0
+xM=5
+ym=-5
+yM=1
+curve(log((2*x-1)/x^2), from=1/2+0.001, to=xM, xlim=c(xm,xM), ylim=c(ym,yM), cex.lab=0.75, bty='l', axes=FALSE, xlab='',ylab='', lwd = 2, mgp = c(0, 0.1, 0),font.main=1,asp=1)
+abline(v=1/2,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+#abline(h=0,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+points((2+sqrt(2))/2, -0.1882264, cex = 1.25, pch=8)
+points(1, 0, cex = 1.2, pch=16)
+axis(1,pos=0,at=xm:xM,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.1, 0))
+axis(2,pos=0,at=ym:yM,cex.axis=0.8,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.2, 0),las = 1)
+#grid(nx=NULL,ny=NULL,col = "lightgray", lty = "dotted",lwd = 1)
+legend("topright", legend=c(expression(log(frac(2*x-1,x^2))),"As.Ve. x=1/2+"), lty=c(1,2),lwd=c(2,1), bty='n', cex=0.8)
+```
+\end{enumerate}
+
+\item \pt{8}  Si calcoli
+$$
+\int x^2 \log(x^4)  \;dx .
+$$ 
+\begin{flushright}\solu{\frac{4}{9}x^3(3\log(x)-1)+C=\frac{1}{9}x^3(\log(x^{12})-4)+C}\end{flushright}
+
+\item  \pt{6} Classificare tutti i punti stazionari della funzione $f:\mathbb{R}^2 \to \mathbb{R}$, definita da
+$$f(x,y)=x\,(1-x^2-y^2),$$ 
+indicando se essi sono punti di minimo/massimo relativi/assoluti o punti di sella.
+\begin{flushright}\solu{\text{$\left(-\frac{\sqrt{3}}{3},0\right)$ (p. min. rel.), $\left(\frac{\sqrt3}{3},0\right)$ (p. max. rel), $(0,1),(0,-1)$ (p. sella)}}\end{flushright}
+\begin{flushright}\solu{\lim_{y \to +\infty} f(1,y)=-\infty,\lim_{x \to -\infty,} f(x,x)=+\infty, \text{quindi $f$ non ha min/max ass.}}\end{flushright}
+
+\item  \pt{4} 
+Si dica se la seguente matrice è invertibile e, nel caso, si calcoli 
+la sua inversa:
+$$
+A=\left(\begin{array}{ccc}1 & 2 & 3 \\3 & 2 & 1 \\2 & 1 & 3\end{array}\right).
+$$
+\begin{flushright}\solu{A^{-1}=\left(\begin{array}{ccc}-\frac{5}{12} & \frac{1}{4} & \frac{1}{3}\\\\\frac{7}{12} & \frac{1}{4} & -\frac{2}{3} \\\\\frac{1}{12} & -\frac{1}{4} & \frac{1}{3}\end{array}\right)}\end{flushright}
+
+\item  \pt{2} 
+A fronte di un prestito di 100 euro in data odierna, un mio amico mi restituirà
+110 euro tra 24 mesi. Calcolare il Tasso Interno di Rendimento $i$ dell'operazione finanziaria
+esprimendolo come tasso annuo di interesse.
+\begin{flushright}\solu{i=\sqrt{\frac{11}{10}}-1}\end{flushright}
+\end{enumerate}
+
+## Tema d'esame 4
+
+\begin{enumerate}
+\item \pt{10}
+Si studi la funzione $f: D_f \to \mathbb{R},$ definita da
+$$
+f(x)= e^{ \frac{x-1}{x-2}},
+$$
+in particolare ricavandone:
+\begin{enumerate}
+\item \pt{1} il dominio naturale $D_f$;
+\begin{flushright}\solu{\mathbb{R}\setminus \{2\}}\end{flushright}
+\item \pt{2} i limiti agli estremi del suo dominio;
+\begin{flushright}\solu{\lim_{x\to \pm\infty} f(x)=e, \lim_{x\to 2^-} f(x)=0, \lim_{x\to 2^+} f(x)=+\infty}\end{flushright}
+\item \pt{2} la derivata prima $f'(x)$ e per quale insieme di punti si ha $f'(x) \geq 0$;
+\begin{flushright}\solu{f'(x)= -\frac{1}{(x-2)^2}e^{ \frac{x-1}{x-2}} \geq 0,  \text{ mai in $D_f $}}\end{flushright}
+\item \pt{3} la derivata seconda $f''(x)$ e per quale insieme di punti si ha $f''(x) \geq 0$;
+\begin{flushright}\solu{f''(x)=\frac{(2x-3)}{(x-2)^4}e^{ \frac{x-1}{x-2}} \geq 0,  \text{ per $x \in [ \frac32 , 2) \cup (2, +\infty)$}}\end{flushright}
+\item \pt{2} il suo grafico approssimativo con l'indicazione di eventuali massimi, minimi relativi, punti di flesso e asintoti orizzontali, verticali, obliqui. 
+\end{enumerate}
+```{r echo=FALSE,fig.align = 'center',out.height='100%'}
+#par(mfrow=c(1,1), pty="s")
+xm=-5
+xM=7
+ym=-1
+yM=6
+curve(exp((x-1)/(x-2)), from=xm, to=2, xlim=c(xm,xM), ylim=c(ym,yM), cex.lab=0.75, bty='l', axes=FALSE, xlab='',ylab='', lwd = 2, mgp = c(0, 0.1, 0),font.main=1,asp=1)
+curve(exp((x-1)/(x-2)), from=2.001, to=xM,xlim=c(xm,xM), ylim=c(ym,yM),bty='l', lwd = 2,lty=1, add = TRUE)
+curve(exp(1)*x^0, from=xm, to=xM,xlim=c(xm,xM), ylim=c(ym,yM),bty='l', lwd = 1,lty=2, add = TRUE)
+abline(v=2,lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+#abline(h=exp(1),lty =2,lwd = 1, xlim=c(xm,xM), ylim=c(ym,yM))
+points(3/2, exp(-1), cex = 1.25, pch=8)
+#points(1, 0, cex = 1.2, pch=16)
+axis(1,pos=0,at=xm:xM,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.1, 0))
+axis(2,pos=0,at=ym:yM,cex.axis=0.8,cex.axis=0.8,tck=-0.01, mgp = c(0, 0.2, 0),las = 1)
+#grid(nx=NULL,ny=NULL,col = "lightgray", lty = "dotted",lwd = 1)
+legend("topleft", legend=c(expression(exp(frac(x-1,x-2))),"As.Ve. x=2+","As.Or. y=e"), lty=c(1,2,2),lwd=c(2,1,1), bty='n', cex=0.8)
+```
+
+
+\item \pt{8}  Si calcoli
+$$
+\int \frac{8x+1}{4x+3}  \;dx.
+$$ 
+\begin{flushright}\solu{2x-\frac54\log \vert 4x+3\vert+C}\end{flushright}
+
+\item  \pt{6} Nel caso esistano, si trovino i punti di massimo/minimo assoluto della funzione
+$$
+f(x,y)=x-3y,\quad \text{ sull'insieme }\quad A=\{x^2+y^2=1\}.
+$$
+\begin{flushright}\solu{\text{p. min in  $(x,y)=\left(-\frac{1}{\sqrt{10}},\frac{3}{\sqrt{10}}\right)$,  p. max. in $(x,y)=\left(\frac{1}{\sqrt{10}},\frac{-3}{\sqrt{10}}\right)$}}\end{flushright}
+
+\item  \pt{4} 
+Calcolare il determinante della matrice
+$$
+A=\left(\begin{array}{cccc}1 & 2 & 3 & 4 \\4 & 2 & 2 & 1 \\2 & 3 & 3 & 5 \\5 & 4 & 3 & 2\end{array}\right).
+$$
+\begin{flushright}\solu{\text{det}A=-18}\end{flushright}
+
+\item  \pt{2} 
+Una azienda prende a prestito un capitale $C$ da una banca e deve restituirlo con rate costanti di importo $R$ alla fine
+di ognuno dei prossimi \emph{trimestri} al TAN $i$, per un periodo totale di 3 anni. Si scriva la formula per determinare l'importo della rata $R$.
+\begin{flushright}\solu{R=\frac{i\,C}{4(1-(1+i/4)^{-12})}}\end{flushright}
+\end{enumerate}
+
+

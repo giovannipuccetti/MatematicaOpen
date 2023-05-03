@@ -1,0 +1,829 @@
+# Matrici {#matrici}
+
+Il concetto di matrice nasce spontaneamente dalla trattazione dei sistemi lineari. 
+
+::: {.definition}
+Una **matrice** $m \times n$ è un insieme ordinato di $mn$ numeri disposti in
+$m$ righe e $n$ colonne. Il numero $m$ delle sue righe ed il numero $n$ delle sue colonne sono dette
+*dimensioni* della matrice. Una matrice con una dimensione pari ad 1 è detta *vettore* (*vettore colonna*, se $n=1$; *vettore riga*, se $m=1$).
+Una matrice $n \times n$ è detta *matrice quadrata* di ordine $n$.
+:::
+
+Una matrice verrà indicata con una lettera maiuscola in grassetto, come ad esempio
+$$
+\mathbf{A}=\left(\begin{array}{cccc}a_{11} & a_{12} & \dots & a_{1n} \\a_{21} & a_{22} & \dots & a_{2n} \\\vdots & \vdots & \ddots & \vdots \\a_{m1} & a_{m2} & \dots & a_{mn}\end{array}\right).
+$$
+Si può indicare una matrice più sinteticamente facendo riferimento al suo 
+generico elemento con la notazione $\mathbf{A}=(a_{ij})$. Per indicare i vettori, si usa comunemente una lettera minuscola (anziché maiuscola) in grassetto
+e si abolisce l'indicazione dell'unica riga o colonna.
+Ad esempio, un vettore colonna $m\times 1$ verrà indicato come
+$$
+\mathbf{a}=\left(\begin{array}{c}a_1 \\ a_2 \\ \vdots \\ a_m \end{array}\right),
+$$
+mentre un vettore riga $1\times n$ come 
+$$
+\mathbf{b}=(b_1, b_2, \dots, b_n).
+$$
+L'insieme $\mathcal{M}_{mn}$ delle matrici $m \times n$ può essere visto come una estensione
+della retta reale, basti pensare che una matrice $1 \times 1$ è di fatto un numero reale.
+Due matrici appartenenti ad  $\mathcal{M}_{mn}$, cioè aventi le stesse dimensioni, si dicono *dello stesso ordine*.
+
+È possibile introdurre delle operazioni sull'insieme $\mathcal{M}_{mn}$ così come fatto
+sulla retta reale.
+
+## Somma di matrici
+
+Due matrici $\mathbf{A}=(a_{ij})$ e $\mathbf{B}=(b_{ij})$ si dicono uguali se sono dello stesso ordine e hanno
+gli elementi nella stessa posizione identici. Per $\mathbf{A},\mathbf{B} \in \mathcal{M}_{mn}$ si scrive cioè  $\mathbf{A}=\mathbf{B}$ se $a_{ij}=b_{ij}$ per
+$1\leq i \leq m$ e $1 \leq j \leq n$.
+
+::: {.definition}
+Si dice **somma** delle matrici $\mathbf{A}=(a_{ij}),\mathbf{B}=(b_{ij}) \in \mathcal{M}_{mn}$,
+la matrice $\mathbf{A+B}=(a_{ij}+b_{ij})\in \mathcal{M}_{mn}$ ottenuta sommando gli  elementi delle due matrici *nella stessa posizione*. Si dice **prodotto** della matrice $\mathbf{A}=(a_{ij})$
+per il numero reale $\lambda$ la matrice $\lambda\mathbf{A}=(\lambda a_{ij})\in \mathcal{M}_{mn}$ ottenuta moltiplicando *ogni* elemento della matrice per $\lambda$.
+:::
+
+::: {.example}
+Date le matrici
+$$
+\mathbf{A}=\left(\begin{array}{cc}1 & 2 \\3 & 4 \\5 & 6\end{array}\right),\;\mathbf{B}=\left(\begin{array}{cc}2 & 3 \\4 & 5 \\6 & 7\end{array}\right),
+$$
+è immediato calcolare
+$$
+\mathbf{A+B}=\left(\begin{array}{cc}3 & 5 \\7 & 9 \\11 & 13\end{array}\right), \quad 2\mathbf{A}=\left(\begin{array}{cc}2 & 4 \\6 & 8 \\10 & 12\end{array}\right), \quad \frac{1}{3}\,\mathbf{B}=\left(\begin{array}{cc}\frac{2}{3} & 1 \\ \\ \frac{4}{3} & \frac{5}{3} \\ \\ 2 & \frac{7}{3}\end{array}\right).
+$$
+:::
+
+La differenza tra le matrici $\mathbf{A},\mathbf{B} \in \mathcal{M}_{mn}$ è quindi definita come
+$\mathbf{A}-\mathbf{B}= \mathbf{A}+ (-1)\mathbf{B}$. Inoltre, si scrive $\mathbf{-A}=(-1)\mathbf{A}$. 
+È possibile effettuare la somma solo tra matrici dello stesso ordine; in tal caso valgono le stesse proprietà
+che caratterizzano la somma di numeri reali, compresa l'esistenza dell'elemento neutro che è evidentemente dato dalla matrice $\mathbf{0}\in \mathcal{M}_{mn}$ avente tutti gli elementi nulli.
+
+::: {.proposition}
+Per tre matrici $\mathbf{A},\mathbf{B}, \mathbf{C} \in \mathcal{M}_{mn}$, e due numeri reali $\lambda,\gamma$, sono di immediata verifica le seguenti proprietà della somma (+) e del prodotto  ($\cdot$) per un numero reale:
+
+- (Associativa) $\left(\mathbf{A}+\mathbf{B}\right)+\mathbf{C}=\mathbf{A}+\left(\mathbf{B}+\mathbf{C}\right)$;
+
+- (Commutativa) $\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}$;
+
+- (Elemento Neutro) $\mathbf{A}+\mathbf{0}=\mathbf{0}+\mathbf{A}=\mathbf{A}$;
+
+- (Opposto) $\mathbf{A}+(\mathbf{-A})=(\mathbf{-A})+\mathbf{A}=\mathbf{0}$;
+
+- (Distributiva del $\cdot$ rispetto a +) $\lambda(\mathbf{A}+\mathbf{B})= \lambda\mathbf{A}+ \lambda\mathbf{B}$.
+:::
+<!-- - (Distributiva del + rispetto a $\cdot$) $(\lambda+\gamma)\mathbf{A}=\lambda\mathbf{A}+\gamma\mathbf{A}$ -->
+## Prodotto righe per colonne
+
+Mentre la definizione di somma tra matrici è del tutto intuitiva e immediata, 
+la moltiplicazione tra due matrici è definita in modo apparentemente controintuitivo.
+È conveniente illustrarla prima con un esempio pratico di calcolo.
+
+::: {.example}
+Per eseguire il prodotto tra le matrici 
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 2 & 3 \\4 & 5 & 6\end{array}\right),  \quad \mathbf{B}=\left(\begin{array}{cc}2 & 3 \\4 & 5 \\6 & 7\end{array}\right),
+$$
+si deve prima verificare che **il numero delle colonne della prima sia uguale al numero di righe della seconda**. In questo caso le due matrici si dicono **compatibili per il prodotto**.
+In questo caso la matrice $\mathbf{A}$ è una $(2 \times \mathbf{3})$, mentre $\mathbf{B}$ è una $(\mathbf{3} \times 2)$.
+Le due dimensioni in grassetto sono identiche, quindi le matrici sono compatibili per il prodotto. Le altre due dimensioni (il numero di righe della prima e il numero di colonne della seconda) saranno le dimensioni della matrice prodotto $\mathbf{C}=\mathbf{A}\mathbf{B}$, che sarà cioè una $(2 \times 2)$. In generale il prodotto di due matrici
+$$
+(m \times \mathbf{n}) \text{ e } (\mathbf{n} \times p)
+$$
+è una matrice 
+$$
+(m\times p).
+$$
+L'elemento di $\mathbf{C}$ in posizione **(1,1)** è dato dal *prodotto* della **prima** *riga* di $\mathbf{A}$ per la **prima** *colonna* di $\mathbf{B}$. Queste due hanno lo stesso numero di elementi per compatibilità delle due matrici. Si ha
+$$
+\mathbf{A}=\left(\begin{array}{ccc} \textbf{1} & \textbf{2} & \textbf{3} \\4 & 5 & 6\end{array}\right), \; \mathbf{B}=\left(\begin{array}{cc}\textbf{2} & 3 \\\textbf{4} & 5 \\\textbf{6} & 7\end{array}\right), \quad c_{11}= \textbf{1} \cdot \textbf{2} + \textbf{2} \cdot \textbf{4} +\textbf{3} \cdot \textbf{6}=28.
+$$
+L'elemento di $\mathbf{C}$ in posizione **(1,2)** è dato dal *prodotto* della **prima** *riga* di $\mathbf{A}$ per la **seconda** *colonna* di $\mathbf{B}$. Queste due hanno lo stesso numero di elementi per la compatibilità delle due matrici. Si ha
+$$
+\mathbf{A}=\left(\begin{array}{ccc} \textbf{1} & \textbf{2} & \textbf{3} \\4 & 5 & 6\end{array}\right), \; \mathbf{B}=\left(\begin{array}{cc}2 & \textbf{3} \\ 4 & \textbf{5} \\ 6 & \textbf{7}\end{array}\right), \quad c_{12}= \textbf{1} \cdot \textbf{3} + \textbf{2} \cdot \textbf{5} +\textbf{3} \cdot \textbf{7}=34.
+$$
+L'elemento di $\mathbf{C}$ in posizione **(2,1)** è dato dal *prodotto* della **seconda** *riga* di $\mathbf{A}$ per la **prima** *colonna* di $\mathbf{B}$. Queste due hanno lo stesso numero di elementi per la compatibilità delle due matrici. Si ha
+$$
+\mathbf{A}=\left(\begin{array}{ccc} 1 & 2 & 3 \\ \textbf{4} & \textbf{5} & \textbf{6} \end{array}\right), \; \mathbf{B}=\left(\begin{array}{cc} \textbf{2} & 3 \\ \textbf{4} & 5 \\ \textbf{6} & 7\end{array}\right), \quad c_{21}= \textbf{4} \cdot \textbf{2} + \textbf{5} \cdot \textbf{4} +\textbf{6} \cdot \textbf{6}=64.
+$$
+L'elemento di $\mathbf{C}$ in posizione **(2,2)** è dato dal *prodotto* della **seconda** *riga* di $\mathbf{A}$ per la **seconda** *colonna* di $\mathbf{B}$. Queste due hanno lo stesso numero di elementi per la compatibilità delle due matrici. Si ha
+$$
+\mathbf{A}=\left(\begin{array}{ccc} 1 & 2 & 3 \\ \textbf{4} & \textbf{5} & \textbf{6} \end{array}\right), \; \mathbf{B}=\left(\begin{array}{cc}2 & \textbf{3} \\ 4 & \textbf{5} \\ 6 & \textbf{7}\end{array}\right), \quad c_{22}= \textbf{4} \cdot \textbf{3} + \textbf{5} \cdot \textbf{5} +\textbf{6} \cdot \textbf{7}=79.
+$$
+In conclusione, si calcola
+$$
+\mathbf{C}=\left(\begin{array}{cc}28 & 34 \\ 64 & 79 \end{array}\right).
+$$
+:::
+
+Per calcolarne il prodotto, due matrici devono essere tra loro compatibili: il numero delle
+colonne della prima deve essere uguale al numero di righe della seconda. In caso contrario, come per il  prodotto $\mathbf{B}\mathbf{A}$ nell'esempio precedente, il prodotto non potrà essere calcolato. Da ciò segue che il prodotto tra matrici **non è commutativo** in generale.
+
+::: {.definition}
+Si dice **prodotto (righe per colonne)** delle matrici $\mathbf{A}=(a_{ij})\in \mathcal{M}_{mn}$ e $\mathbf{B}=(b_{ij}) \in \mathcal{M}_{np}$,
+la matrice $\mathbf{AB}=(c_{ij})\in \mathcal{M}_{mp}$ in cui l'elemento $c_{ij}$ è la somma dei prodotti degli elementi della
+$i$-ma riga di $\mathbf{A}$ per la $j$-ma colonna di $\mathbf{B}$, cioè
+$$
+c_{ij}= a_{i1}b_{1j}+a_{i2}b_{2j}+\dots+a_{in}b_{nj} =\sum_{r=1}^{n} a_{ir}b_{rj}.
+$$
+:::
+
+::: {.example #identity}
+Date le matrici 
+$$
+\mathbf{A}=\left(\begin{array}{cc}1 & 2 \\ 0 & 3 \end{array}\right), \; \mathbf{B}=\left(\begin{array}{cc}2 & 3 \\4 & 5 \end{array}\right),\; \mathbf{I}=\left(\begin{array}{cc}1 & 0 \\0 & 1 \end{array}\right),
+$$
+si calcola facilmente
+$$
+\mathbf{A}\mathbf{B}=\left(\begin{array}{cc}10 & 13 \\ 12 & 15 \end{array}\right) \neq \mathbf{B}\mathbf{A}=\left(\begin{array}{cc}2 & 13 \\4 & 23 \end{array}\right), \; \mathbf{B}\,\mathbf{I}=\mathbf{I}\,\mathbf{B}=\left(\begin{array}{cc}2 & 3 \\4 & 5 \end{array}\right).
+$$
+Si osservi come sia sempre possibile effettuare il prodotto di matrici quadrate dello stesso ordine, e il risultato sia ancora una
+matrice quadrata dello stesso ordine. Tuttavia, anche nel caso di matrici quadrate, cioè quando è sempre possibile effettuarlo, il prodotto non è commutativo. 
+Esiste però un elemento neutro
+rispetto al prodotto, che per le matrici $2 \times 2$ è rappresentato dalla matrice $\mathbf{I}$ sopra definita.
+:::
+
+
+> Non essendo il prodotto righe per colonne commutativo, in generale è differente moltiplicare (per la stessa matrice) a sinistra o a destra di una matrice data.
+
+La definizione di prodotto righe per colonne può apparire controintuitiva, ma è giustificata
+(ancora una volta) dalla relazione tra matrici e sistemi lineari.
+Si consideri infatti il sistema lineare  di $m$ equazioni in $n$ variabili 
+\begin{equation}
+ \left\{ \begin{array}{lcl}
+a_{11}x_1+a_{12}x_2+\dots+a_{1n}x_n & = & b_1, \\
+\hspace{2.5cm}\vdots           & = & \vdots \\
+a_{i1}x_1+a_{i2}x_2+\dots+a_{in}x_n & = & b_i, \\
+\hspace{2.5cm}\vdots           & = & \vdots \\
+a_{m1}x_1+a_{m2}x_2+\dots+a_{mn}x_n & = & b_m,
+(\#eq:linsystbis)
+\end{array}
+\right.
+\end{equation}
+dove si è posta in evidenza la $i$-ma riga. 
+Il sistema lineare può essere rappresentato dalla sua matrice dei coefficienti (matrice incompleta)
+$$
+\mathbf{A}=\left(\begin{array}{cccc}a_{11} & a_{12} & \dots & a_{1n} \\\vdots & \vdots & \ddots & \vdots \\a_{i1} & a_{i2} & \dots & a_{in} \\\vdots & \vdots & \ddots & \vdots \\a_{m1} & a_{m2} & \dots & a_{mn}\end{array}\right),
+$$
+e dai vettori
+$$
+\mathbf{x}=\left(\begin{array}{c}x_1 \\ x_2 \\ \vdots \\ x_n \end{array}\right) ,\quad  \mathbf{b}=\left(\begin{array}{c}b_1 \\ b_2 \\ \vdots \\ b_m \end{array}\right),
+$$
+ovvero il vettore $\mathbf{x}$ delle variabili e il vettore $\mathbf{b}$ dei termini noti del sistema.
+
+La matrice $\mathbf{A}$ ha dimensioni  $m \times n$ mentre il vettore $\mathbf{x}$ è un $n \times 1$. Essi sono perciò compatibili per il prodotto e
+la loro moltiplicazione produrrà un vettore $m \times 1$. La riga $i$-ma di questo vettore è il prodotto della $i$-ma riga di $\mathbf{A}$ per la prima (ed unica) colonna di $\mathbf{x}$, ovvero
+$$
+b_i=a_{i1}x_1+a_{i2}x_2+ \dots +a_{in}x_n.
+$$
+Questa altro non è che la $i$-ma equazione del sistema lineare \@ref(eq:linsystbis). Si potrà quindi scrivere il sistema lineare \@ref(eq:linsystbis) semplicemente come 
+$$
+\mathbf{A}\mathbf{x}=\mathbf{b}.
+$$
+Non vi è dubbio che questa notazione sia allo stesso tempo concisa e molto elegante, e giustifica pienamente la definizione data di prodotto righe per colonne.
+
+Un'altra operazione molto usata tra matrici è la trasposizione.
+
+::: {.definition}
+La **trasposta** di una matrice $\mathbf{A}=(a_{ij}) \in \mathcal{M}_{mn}$ è la matrice $\mathbf{A}^t=(a_{ij}^t) \in \mathcal{M}_{nm}$ le cui
+righe sono le colonne di $\mathbf{A}$, ovvero per cui $a_{ij}^t=a_{ji}$, $1 \leq i \leq m, 1 \leq j \leq n$.
+:::
+::: {.example}
+Per scrivere la trasposta di una matrice basta scrivere le colonne della matrice da trasporre in riga. Equivalentemente, si possono scrivere le righe della matrice da trasporre in colonna. Ad esempio:
+$$
+\mathbf{A}=\left(\begin{array}{cc}1 & 2 \\3 & 4 \\5 & 6\end{array}\right),\quad \mathbf{A}^t=\left(\begin{array}{ccc}1 & 3 & 5 \\2 & 4 & 6 \end{array}\right).
+$$
+:::
+
+Valgono le seguenti proprietà della trasposizione.
+
+::: {.proposition}
+Per due matrici $\mathbf{A},\mathbf{B} \in \mathcal{M}_{mn}$, $\mathbf{C} \in \mathcal{M}_{np}$, e un numero reale $\lambda$, sono di immediata verifica le seguenti proprietà:
+
+- $\left(\mathbf{A}^t\right)^t=\mathbf{A}$;
+
+- $\left(\mathbf{A}+\mathbf{B}\right)^t=\mathbf{A}^t+\mathbf{B}^t$;
+
+- $\left(\lambda\mathbf{A}\right)^t=\lambda\mathbf{A}^t$;
+
+- $\left(\mathbf{B}\mathbf{C}\right)^t=\mathbf{C}^t\mathbf{B}^t$.
+:::
+
+Si osservi come la matrice trasposta del prodotto sia il prodotto delle trasposte *in ordine invertito*.
+Non potrebbe essere altrimenti per questioni di compatibilità: $\left(\mathbf{B}\mathbf{C}\right)^t$ ha dimensioni $(m \times p)^t=(p \times m)$,
+ovvero esattamente le stesse del prodotto tra $\mathbf{C}^t$ ($p \times n$) e $\mathbf{B}^t$ ($n \times m$).
+Del resto, il prodotto $\mathbf{B}^t\mathbf{C}^t$ non è in generale eseguibile.
+
+::: {.definition}
+Si dice **prodotto interno** tra i vettori 
+$$
+\mathbf{a}=\left(\begin{array}{c}a_1 \\ a_2 \\ \vdots \\ a_m \end{array}\right),\mathbf{b}=\left(\begin{array}{c}b_1 \\ b_2 \\ \vdots \\ b_m \end{array}\right) \in \mathcal{M}_{m1},
+$$ 
+e si indica con $<\mathbf{a},\mathbf{b}>$,
+la somma dei prodotti tra le loro componenti, ovvero
+$$
+<\mathbf{a},\mathbf{b}>\,=\sum_{i=1}^{m} a_ib_i. 
+$$
+Due vettori si dicono tra loro *ortogonali* se il loro prodotto interno è nullo.
+:::
+
+I vettori sono semplicemente matrici con una dimensione unitaria. Si osservi come, sfruttando le dimensioni $(m \times 1)$ dei due vettori, si possa scrivere il loro prodotto interno molto più elegantemente come 
+$$
+<\mathbf{a},\mathbf{b}>=\mathbf{a}^t\mathbf{b}.
+$$
+Dato $\mathbf{a}\in \mathcal{M}_{m1}$, si ha  
+$$
+<\mathbf{a},\mathbf{a}>\,=\mathbf{a}^t\mathbf{a}=\sum_{i=1}^{m} a_i^2 \geq 0, 
+$$
+con $<\mathbf{a},\mathbf{a}>\,=0$ se e solo se $\mathbf{a}=\mathbf{0}$, il vettore nullo.
+Si osservi infine come, per motivi tipografici, sia più conveniente scrivere un vettore colonna come $\mathbf{a}=(a_1,a_2,\dots,a_m)^t$.
+
+::: {.example}
+Dati i due vettori $\mathbf{a}=(1,0,2,-1)^t$ e $\mathbf{b}=(2,1,0,-2)^t$ Si calcola facilmente 
+$$
+<\mathbf{a},\mathbf{b}>=1\cdot 2 + 0\cdot 1 + 2\cdot 0 +-1\cdot (-2)=0,
+$$
+ovvero $\mathbf{a}$ e $\mathbf{b}$ sono tra loro ortogonali.
+::: 
+
+## L'insieme delle matrici quadrate
+
+L'insieme delle matrici quadrate di ordine $n$, che denoteremo con $\mathcal{M}_{n}=\mathcal{M}_{nn}$, riveste una particolare importanza,
+essendo *chiuso* rispetto al prodotto righe per colonne: al suo interno cioè è sempre possibile eseguire il prodotto tra due matrici il cui risultato è ancora una matrice di ordine $n$.
+
+
+In una matrice quadrata $\mathbf{A}=(a_{ij}) \in \mathcal{M}_{n},$
+$$
+\mathbf{A}=\left(\begin{array}{cccc}\mathbf{a_{11}} & a_{12} & \dots & a_{1n} \\a_{21} & \mathbf{a_{22}} & \dots & a_{2n} \\\vdots & \vdots & \ddots & \vdots \\a_{n1} & a_{n2} & \dots & \mathbf{a_{nn}}\end{array}\right),
+$$
+gli $n$ elementi $a_{ii}, 1 \leq i \leq n,$ (sopra in grassetto) sono detti *elementi diagonali*. L'insieme costituito da tutti gli elementi diagonali si indica con $\text{diag}(\mathbf{A})$ ed è detto *diagonale* della matrice. Visivamente la diagonale di una matrice quadrata è la diagonale di numeri che si estende dall'angolo in alto a sinistra a quello in basso a destra.
+
+Viceversa, dati $n$ numeri reali $d_1,\dots,d_n$, si indica con $\text{diag}(d_1,\dots,d_n)$ la matrice quadrata di ordine $n$ avente tali elementi sulla diagonale 
+e $0$ altrove. Quando questi numeri sono tutti pari ad uno si definisce la matrice **identità**, ovvero 
+$$
+\mathbf{I}=\text{diag}(1,\dots,1)=\left(\begin{array}{cccc}1 & 0 & \dots & 0 \\ 0 & 1 & \dots & 0 \\\vdots & \vdots & \ddots & \vdots \\0 & 0 & \dots & 1\end{array}\right).
+$$
+È immediato verificare (si ricordi l'Esempio \@ref(exm:identity)) che la matrice identità $\mathbf{I}$ è l'**elemento neutro** del prodotto righe per colonne, che soddisfa anche le seguenti proprietà.
+
+::: {.proposition}
+Per tre matrici $\mathbf{A},\mathbf{B}, \mathbf{C} \in \mathcal{M}_{n}$, sono di immediata verifica le seguenti proprietà del prodotto righe per colonne (*):
+
+- (Associativa) $\left(\mathbf{A}\mathbf{B}\right)\mathbf{C}=\mathbf{A}\left(\mathbf{B}\mathbf{C}\right)$;
+
+- (Elemento Neutro di *) $\mathbf{A}\mathbf{I}=\mathbf{I}\mathbf{A}=\mathbf{A}$;
+
+- (Distributiva del * rispetto a +) $\left(\mathbf{A}+\mathbf{B}\right)\mathbf{C}=\mathbf{A}\mathbf{C}+\mathbf{B}\mathbf{C},\;$
+$\mathbf{C}\left(\mathbf{A}+\mathbf{B}\right)=\mathbf{C}\mathbf{A}+\mathbf{C}\mathbf{B}$.
+:::
+
+::: {.remark}
+È importante osservare che:
+
+- non essendo il prodotto tra matrici commutativo (nemmeno tra matrici quadrate),
+si deve verificare che vale la proprietà distributiva del * sia *a sinistra* che *a destra* di +; 
+
+- le proprietà associativa e distributiva valgono anche per matrici non quadrate, a patto che siano eseguibili i rispettivi prodotti.
+:::
+
+La mancata commutatività del prodotto righe per colonne (in generale $\mathbf{A}\mathbf{B} \neq \mathbf{B}\mathbf{A}$) porta a conseguenze rilevanti. Ad esempio, all'insieme delle matrici quadrate di ordine $n$ non può essere estesa la *legge di annullamento del prodotto* di due numeri reali.
+Se il prodotto di due numeri reali è nullo, allora almeno uno dei due numeri deve essere nullo.
+Lo stesso non vale in generale per due matrici quadrate, come illustra il seguente esempio. 
+
+::: {.example}
+Si prendano le matrici
+$$
+\mathbf{A}= \left(\begin{array}{cc}1 & 1 \\1 & 1\end{array}\right), \; \mathbf{B}= \left(\begin{array}{cc}1 & 1 \\-1 & -1\end{array}\right).
+$$
+È immediato verificare che 
+$$
+\mathbf{A}\mathbf{B}=\left(\begin{array}{cc}0 & 0 \\0 & 0\end{array}\right),
+$$  
+ma nessuna delle due è uguale alla matrice nulla. 
+:::
+
+Nel caso di due numeri reali, la legge di annullamento del prodotto permette la cancellazione
+di un fattore diverso da zero. Ad esempio, se per tre numeri reali $a,b,c$, con $a \neq 0$, si ha che $ab=ac$, allora $ab-ac=a(b-c)=0$ implica (tramite l'annullamento del prodotto) che $(b-c)=0$, ovvero $b=c$. Venendo a mancare la legge di annullamento, per tre matrici $\mathbf{A},\mathbf{B},\mathbf{C},$
+con $\mathbf{A}\neq \mathbf{0}$ **non è possibile** affermare che $\mathbf{A}\mathbf{B}=\mathbf{A}\mathbf{C}$ implichi $\mathbf{B}=\mathbf{C}$.
+
+::: {.example #matcanc}
+Si prendano le matrici
+$$
+\mathbf{A}= \left(\begin{array}{cc}1 & 1 \\1 & 1\end{array}\right), \; \mathbf{B}= \left(\begin{array}{cc}1 & 1 \\-1 & -1\end{array}\right), \; \mathbf{C}= \left(\begin{array}{cc}-1 & -1 \\1 & 1\end{array}\right).
+$$
+Si verifica immediatamente che
+$$
+\mathbf{A}\mathbf{B}=\mathbf{A}\mathbf{C}, \quad \mathbf{B} \neq \mathbf{C}.
+$$
+Nel seguito daremo una condizione sulla matrice $\mathbf{A}$ che permetterà di cancellarla dall'equazione precedente.
+:::
+
+Se una matrice è uguale alla sua trasposta, essa si dice simmetrica. 
+Si osservi che questo può accadere solo per una matrice quadrata.
+
+::: {.definition}
+Una matrice $\mathbf{A}=(a_{ij}) \in \mathcal{M}_{n}$ si dice simmetrica se vale che $\mathbf{A}=\mathbf{A}^t$. 
+::: 
+
+$\mathbf{A}\in \mathcal{M}_{n}$ è simmetrica se e solo se $a_{ij}=a_{ji}, 1\leq i,j \leq n,$
+ovvero se e solo se i suoi elementi sono simmetrici rispetto alla sua diagonale, come ad esempio nella matrice
+$$
+\mathbf{A}=\mathbf{A}^t=\left(\begin{array}{ccc}\textbf{0} & 2 & 3 \\2 & \textbf{1} & 4 \\3 & 4 & \textbf{2}\end{array}\right).
+$$
+Data una qualsiasi matrice (anche non quadrata) $\mathbf{B}\in \mathcal{M}_{mn}$,
+si verifica rapidamente che sia la matrice $\mathbf{B}^t\mathbf{B}$ (che è una $n \times n$)
+che la matrice  $\mathbf{B}\mathbf{B}^t$ (che è una $m \times m$) sono simmetriche.
+Per farlo, basta vedere che sono uguali alle loro trasposte. Sfruttando le proprietà della matrice trasposta rispetto al prodotto si dimostra cioè che 
+$$
+\left(\mathbf{B}^t\mathbf{B}\right)^t=\mathbf{B}^t(\mathbf{B}^t)^t=\mathbf{B}^t\mathbf{B}, \quad \left(\mathbf{B}\mathbf{B}^t\right)^t=(\mathbf{B}^t)^t\mathbf{B}^t=\mathbf{B}\mathbf{B}^t.
+$$
+
+
+## Determinante
+
+Una funzione molto usata in Matematica e Statistica è il determinante di una matrice quadrata.
+Il determinante è una funzione $\text{det}: \mathcal{M}_n \to \mathbb{R}$ che associa ad una matrice quadrata un numero reale $\text{det}(\mathbf{A})$, anche indicato con $\vert\mathbf{A}\vert$.
+
+È istruttivo dare prima la definizione per matrici quadrate di ordine $n=1,2$, e poi passare alla definizione generale.
+
+::: {.definition}
+Il determinante di una matrice $1 \times 1$ è uguale all'unico numero dalla quale è composta, 
+$$\text{det}((a_{11}))=\text{det}(a_{11})=a_{11}.$$
+Nel seguito, per praticità, e come fatto nella precedente definizione, non useremo le seconde parentesi per indicare l'argomento della funzione determinante. Il determinante di una matrice $2 \times 2$ è il prodotto degli elementi della diagonale meno il prodotto degli altri elementi (*della diagonale secondaria*):   
+
+$$\text{det}\left(\begin{array}{cc}\mathbf{a_{11}} & a_{12} \\a_{21} & \mathbf{a_{22}}\end{array}\right)=\mathbf{a_{11}}\mathbf{a_{22}}-a_{21}a_{12}.
+$$
+:::
+
+Per definire la funzione determinante in generale è utile illustrarne prima il calcolo nel caso
+particolare di una  matrice quadrata di ordine 3.
+
+::: {.example}
+Sia data la matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}4 & 1 & 3 \\\mathbf{2} & \mathbf{3} & \mathbf{0} \\1 & 3 & 2\end{array}\right).
+$$
+Il determinante viene calcolato *sviluppandolo rispetto ad una riga o una colonna* della matrice. 
+Come esempio si prenda la seconda riga (in grassetto) di $\mathbf{A}$: il determinante è dato dalla somma dei seguenti prodotti:
+ 
+- si moltiplica il primo elemento della seconda riga $a_{21}=2$ per il determinante della sotto-matrice ottenuta eliminando la seconda riga e la prima colonna, cambiandone il segno perché $a_{21}$ è in posizione dispari ($2+1=3$):
+$$
+2 \, (-1)\, \text{det}\left(\begin{array}{ccc} & 1 & 3 \\ &  &  \\& 3 & 2\end{array}\right)= 2(-1)(2-9)=\mathbf{14};
+$$
+- si moltiplica il secondo elemento della seconda riga $a_{22}=3$ per il determinante della sotto-matrice ottenuta eliminando la seconda riga e la seconda colonna, *non* cambiandone il segno perché $a_{22}$ è in posizione pari ($2+2=4$):
+$$
+3 \, \text{det}\left(\begin{array}{ccc}4 &  & 3 \\  &   &  \\1 &  & 2\end{array}\right).= 3(8-3)=\mathbf{15};
+$$
+- si moltiplica il terzo elemento della seconda riga $a_{23}=0$ per il determinante della sotto-matrice ottenuta eliminando la seconda riga e la terza colonna, cambiandone il segno perché $a_{23}$ è in posizione dispari ($2+3=5$):
+$$
+0 \, (-1)\, \text{det}\left(\begin{array}{ccc}4 & 1 &  \\  &   &  \\1 & 3 & \end{array}\right).= 0(-1)(12-1)=\mathbf{0}.
+$$
+In conclusione, 
+$$
+\text{det}(\mathbf{A})=\mathbf{14}+\mathbf{15}+\mathbf{0}=\mathbf{29}.
+$$
+Si può osservare come, prendendo in considerazione un'altra riga/colonna per lo sviluppo, il risultato non cambi. Ad esempio, sviluppando il calcolo rispetto alla terza colonna si ottiene:
+\begin{align*}
+\text{det}(\mathbf{A})&= \text{det} \left(\begin{array}{ccc}4 & 1 & \mathbf{3} \\ 2 & 3 & \mathbf{0} \\1 & 3 & \mathbf{2}\end{array}\right) \\ &= 3\,\text{det} \left(\begin{array}{ccc} &  &  \\ 2 & 3 &  \\1 & 3 & \end{array}\right) + 0\, (-1) \, \text{det} \left(\begin{array}{ccc}4 & 1 &  \\  &  &  \\1 & 3 & \end{array}\right) + 2\, \text{det} \left(\begin{array}{ccc}4 & 1 &  \\ 2 & 3 &  \\ &  & \end{array}\right)\\&= 3(6-3)+0(-1)(12-1)+2(12-2)=9+20=\mathbf{29}.
+\end{align*}
+::: 
+Possiamo a questo punto dare la definizione generale di funzione determinante. 
+
+::: {.definition}
+Il determinante di una matrice $\mathbf{A}=(a_{11})\in \mathcal{M}_1$ è pari all'unico elemento della matrice, $\text{det}(a_{11})=a_{11}$.
+
+Per $n \geq 2$, il determinante della matrice $\mathbf{A}=(a_{ij})\in \mathcal{M}_n$ è la funzione
+$\text{det}:\mathcal{M}_n \to \mathbb{R}$, che associa alla matrice $\mathbf{A}$ il numero reale $\text{det}(\mathbf{A})$ ottenuto sommando i prodotti 
+di ogni elemento $a_{ij}$ di una data riga (colonna) di $\mathbf{A}$ per il rispettivo determinante della sotto-matrice $(n-1) \times (n-1)$ ottenuta cancellando la $i$-ma riga e la $j$-ma colonna di $\mathbf{A}$, moltiplicato per $(-1)^{i+j}$.
+::: 
+
+::: {.remark}
+Si può dimostrare che la definizione di determinante data è ben posta, ovvero che 
+il valore del determinante non varia a seconda della riga o colonna considerata per il suo sviluppo.
+Inoltre, a partire dalla definizione data per le matrici quadrate di ordine 1, la seconda parte della definizione definisce il determinante per tutti gli ordini superiori $n \geq 1$.
+La definizione è coerente ad esempio con quanto prima espresso per le matrici quadrate di ordine 2; sviluppando il calcolo rispetto alla prima colonna si ottiene infatti
+$$
+\text{det}\left(\begin{array}{cc}\mathbf{a_{11}} & a_{12} \\\mathbf{a_{21}}  & a_{22} \end{array}\right)=a_{11}\, \text{det}\left(\begin{array}{cc} &  \\ & a_{22} \end{array}\right) + a_{21}\,(-1)\, \text{det}\left(\begin{array}{cc} & a_{12} \\ & \end{array}\right) =
+a_{11}a_{22}-a_{21}a_{12}.
+$$
+:::
+
+::: {.definition}
+Data una matrice $\mathbf{A}=(a_{ij})\in \mathcal{M}_n$, con $n \geq 2$, si dice **complemento algebrico** $c_{ij}$ dell'elemento $a_{ij}$ il determinante della sotto-matrice $(n-1) \times (n-1)$ ottenuta cancellando la $i$-ma riga e la $j$-ma colonna di $\mathbf{A}$, moltiplicato per $(-1)^{i+j}$.
+La matrice $\text{adj}(\mathbf{A})=c_{ij}\in \mathcal{M}_n$ dei complementi algebrici è detta **matrice aggiunta** di  $\mathbf{A}$. 
+::: 
+
+::: {.remark}
+Più brevemente si può definire il determinante di una matrice quadrata come **la somma dei prodotti degli elementi di una riga (colonna) per i rispettivi complementi algebrici**.
+Il calcolo del determinante di una matrice $n \times n$, nel caso peggiore in cui gli elementi della matrice siano tutti non nulli, si riduce al calcolo di $n$ determinanti di matrici $(n-1) \times (n-1)$, che a loro volta necessitano del calcolo di $n-1$ determinanti di matrici $(n-2) \times (n-2)$, e così via. Per calcolare il determinante di una matrice quadrata di ordine $n$ secondo la definizione, quindi, potrebbe servire dover calcolare ben $n(n-1)(n-2)\cdot \dots \cdot 2 \cdot 1=n!$ determinanti.
+:::
+
+Il calcolo del determinante secondo la definizione è quindi in generale molto oneroso, con una complessità, nel peggior caso possibile, di $O(n!)$. Per velocizzare il calcolo, conviene scegliere per il suo sviluppo la riga o colonna avente il maggior numero di
+elementi nulli.
+
+::: {.example}
+Per calcolare il determinante della matrice 
+$$
+\mathbf{A}=\left(\begin{array}{cccc}1 & 0 & 2 & 3 \\4 & 4 & 1 & 0 \\\mathbf{0} & \mathbf{3} & \mathbf{0} & \mathbf{2} \\1 & 1 & 2 & 2\end{array}\right)
+$$
+si può scegliere, ad esempio, di effettuarne lo sviluppo rispetto alla terza riga (in grassetto).
+Questo ci consente di trascurare il calcolo dei complementi algebrici dei due elementi nulli, e scrivere quindi
+\begin{align*}
+\text{det}(\mathbf{A})&= 3 \,(-1)\,\text{det} \left(\begin{array}{ccc}1 & 2 & 3 \\\mathbf{4} & \mathbf{1} & \mathbf{0} \\1 & 2 & 2\end{array}\right) + 2 \,(-1)\,\text{det} \left(\begin{array}{ccc}\mathbf{1} & \mathbf{0} & \mathbf{2} \\ 4 & 4 & 1 \\1 & 1 & 2\end{array}\right)\\
+=&-3\,\left[4\,(-1)\,\text{det}\left(\begin{array}{cc}2 &3 \\2 & 2\end{array}\right) +1\,\text{det} \left(\begin{array}{cc}1 & 3 \\1 & 2\end{array}\right)\right]\\ &\phantom{00000000000000000000000}-2\left[1\,\text{det}\left(\begin{array}{cc}4 &1 \\1 & 2\end{array}\right) +2\,\text{det} \left(\begin{array}{cc}4 & 4 \\1 & 1\end{array}\right)\right]\\
+&=-3[-4(4-6)+1(2-3)]-2[1(8-1)+2(4-4)]\\
+&=-3(8-1)-2(7+0)=-21-14=\mathbf{-35}.
+\end{align*}
+Si può verificare il risultato procedendo allo sviluppo rispetto ad un'altra riga o colonna della matrice di partenza.
+:::
+
+> Il fatto che un elemento sia pari o dispari deve essere determinato ad ogni successivo sviluppo del calcolo del determinante, ovvero ogni qualvolta si ha a che fare con lo stesso elemento, ma inserito in una nuova (sotto-)matrice.
+
+Anche in presenza di un numero di elementi nulli in una riga o colonna, il calcolo del determinante risulta comunque oneroso. Un metodo possibilmente più veloce si basa sulle operazioni elementari usate nella eliminazione di Gauss (Capitolo \@ref(sistemi)). Vediamo prima come si comporta il determinante rispetto a queste operazioni.
+
+::: {.theorem #detprop}
+Per una matrice quadrata di ordine $n$, sono di immediata verifica le seguenti proprietà del determinante rispetto alle operazioni elementari sulle sue righe:
+
+- se si scambiano due righe di $\mathbf{A}$, il determinante cambia di segno;
+
+- se si moltiplicano per un numero $k \neq 0$ tutti gli elementi di una riga di $\mathbf{A}$, il determinante risulta moltiplicato per $k$ (nel caso $k=0$, la regola continua a valere, cioè il determinante si annulla);
+
+- se si somma ad una riga di $\mathbf{A}$ il multiplo di un'altra, il determinante non cambia.
+:::
+
+> Dato che nello sviluppo del calcolo del determinante si può scegliere liberamente una riga o una colonna della matrice, il teorema precedente vale sostituendo alle righe le colonne di una matrice. Equivalentemente, si può altresì osservare che, essendo la definizione di determinante ben posta, la trasposizione di una matrice non ne cambia il determinante. 
+
+::: {.remark}
+Nell'effettuare l'eliminazione di Gauss attraverso operazioni elementari sulle righe
+di una matrice quadrata $\mathbf{A}$, il determinante della matrice ridotta a scala $\mathbf{S}$ ottenuta è in generale un multiplo del determinante della matrice di partenza, ovvero
+\begin{equation}
+\text{det}(\mathbf{A}) = k \, \text{det}\,(\mathbf{S}),  \text{ con } k \neq 0.
+(\#eq:detred)
+\end{equation}
+Infatti, se si moltiplica una riga per una costante (non nulla), il determinante risulta moltiplicato per quella costante; se si effettua solo uno scambio di righe, la costante è pari a $-1$; se si somma ad una riga il multiplo di un'altra, il determinante non cambia.
+::: 
+
+::: {.example}
+Per calcolare il determinante della stessa matrice dell'esempio precedente, ovvero
+$$
+\mathbf{A}=\left(\begin{array}{cccc}1 & 0 & 2 & 3 \\4 & 4 & 1 & 0 \\0 & 3 & 0 & 2 \ \\1 & 1 & 2 & 2\end{array}\right),
+$$
+si può effettuare una eliminazione di Gauss.
+Nel primo passaggio, con ($II-4(I)$) e ($IV-I$), si ottiene
+$$
+\left(\begin{array}{cccc}1 & 0 & 2 & 3 \\0 & 4 & -7 & -12 \\ 0 & 3 & 0 & 2 \\0 & 1 & 0 & -1\end{array}\right).
+$$
+Scambiando la seconda e la quarta riga ($II\leftrightarrow IV$), si giunge a 
+$$
+\left(\begin{array}{cccc}1 & 0 & 2 & 3 \\0 & 1 & 0 & -1 \\ 0 & 3 & 0 & 2 \\0 & 4 & -7 & -12\end{array}\right).
+$$
+Effettuando un altro passo della eliminazione, con ($III-3(II)$) e ($IV-4(II)$), si arriva a
+$$
+\left(\begin{array}{cccc}1 & 0 & 2 & 3 \\0 & 1 & 0 & -1 \\ 0 & 0 & 0 & 5 \\0 & 0 & -7 & -8\end{array}\right).
+$$
+Infine, scambiando ($III \leftrightarrow IV$), si ottiene la matrice ridotta a scala
+$$
+\mathbf{S}=\left(\begin{array}{cccc}\mathbf{1} & 0 & 2 & 3 \\0 & \mathbf{1} & 0 & -1 \\ 0 & 0 & \mathbf{-7} & -8 \\0 & 0 & 0 & \mathbf{5}\end{array}\right).
+$$
+Dato che nella eliminazione di Gauss è stato effettuato un numero *pari* di scambi di righe e
+si sono solamente sommati multipli di riga ad altre righe, si ha in questo caso che 
+$$
+\text{det}(\mathbf{S})=\text{det}(\mathbf{A}).
+$$
+Il determinante della ridotta a scala trovata è più facilmente calcolabile, in quanto si può sviluppare rispetto alla prima colonna della matrice e di ogni sotto-matrice ottenuta a partire dallo sviluppo, ottenendo:
+\begin{align*}
+\text{det}(\mathbf{S})&= \mathbf{1} \, \text{det} \left(\begin{array}{ccc}\mathbf{1} & 0 & -1 \\0 & \mathbf{-7} & -8 \\0 & 0 & \mathbf{5}\end{array}\right) \\&=  \mathbf{1} \cdot\mathbf{1} \cdot\text{det} \left(\begin{array}{cc}\mathbf{-7} & -8 \\0 & \mathbf{5}\end{array}\right)= \mathbf{1} \cdot\mathbf{1}\cdot(\mathbf{-7})\cdot \text{det} (\mathbf{5})= \mathbf{1} \cdot\mathbf{1}\cdot(\mathbf{-7})\cdot \mathbf{5}= \mathbf{-35}.
+\end{align*}
+Il determinante risulta perciò uguale al prodotto degli elementi sulla diagonale della ridotta a scala trovata.
+:::
+
+Effettuare l'eliminazione di Gauss su una matrice quadrata porta a trovare una matrice *triangolare*.
+
+::: {.definition}
+Una matrice quadrata $\mathbf{A} \in \mathcal{M}_n$ è detta **triangolare** se i suoi elementi sotto la diagonale sono nulli, ovvero se
+$$
+a_{ij}=0, \text{ per } i>j.
+$$ 
+:::
+
+Dall'esempio precedente si ricava direttamente il seguente teorema.
+
+::: {.theorem #detprop2}
+Una ridotta a scala di una matrice quadrata è triangolare, ed il suo determinante è
+dato dal prodotto degli elementi sulla sua diagonale.
+::: 
+
+::: {.remark}
+Si osservi come il metodo di eliminazione di Gauss sia computazionalmente più efficiente nel 
+calcolare il determinante di una matrice quadrata. Infatti, trascurando gli scambi di riga (che non sono strettamente necessari al calcolo), ad ogni passo dell'eliminazione di Gauss si compiono al più $n$ somme sugli elementi di una riga, per $n$ righe, e per al più $n$ passi dell'eliminazione attraverso i quali si giunge ad una matrice triangolare. Calcolare il determinante secondo questo metodo comporta quindi una complessità di $O(n^3)$, rispetto alla complessità di $O(n!)$ dello sviluppo secondo la definizione. Si osservi la differenza tra questi due ordini di infinito, anche per valori relativamente piccoli di $n$: $10^3=1000$, mentre $10!=3628800$.
+::: 
+
+Nel calcolo del determinante di una matrice può essere conveniente usare una tecnica mista,
+ovvero usare sia la definizione che la eliminazione di Gauss.
+
+\pagebreak
+
+::: {.example}
+Per calcolare il determinante della stessa matrice dell'esempio precedente, ovvero
+$$
+\mathbf{A}=\left(\begin{array}{cccc}1 & 0 & 2 & 3 \\4 & 4 & 1 & 0 \\0 & 3 & 0 & 2 \ \\1 & 1 & 2 & 2\end{array}\right),
+$$
+si può effettuare il primo passaggio della eliminazione di Gauss, ($II-4(I)$) e ($IV-I$), che lascia invariato il determinante, ottenendo
+$$
+\left(\begin{array}{cccc}\mathbf{1} & 0 & 2 & 3 \\\mathbf{0} & 4 & -7 & -12 \\ \mathbf{0} & 3 & 0 & 2 \\\mathbf{0} & 1 & 0 & -1\end{array}\right),
+$$
+e quindi usare lo sviluppo del determinante rispetto alla prima colonna, e poi rispetto alla seconda colonna della sotto-matrice ottenuta:
+\begin{align*}
+\text{det}(\mathbf{A})&= 1\, \text{det} \left(\begin{array}{ccc}4 & \mathbf{-7} & -12 \\3 & \mathbf{0} & 2 \\1 & \mathbf{0} & -1\end{array}\right) 
+\\&=  1\cdot(-7) \left[ (-1)\cdot \text{det} \left(\begin{array}{cc}3 & 2 \\1 & -1\end{array}\right)\right]= 7 (-3-2)=\mathbf{-35}.
+\end{align*}
+:::
+
+::: {.example}
+Si calcoli il determinante della matrice
+$$
+\mathbf{A}=\left(\begin{array}{cccc}1 & 2 & 2 & 1 \\2 & 3 & 4 & 5 \\2 & 1 & 1 & 2 \\3 & 2 & 2 & 4\end{array}\right).
+$$
+Ci sono infiniti modi per svolgere questo calcolo e suggeriamo di completarlo almeno in due modi differenti in modo da verificare il risultato. Ad esempio, non è necessario eseguire una eliminazione di Gauss standard, ma si possono effettuare operazioni sulle righe o colonne della matrice coerentemente con le proprietà del Teorema \@ref(thm:detprop). Ad esempio, sottraendo alla terza *colonna* la seconda *colonna*, ($IIIC-IIC$), si ottiene una matrice con lo stesso determinante:
+$$
+\left(\begin{array}{cccc}1 & 2 & \mathbf{0} & 1 \\2 & 3 &  \mathbf{1} & 5 \\2 & 1 &  \mathbf{0} & 2 \\3 & 2 &  \mathbf{0} & 4\end{array}\right).
+$$
+Sviluppando quindi rispetto alla terza colonna (si osservi che il suo unico elemento non nullo è in posizione dispari), si ottiene
+$$
+\text{det} \,(\mathbf{A})=1 \, (-1) \,\text{det} \,\left(\begin{array}{ccc}1 & 2 & 1 \\2 & 1 & 2 \\3 & 2 & 4\end{array}\right).
+$$
+Effettuando ($IC-IIIC$) sulla sotto-matrice così ottenuta, si ottiene
+\begin{align*}
+\text{det} \,\mathbf{A}=1 \, (-1) \,&\text{det} \,\left(\begin{array}{ccc}1 & 2 & 1 \\2 & 1 & 2 \\3 & 2 & 4\end{array}\right)\\= - &\text{det} \,\left(\begin{array}{ccc}\mathbf{0} & 2 & 1 \\\mathbf{0} & 1 & 2 \\\mathbf{-1} & 2 & 4\end{array}\right)= -\left(-1\,\text{det}\,\left(\begin{array}{cc}2 & 1 \\1 & 2\end{array}\right) \right) = 4-1=3.
+\end{align*}
+:::
+
+Visto il ruolo fondamentale svolto dalla eliminazione di Gauss nel calcolo del determinante, possiamo stabilire una interessante relazione tra il determinante di una matrice quadrata e il suo rango. Ricordiamo la definizione di rango data nel Capitolo \@ref(sistemi).
+
+::: {.definition}
+Il numero di pivot di una qualsiasi ridotta a scala di una matrice $\mathbf{A}$ è detto **rango** della matrice e si indica con $r(\mathbf{A})$. Per $\mathbf{A} \in \mathcal{M}_n$ vale quindi $r(\mathbf{A}) \leq n$. Se $r(\mathbf{A})=n$ si dice che la matrice possiede **rango pieno**.
+:::
+
+::: {.theorem #rank}
+Una matrice quadrata ha rango pieno se e solo se il suo determinante è non nullo. Per $\mathbf{A} \in \mathcal{M}_n$, si ha cioè che 
+$$
+r(\mathbf{A})=n \quad \text{ se e solo se } \quad \text{det}(\mathbf{A})\neq0.
+$$
+Una tale matrice è detta **non singolare**.
+:::
+::: {.proof}
+Supponiamo che $\mathbf{S}=(s_{ij})$ sia una matrice ridotta a scala ottenuta a partire dalla matrice  $\mathbf{A}$ attraverso operazioni elementari sulle righe. La matrice $\mathbf{S}$ è quindi triangolare e il suo determinante è dunque pari al prodotto degli elementi sulla sua diagonale.  Da \@ref(eq:detred), si avrà dunque, per $k \neq 0$, che
+$$
+\text{det}(\mathbf{A}) = k \, \text{det}\,(\mathbf{S})= k\,\prod_{i=1}^n s_{ii}.
+$$
+Se $\text{det}(\mathbf{A}) \neq 0$, allora $\prod_{i=1}^n s_{ii} \neq 0$, ovvero gli $n$ elementi sulla diagonale di $\mathbf{S}$ sono tutti non nulli, ovvero sono tutti pivot. Una ridotta a scala di $\mathbf{A}$ ha quindi $n$ pivot, ovvero (per definizione) il rango di $\mathbf{A}$ è pari ad $n$.
+
+Viceversa, se $r(\mathbf{A})=n$, una qualsiasi sua ridotta a scala $\mathbf{S}$ (che è triangolare) ha $n$ pivot (non nulli) sulla diagonale, il cui prodotto è pari al determinante di $\mathbf{S}$. Quindi $\text{det}\,(\mathbf{S}) \neq 0$. Dalla precedente equazione (visto che $k \neq 0$), si ha quindi  $\text{det}(\mathbf{A}) \neq 0$.
+:::
+
+\pagebreak
+
+## Inversa di una matrice
+
+Abbiamo già visto nell'Esempio \@ref(exm:matcanc) come per le matrici non valga la regola di cancellazione. In effetti, anche per i numeri reali non si può sempre cancellare il numero reale $a$ dall'equazione $ab=ac,$ ma solo quando risulta $a \neq 0$. Questo avviene perché solo i numeri $a \neq 0$ possiedono un *inverso*, ovvero un numero $a^{-1}$ tale che
+moltiplicato a destra o a sinistra per $a$ restituisca l'elemento neutro del prodotto,
+$aa^{-1}=a^{-1}a=1$. Quando $a \neq 0$, si ha  $a^{-1}=\frac{1}{a}$, e si può procedere con la cancellazione
+$$
+ab=ac \quad\Rightarrow\quad a^{-1}ab=a^{-1}ac \quad\Rightarrow\quad 1\,b=1\,c \quad\Rightarrow\quad b=c.
+$$
+È possibile definire l'elemento inverso anche nell'insieme delle matrici quadrate.
+
+::: {.definition}
+Una matrice quadrata $\mathbf{A}\in\mathcal{M}_n$ si dice **invertibile** se esiste una matrice $\mathbf{A}^{-1}\in\mathcal{M}_n$
+tale che
+$$
+\mathbf{A}\mathbf{A}^{-1}=\mathbf{A}^{-1}\mathbf{A}=\mathbf{I}.
+$$
+Nel caso esista, $\mathbf{A}^{-1}$ viene detta matrice **inversa** di $\mathbf{A}$.
+:::
+
+::: {.theorem}
+L'inversa di una matrice quadrata, se esiste, è unica.
+:::
+::: {.proof}
+Supponiamo che $\mathbf{A}\in\mathcal{M}_n$ sia invertibile con almeno due matrici inverse $\mathbf{B}$ e $\mathbf{C}$, ovvero tali che
+$$
+\mathbf{A}\mathbf{B}=\mathbf{B}\mathbf{A}=\mathbf{I}=\mathbf{A}\mathbf{C}=\mathbf{C}\mathbf{A}.
+$$
+Le seguenti eguaglianze sono immediate:
+$$
+\mathbf{B}=\mathbf{B}\,\mathbf{I}=\mathbf{B}(\mathbf{A}\mathbf{C})=(\mathbf{B}\mathbf{A})\mathbf{C}=\mathbf{I}\mathbf{C}=\mathbf{C},
+$$
+da cui si ottiene l'unicità dell'inversa, $\mathbf{B}=\mathbf{C}$.
+:::
+
+È evidente che la matrice $\mathbf{0}$ non è invertibile: moltiplicata per qualsiasi matrice restituisce sempre se stessa, e non l'identità. A differenza di quanto accade con i numeri reali, non tutte le matrici diverse da $\mathbf{0}$ sono invertibili. Affinché $\mathbf{A}$ sia invertibile, non è sufficiente infatti che $\mathbf{A} \neq \mathbf{0}$, ma deve anche essere  $\text{det}(\mathbf{A}) \neq 0$.
+
+\pagebreak
+
+::: {.theorem #nonsingular}
+Una matrice quadrata $\mathbf{A} \in \mathcal{M}_n$ è invertibile se e solo se è non singolare (ovvero se e solo se il suo determinante è non nullo).
+:::
+
+::: {.proof}
+Se $n=1$ una matrice è assimilabile ad un numero reale, quindi è invertibile se e solo se è diversa da zero, ovvero se e solo se è diverso da zero il suo determinante. La dimostrazione per $n>2$ è analoga al caso $n=2$, che descriviamo nel dettaglio.
+
+Supponiamo di voler invertire la matrice $\mathbf{A}=\left(\begin{array}{cc}a_{11} & a_{12} \\a_{21} & a_{22}\end{array}\right) \in \mathcal{M}_2$. Per farlo dovremmo trovare una matrice $\mathbf{X}=\left(\begin{array}{cc}x_{1} & x_{3} \\x_{2} & x_{4}\end{array}\right) \in \mathcal{M}_2$ tale che, ad esempio, $\mathbf{A}\mathbf{X}=\mathbf{I}$, ovvero tale che
+$$
+\mathbf{A}\mathbf{X}=\left(\begin{array}{cc}a_{11} & a_{12} \\a_{21} & a_{22}\end{array}\right)\left(\begin{array}{cc}x_{1} & x_{3} \\x_{2} & x_{4}\end{array}\right) =\left(\begin{array}{cc}1 & 0 \\0 & 1\end{array}\right). 
+$$
+Svolgendo il prodotto righe per colonne, si trova che la precedente equazione è equivalente ai due sistemi lineari
+$$
+\text{SL1}=\begin{cases}
+a_{11}x_1+a_{12}x_2=1, \\
+a_{21}x_1+a_{22}x_2=0, \\
+\end{cases}\\
+\text{SL2}=\begin{cases}
+a_{11}x_3+a_{12}x_4=0, \\
+a_{21}x_3+a_{22}x_4=1. \\
+\end{cases}
+$$
+Questi due sistemi lineari hanno *entrambi* come matrice incompleta la matrice $\mathbf{A}$, e differenti vettori dei termini noti, che sono rispettivamente dati  dalla prima e dalla seconda colonna della matrice $\mathbf{I}$.
+L'inversa di $\mathbf{A}$ esiste (unica) se e solo se *entrambi* i sistemi hanno una unica soluzione,
+ovvero se e solo se il numero di pivot di una ridotta a scala di $\mathbf{A}$ è pari a 2, ovvero se e solo se $\mathbf{A}$ possiede rango pieno, ovvero se e solo se (Teorema \@ref(thm:rank)) $\text{det}(\mathbf{A})\neq 0$. Si giunge alla stessa conclusione partendo dai due sistemi generati dall'equazione $\mathbf{X}\mathbf{A}=\mathbf{I}$.
+
+In generale, per qualsiasi ordine $n$, trovare l'inversa di una matrice è equivalente a risolvere 
+$n$ sistemi lineari $\text{SL}i, 1 \leq i \leq n$, aventi ognuno come matrice incompleta la matrice da invertire, e come vettore dei termini noti la $i$-ma colonna della matrice identità. La matrice inversa esiste ed è unica se e solo se tutti gli $n$ sistemi hanno una unica soluzione, ovvero se e solo se  il numero di pivot di una ridotta a scala di $\mathbf{A}$ è pari a $n$, ovvero se e solo se $\mathbf{A}$ possiede rango pieno, ovvero se e solo se $\text{det}(\mathbf{A})\neq 0$.
+:::
+
+::: {.remark}
+Per le matrici $\mathbf{A}$ invertibili (ovvero le matrici non singolari) vale la regola di cancellazione, in quanto si può scrivere
+$$
+\mathbf{A}\mathbf{B}=\mathbf{A}\mathbf{C} \quad\Rightarrow\quad \mathbf{A}^{-1}\mathbf{A}\mathbf{B}=\mathbf{A}^{-1}\mathbf{A}\mathbf{C} \quad\Rightarrow\quad \mathbf{I}\,\mathbf{B}=\mathbf{I}\,\mathbf{C} \quad\Rightarrow\quad \mathbf{B}=\mathbf{C}.
+$$
+Si osservi infatti che la matrice $\mathbf{A}$ dell'Esempio \@ref(exm:matcanc) non è invertibile in quanto ha determinante nullo.
+:::
+
+Quanto illustrato ha una immediata applicazione nella risoluzione di sistemi lineari quadrati
+(ovvero con numero di equazioni pari al numero di variabili). Sappiamo già che un qualsiasi sistema può essere scritto in forma molto concisa ed elegante come
+$$
+\mathbf{A}\mathbf{x}=\mathbf{b}.
+$$
+
+::: {.theorem}
+Se $\mathbf{A}\in \mathcal{M}_n$, 
+il sistema lineare $\mathbf{A}\mathbf{x}=\mathbf{b}$ possiede unica soluzione $\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}$ se e solo se $\text{det}(\mathbf{A})\neq 0$.
+::: 
+
+::: {.proof}
+Dal Teorema \@ref(thm:rank), sappiamo che il sistema quadrato $\mathbf{A}\mathbf{x}=\mathbf{b}$ ha una unica soluzione se e solo se una qualsiasi ridotta a scala di $\mathbf{A}$ ha rango pieno (ovvero possiede $n$ pivot), ovvero se e solo se $\text{det}(\mathbf{A})\neq 0$. 
+Inoltre, dal Teorema \@ref(thm:nonsingular), sappiamo che esiste $\mathbf{A}^{-1}$.  Moltiplicando a sinistra entrambi i membri dell'equazione $\mathbf{A}\mathbf{x}=\mathbf{b}$ per $\mathbf{A}^{-1}$ si ottiene $\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}.$
+:::
+
+> La soluzione $\mathbf{x}=\mathbf{A}^{-1}\mathbf{b}$ corrisponde alla *formula di Cramer* per la risoluzione dei sistemi lineari quadrati. Essa non viene trattata in questo testo perché le si preferisce la soluzione tramite eliminazione di Gauss (che vale per qualunque sistema lineare, anche non quadrato).
+
+Stabilite le condizioni per l'esistenza della matrice inversa (determinante non nullo), e la sua unicità, non ci resta che illustrare con un esempio il suo calcolo effettivo.
+
+::: {.example #inversa}
+Calcolare, nel caso esista, l'inversa della matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}\mathbf{0} & \mathbf{2} & \mathbf{2} \\1 & 1 & 3 \\2 & 0 & 1\end{array}\right).
+$$
+Per calcolare l'inversa di una matrice quadrata $\mathbf{A}$, si procede con questi passaggi:
+
+- si calcola il determinante di $\mathbf{A}$ e si verifica che sia non nullo (se fosse nullo, la matrice non sarebbe invertibile):
+$$
+\text{det}(\mathbf{A})= 2\,(-1)\,\text{det}\left(\begin{array}{cc}1 & 3 \\2 & 1\end{array}\right)+2\,\text{det}\left(\begin{array}{cc}1 & 1 \\2 & 0\end{array}\right)=-2(1-6)+2(0-2)=6 \neq 0;
+$$
+
+- si traspone $\mathbf{A}$:
+$$
+\mathbf{A}^t=\left(\begin{array}{ccc} 0& 1 &2  \\2 & 1 & 0 \\2 & 3 & 1\end{array}\right);
+$$
+- la matrice inversa è data dalla matrice dei complementi algebrici (matrice aggiunta) di $\mathbf{A}^t$, divisa per il determinante:
+$$
+\mathbf{A}^{-1}=\frac{\text{adj}(\mathbf{A}^t)}{\text{det}(\mathbf{A})}=\frac{1}{6}\,\text{adj}(\mathbf{A}^t)=\frac{1}{6}\left(\begin{array}{ccc} 1& -2 &4  \\5 & -4 & 2 \\-2 & 4 & -2\end{array}\right)=\left(\begin{array}{ccc} \frac{1}{6}& -\frac{1}{3} &\frac{2}{3}  \\\\\frac{5}{6} & -\frac{2}{3} & \frac{1}{3} \\\\-\frac{1}{3} & \phantom{-}\frac{2}{3} & -\frac{1}{3}\phantom{-}\end{array}\right);
+$$
+- si verifica che $\mathbf{A}\mathbf{A}^{-1}=\mathbf{I}$ (o che $\mathbf{A}^{-1}\mathbf{A}=\mathbf{I}$):
+$$
+\mathbf{A}\mathbf{A}^{-1}=\left(\begin{array}{ccc}0 & 2 & 2 \\1 & 1 & 3 \\2 & 0 & 1\end{array}\right)\left(\begin{array}{ccc} \frac{1}{6}& -\frac{1}{3} &\frac{2}{3}  \\\\\frac{5}{6} & -\frac{2}{3} & \frac{1}{3} \\\\-\frac{1}{3} & \phantom{-}\frac{2}{3} & -\frac{1}{3}\phantom{-}\end{array}\right)=\left(\begin{array}{ccc}1 & 0 & 0 \\0 & 1 & 0 \\0 & 0 & 1\end{array}\right).
+$$
+:::
+
+> È consigliabile verificare i calcoli moltiplicando la matrice inversa trovata e la matrice originaria (a destra o a sinistra) per ottenere la matrice $\mathbf{I}$. Se questo non dovesse risultare, un eventuale elemento non conforme in posizione $(i,j)$ ci comunicherebbe un errore nella $i$-ma riga o nella $j$-ma colonna dell'inversa. Se dalla moltiplicazione risultasse invece un multiplo di $\mathbf{I}$, sarebbe sbagliato il calcolo del determinante.
+
+> È equivalente (e meno oneroso in generale per matrici di grandi dimensioni) risolvere gli $n$ sistemi lineari della dimostrazione del Teorema \@ref(thm:nonsingular) per trovare la matrice inversa. Questo può essere fatto simultaneamente con la eliminazione di Gauss affiancando alla matrice incompleta la matrice $\mathbf{I}$. Nell'Esempio \@ref(exm:inversa), andrebbero risolti i tre sistemi
+$$
+\left(\begin{array}{ccc}0 & 2 & 2 \\1 & 1 & 3 \\2 & 0 & 1\end{array}\right.\left|\,\begin{array}{ccc}1 & 0 & 0 \\0 & 1 & 0 \\0 & 0 & 1\end{array}\right).
+$$
+
+## Esercizi
+::: {.exercise}
+Calcolare il determinante della matrice
+$$
+\mathbf{A}=\left(\begin{array}{cccc}2 & 3 & 5 & 4 \\1 & 2 & 3 & 4 \\2 & 3 & 4 & 5 \\4 & 2 & 3 & 1\end{array}\right)
+$$
+\begin{flushright}[ $\text{det}(\mathbf{A})=-6$ ]\end{flushright}
+:::
+::: {.exercise}
+Calcolare il determinante della matrice
+$$
+\mathbf{A}=\left(\begin{array}{cccc}1 & 2 & 3 & 4 \\5 & 6 & 7 & 8 \\9 & 10 & 11 & 12 \\13 & 14 & 15 & 16\end{array}\right)
+$$
+\begin{flushright}[ $\text{det}(\mathbf{A})=0$ ]\end{flushright}
+::: 
+
+\pagebreak
+
+::: {.exercise}
+Calcolare il determinante della matrice
+$$
+\mathbf{A}=\left(\begin{array}{cccc}0 & 1 & 2 & 3 \\1 & 0 & 3 & 4 \\2 & 3 & 0 & 5 \\3 & 4 & 5 & 0\end{array}\right)
+$$
+\begin{flushright}[ $\text{det}(\mathbf{A})=-144$ ]\end{flushright}
+::: 
+
+::: {.exercise}
+Calcolare il determinante della matrice
+$$
+\mathbf{A}=\left(\begin{array}{cccc}0 & 1 & 0 & 3 \\3 & 1 & 0 & 2 \\1 & 0 & 2 & 2 \\1 & 2 & 3 & 0\end{array}\right)
+$$
+\begin{flushright}[ $\text{det}(\mathbf{A})=55$ ]\end{flushright}
+::: 
+
+::: {.exercise}
+Calcolare il determinante della matrice
+$$
+\mathbf{A}=\left(\begin{array}{cccc}1 & 2 & 2 & 1 \\2 & 3 & 4 & 5 \\2 & 1 & 1 & 2 \\3 & 2 & 2 & 4\end{array}\right)
+$$
+\begin{flushright}[ $\text{det}(\mathbf{A})=3$ ]\end{flushright}
+::: 
+
+::: {.exercise}
+Calcolare, nel caso esista, l'inversa della matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 2 & 1 \\0 & 0 & 2 \\1 & 0 & 1\end{array}\right) \quad \quad \quad \left[\;\mathbf{A}^{-1}=\left(\begin{array}{ccc}0 & -\frac{1}{2} & 1 \\\frac{1}{2} & 0 & -\frac{1}{2} \\0 & \frac{1}{2} & 0\end{array}\right)\;\right]
+$$
+:::
+
+::: {.exercise}
+Calcolare, nel caso esista, l'inversa della matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 2 & 1 \\2 & 1 & 1 \\1 & 1 & 1\end{array}\right) \quad \quad \quad \left[\;\mathbf{A}^{-1}=\left(\begin{array}{ccc}0 & 1 & -1 \\1 & 0 & -1 \\-1 & -1 & 3\end{array}\right)\;\right]
+$$
+:::
+
+::: {.exercise}
+Calcolare, nel caso esista, l'inversa della matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 2 & 3 \\1 & 2 & 1 \\2 & 1 & 2\end{array}\right) \quad \quad \quad \left[\;\mathbf{A}^{-1}=\left(\begin{array}{ccc}-\frac12 & \frac16 & \frac23 \\0 & \frac23 & -\frac13 \\ \frac12 & -\frac12 & 0\end{array}\right)\;\right]
+$$
+:::
+
+::: {.exercise}
+Determinare per quali valori di $h \in \mathbb{R}$ è invertibile la matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}-2 & h & -2 \\1 & 2h & h \\1 & h & 1\end{array}\right)
+$$
+\begin{flushright}[ La matrice è invertibile se $\text{det}(\mathbf{A})=3h(h-1)\neq 0$, $h \neq 0,1$. ]\end{flushright}
+:::
+::: {.exercise}
+Calcolare, nel caso esista, l'inversa della matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 2 & 1 \\-1 & 0 & 1 \\1 & 2 & 3\end{array}\right) \quad \quad \quad \left[\;\mathbf{A}^{-1}=\left(\begin{array}{ccc}-\frac12 & -1 & \frac12 \\1 & \frac12 & -\frac12 \\-\frac12 & 0 & \frac12\end{array}\right)\;\right]
+$$
+:::
+
+::: {.exercise}
+Determinare per quali valori di $h \in \mathbb{R}$ è invertibile la matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & -1 & 1 \\h & 1 & -1 \\0 & h & h\end{array}\right)
+$$
+\begin{flushright}[ La matrice è invertibile se $\text{det}(\mathbf{A})=2h(h+1)\neq 0$, $h \neq 0,-1$. ]\end{flushright}
+:::
+
+::: {.exercise}
+Calcolare, nel caso esista, l'inversa della matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 0 & 1 \\1 & 1 & 0 \\1 & 1 & 1\end{array}\right) \quad \quad \quad \left[\;\mathbf{A}^{-1}=\left(\begin{array}{ccc}1 & 1 & -1 \\-1 & 0 & 1 \\0 & -1 & 1\end{array}\right)\;\right]
+$$
+:::
+
+::: {.exercise}
+Determinare per quali valori di $h \in \mathbb{R}$ è invertibile la matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 2-h & 1 \\h & 0 & 2 \\1 & 1 & 1\end{array}\right)
+$$
+\begin{flushright}[ La matrice è invertibile se $\text{det}(\mathbf{A})=h^2 - 3h + 2=(h-1)(h-2)\neq 0$, $h \neq 1,2$. ]\end{flushright}
+:::
+
+::: {.exercise}
+Determinare per quali valori di $h \in \mathbb{R}$ è invertibile la matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}1 & 4 & 2 \\h & 1 & 2 \\2 & 1 & h\end{array}\right)
+$$
+\begin{flushright}[ La matrice è invertibile se $\text{det}(\mathbf{A})=-4h^2+3h+10 \neq 0$, $h \neq -\frac54, 2$. ]\end{flushright}
+:::
+
+::: {.exercise}
+Determinare per quali valori di $h \in \mathbb{R}$ è invertibile la matrice
+$$
+\mathbf{A}=\left(\begin{array}{ccc}h & 1 & 2 \\1 & 3 & 2 \\1 & 2 & h\end{array}\right)
+$$
+\begin{flushright}[ La matrice è invertibile se $\text{det}(\mathbf{A})=3h^2-5h \neq 0$, $h \neq 0, \frac53$. ]\end{flushright}
+:::
+
