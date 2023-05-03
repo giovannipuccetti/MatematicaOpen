@@ -1,6 +1,6 @@
-IL materiale presente in questo sito è rilasciato con licenza 
+Il materiale presente in questo sito è rilasciato con licenza 
 
-Creative Commons Attribution 4.0 - CC-BY- NC-SA
+**Creative Commons Attribution 4.0 - CC-BY- NC-SA**
 https://creativecommons.org/licenses/by-nc-sa/4.0/deed.it
 
 Si può liberamente:
@@ -17,4 +17,4 @@ NonCommerciale — Non si può utilizzare il materiale per scopi commerciali.
 StessaLicenza — Se si remixa, trasforma il materiale o ci si basa su di esso, si devono distribuire i propri contributi con la stessa licenza del materiale originario.
 
 La licenza completa è disponibile all’indirizzo 
-https://creativecommons.org/licenses/by-ncsa/4.0/legalcode.
+https://creativecommons.org/licenses/by-ncsa/4.0/legalcode
