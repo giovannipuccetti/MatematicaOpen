@@ -4,6 +4,7 @@
 
 Al momento sono presenti i file sorgente in formato R per i capitoli del testo
 "**Matematica per il corso di Economia e Management**"
+Per scarciarli selezionare in alto a sinistra branch=Capitoli_Libro e Figure (per le illustrazioni in png).
 
 Edizione digitale: https://doi.org/10.54103/milanoup.112
 
