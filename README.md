@@ -14,6 +14,7 @@ Edizione digitale: https://doi.org/10.54103/milanoup.112
 
 PodCast di descrizione del progetto: https://www.spreaker.com/user/16503036/podcast-mup-pt-11-matematica-per-il-cors
 
+Intervista su ROARS: https://www.roars.it/open-science-libri-didattici-aperti-un-servizio-per-gli-studenti/
 
 Seguiranno anche i file relativi alle esercitazioni Moodle che accompagnano il testo.
 
