@@ -25,5 +25,7 @@ I file sorgente possono essere copiati, modificati e ripubblicati in accordo con
 1) R https://www.r-project.org
 2) Bookdown https://bookdown.org
 
+**Una guida semplice e rapida:**
+https://bookdown.org/yihui/bookdown/get-started.html
 
 Per ogni informazione addizionale, potete scrivermi al mio indirizzo accademico giovanniDOTpuccettiATunimiDOTit
