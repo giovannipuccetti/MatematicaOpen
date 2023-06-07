@@ -2,7 +2,7 @@
 
 **Matematica Open è un progetto di condivisione dei materiali didattici per i corsi di Matematica Generale insegnati nelle Università Italiane**
 
-![Logo - Small](https://github.com/giovannipuccetti/MatematicaOpen/assets/74778934/d88ebd61-2fff-4be1-9539-56f3f187baee)
+![Logo - small](https://github.com/giovannipuccetti/MatematicaOpen/assets/74778934/e59c33f1-98a4-4772-af53-ef98428ea458)
 
 Al momento sono presenti i file sorgente in formato R per i capitoli del testo
 "**Matematica per il corso di Economia e Management**"
