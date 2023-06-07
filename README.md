@@ -33,5 +33,5 @@ https://bookdown.org/yihui/bookdown/get-started.html
 (utilizzare uno dei file .rmd del libro per provare).
 
 Per ogni informazione addizionale, o per caricare i materiali didattici di un altro volume
-prodotto secondo questo progetto
+da condividere in questo progetto,
 potete scrivermi al mio indirizzo accademico giovanniDOTpuccettiATunimiDOTit
