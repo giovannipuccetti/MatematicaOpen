@@ -10,6 +10,7 @@ G. Puccetti
 "**Matematica per il corso di Economia e Management**"
 
 Per scaricarli selezionare in alto a sinistra branch=Capitoli_Libro e Figure (per le illustrazioni in png).
+Per scaricare le esercitazioni Moodle selezionare in alto a sinistra branch=Esercitazioni_Moodle.
 
 Edizione digitale: https://doi.org/10.54103/milanoup.112
 
@@ -18,8 +19,6 @@ PodCast di descrizione del progetto: https://www.spreaker.com/user/16503036/podc
 Intervista su ROARS: https://www.roars.it/open-science-libri-didattici-aperti-un-servizio-per-gli-studenti/
 
 Flyer: https://github.com/giovannipuccetti/MatematicaOpen/blob/f9b0a9fae8be78ace9d26a9c159e006ac56ad04b/MatematicaOpenflyer.pdf
-
-Entro fine Giugno saranno caricati anche i file relativi alle esercitazioni Moodle che accompagnano il testo.
 
 I file sorgente possono essere copiati, modificati e ripubblicati in accordo con la licenza presente nel file license.md
 
