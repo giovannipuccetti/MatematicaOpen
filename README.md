@@ -31,6 +31,15 @@ I file sorgente possono essere copiati, modificati e ripubblicati in accordo con
 https://bookdown.org/yihui/bookdown/get-started.html
 (utilizzare uno dei file .rmd del libro per provare).
 
+**Licenza da utilizzare se volete produrre un nuovo testo a partire dai file sorgente:**
+
+- Nel nuovo testo e nei suoi materiali aggiuntivi dovrete utilizzare la stessa licenza, che trovate nel file license.md
+- Nel nuovo testo basta aggiungere (ad esempio in seconda di copertina) una dicitura simile a: "Questo testo è stato prodotto parzialmente utilizzando
+  e riadattando il testo G. Puccetti, Matematica per il corso di Economia e Management", https://doi.org/10.54103/milanoup.112
+  Se volete caricare i nuovi materiali su questo sito potete aggiungere:
+  "Questo testo aderisce al progetto Matematica Open - la Matematica aperta a tutti, https://github.com/giovannipuccetti/MatematicaOpen"
+
+
 Per ogni informazione addizionale, o per caricare i materiali didattici di un altro volume
 da condividere in questo progetto,
 potete scrivermi al mio indirizzo accademico giovanniDOTpuccettiATunimiDOTit
