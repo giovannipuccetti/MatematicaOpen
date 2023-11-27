@@ -22,6 +22,12 @@ Flyer: https://github.com/giovannipuccetti/MatematicaOpen/blob/f9b0a9fae8be78ace
 
 I file sorgente possono essere copiati, modificati e ripubblicati in accordo con la licenza presente nel file license.md
 
+Evento CIVICA Open Education (dal minuto 52): https://unibocconi-it.zoom.us/rec/share/eeZXkIKjZ0dqfcw8DyqWZJfhmmFy2WjIGlSDsufzQ0-B6P6-XJCUZ2eC8dDz0LaX.0M3rsap5NURyNngJ 
+
+Passcode: 05tt^qLQ
+
+https://zenodo.org/records/10069471
+
 **Licenza da utilizzare se volete produrre un nuovo testo a partire dai file sorgente:**
 
 - Nel nuovo testo e nei suoi materiali aggiuntivi dovrete utilizzare la stessa licenza, che trovate nel file license.md
